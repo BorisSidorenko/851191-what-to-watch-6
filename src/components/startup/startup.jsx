@@ -7,7 +7,7 @@ import Footer from '../footer/footer';
 
 
 const Startup = (props) => {
-  const {currentMovie, smallMovieCardsInfo} = props;
+  const {currentMovie, allMovies} = props;
   return (
     <>
       <MovieCard
@@ -22,7 +22,7 @@ const Startup = (props) => {
 
           <div className="catalog__movies-list">
             <MoviesList
-              smallMovieCardsInfo = {smallMovieCardsInfo}
+              allMovies = {allMovies}
             />
           </div>
 
@@ -39,7 +39,7 @@ const Startup = (props) => {
 
 Startup.propTypes = {
   currentMovie: PropTypes.object.isRequired,
-  smallMovieCardsInfo: PropTypes.array.isRequired
+  allMovies: PropTypes.array.isRequired
 };
 
 export default Startup;

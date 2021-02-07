@@ -1,13 +1,14 @@
 import React from 'react';
 import SmallMovieCard from '../small-movie-card/small-movie-card';
 
-const MoviesList = ({smallMovieCardsInfo}) => {
-  return smallMovieCardsInfo.map((el, i) => {
-    const [name, poster] = el;
-    return (<SmallMovieCard key={i}
-      name={name}
-      poster={poster}
-    />);
+const MoviesList = ({allMovies}) => {
+  return allMovies.map((el, i) => {
+    return (
+      <SmallMovieCard key={i}
+        name={el.name}
+        preview={el.preview_image}
+      />
+    );
   });
 };
 

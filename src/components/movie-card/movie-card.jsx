@@ -5,7 +5,7 @@ import Header from '../header/header';
 import MovieCardInfo from '../movie-card-info/movie-card-info';
 
 const MovieCard = (props) => {
-  const {poster, background, name, genre, year} = props.currentMovie;
+  const {poster_image: poster, background_image: background, name, genre, released} = props.currentMovie;
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
@@ -21,7 +21,7 @@ const MovieCard = (props) => {
           poster = {poster}
           name = {name}
           genre = {genre}
-          year = {year}
+          released = {released}
         />
       </div>
     </section>

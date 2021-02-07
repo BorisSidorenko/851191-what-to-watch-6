@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MovieCardInfo = ({poster, name, genre, year}) => {
+const MovieCardInfo = ({poster, name, genre, released}) => {
   return (
     <div className="movie-card__info">
       <div className="movie-card__poster">
@@ -13,7 +13,7 @@ const MovieCardInfo = ({poster, name, genre, year}) => {
         <h2 className="movie-card__title">{name}</h2>
         <p className="movie-card__meta">
           <span className="movie-card__genre">{genre}</span>
-          <span className="movie-card__year">{year}</span>
+          <span className="movie-card__year">{released}</span>
         </p>
 
         <div className="movie-card__buttons">
@@ -39,7 +39,7 @@ MovieCardInfo.propTypes = {
   poster: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   genre: PropTypes.string.isRequired,
-  year: PropTypes.string.isRequired
+  released: PropTypes.number.isRequired
 };
 
 export default MovieCardInfo;

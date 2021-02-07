@@ -2,12 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
 
-import {MovieNameAndPoster, MovieFromHeader} from './utils/constatns';
+import {generateMovie, generateMovies} from './mock/movie/movie';
 
 ReactDOM.render(
     <App
-      currentMovie = {MovieFromHeader}
-      smallMovieCardsInfo = {Object.entries(MovieNameAndPoster)}
+      currentMovie = {generateMovie()}
+      allMovies = {generateMovies()}
     />,
     document.querySelector(`#root`)
 );
