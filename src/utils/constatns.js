@@ -19,3 +19,11 @@ export const MovieNameAndPoster = {
   "Orlando": `img/orlando.jpg`,
   "Mindhunter": `img/mindhunter.jpg`
 };
+
+export const MovieFromHeader = {
+  name: `The Grand Budapest Hotel`,
+  poster: `img/the-grand-budapest-hotel-poster.jpg`,
+  background: `img/bg-the-grand-budapest-hotel.jpg`,
+  genre: `Drama`,
+  year: `2014`
+};

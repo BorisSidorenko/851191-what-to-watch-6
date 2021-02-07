@@ -1,13 +1,15 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import Header from '../header/header';
 import MovieCardInfo from '../movie-card-info/movie-card-info';
 
-const MovieCard = () => {
+const MovieCard = (props) => {
+  const {poster, background, name, genre, year} = props.currentMovie;
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+        <img src={background} alt={name} />
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -15,10 +17,19 @@ const MovieCard = () => {
       <Header />
 
       <div className="movie-card__wrap">
-        <MovieCardInfo />
+        <MovieCardInfo
+          poster = {poster}
+          name = {name}
+          genre = {genre}
+          year = {year}
+        />
       </div>
     </section>
   );
+};
+
+MovieCard.propTypes = {
+  currentMovie: PropTypes.object.isRequired
 };
 
 export default MovieCard;

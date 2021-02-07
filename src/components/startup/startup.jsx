@@ -7,10 +7,12 @@ import Footer from '../footer/footer';
 
 
 const Startup = (props) => {
-  const {smallMovieCardsInfo} = props;
+  const {currentMovie, smallMovieCardsInfo} = props;
   return (
     <>
-      <MovieCard />
+      <MovieCard
+        currentMovie = {currentMovie}
+      />
 
       <div className="page-content">
         <section className="catalog">
@@ -36,6 +38,7 @@ const Startup = (props) => {
 };
 
 Startup.propTypes = {
+  currentMovie: PropTypes.object.isRequired,
   smallMovieCardsInfo: PropTypes.array.isRequired
 };
 
