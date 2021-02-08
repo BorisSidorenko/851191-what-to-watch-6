@@ -14,7 +14,7 @@ const getGenreComponent = (genre) => {
 
 const GenresList = () => (
   <ul className="catalog__genres-list">
-    {GENRES.map((genre) => getGenreComponent(genre))}
+    {GENRES.map(getGenreComponent)}
   </ul>
 );
 

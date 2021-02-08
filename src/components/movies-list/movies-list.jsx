@@ -1,14 +1,13 @@
 import React from 'react';
 import MovieCard from '../movie-card/movie-card';
 
-const getMovieCardComponent = ({id, name, preview_image: preview}) => (
+const getMovieCardComponent = ({id, ...rest}) => (
   <MovieCard
     key = {id}
-    name = {name}
-    preview = {preview}
+    {...rest}
   />
 );
 
-const MoviesList = ({allMovies}) => allMovies.map((movie) => getMovieCardComponent(movie));
+const MoviesList = ({allMovies}) => allMovies.map(getMovieCardComponent);
 
 export default MoviesList;

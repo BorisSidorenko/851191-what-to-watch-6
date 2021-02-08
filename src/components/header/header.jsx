@@ -3,9 +3,7 @@ import Logo from '../logo/logo';
 
 const Header = () => (
   <header className="page-header movie-card__head">
-    <Logo
-      isLogoLight = {false}
-    />
+    <Logo />
 
     <div className="user-block">
       <div className="user-block__avatar">
