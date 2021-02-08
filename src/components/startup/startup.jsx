@@ -11,7 +11,7 @@ const Startup = (props) => {
   return (
     <>
       <MovieCard
-        currentMovie = {currentMovie}
+        {...currentMovie}
       />
 
       <div className="page-content">
