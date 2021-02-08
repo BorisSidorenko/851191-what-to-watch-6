@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
-import PromoMovieInfo from '../promo-movie-info/promo-movie';
+import PromoMovieInfo from '../promo-movie-info/promo-movie-info';
 
 const PromoMovie = ({background_image: background, name, ...rest}) => (
   <section className="movie-card">
