@@ -1,9 +1,9 @@
 import React from 'react';
-import {nanoid} from '../../vendor/nanoid';
+import {v4 as uuidv4} from 'uuid';
 import {GENRES} from '../../utils/constatns';
 
 const getGenreComponent = (genre) => {
-  const [id] = React.useState(nanoid);
+  const [id] = React.useState(uuidv4);
 
   return (
     <li key={id} className="catalog__genres-item">

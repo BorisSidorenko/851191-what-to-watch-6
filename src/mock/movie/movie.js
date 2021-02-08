@@ -1,4 +1,4 @@
-import {nanoid} from '../../vendor/nanoid';
+import {v4 as uuidv4} from 'uuid';
 import {getRandomInt, getRandomIntInRange, getArrayOfObjects} from '../../utils/common';
 import {MovieNames, IMG_PATH, MoviePreviews, BGColors, MovieDescription, MOVIE_RATING, SCORE, DIRECTORS, ACTORS, RUN_TIME, MOVIE_GENRES, RELEASE_YEAR, MOVIE_AMOUNT_TO_GENERATE} from '../../utils/constatns';
 
@@ -22,7 +22,7 @@ const getRandomGenre = () => MOVIE_GENRES[getRandomInt(MOVIE_GENRES.length)];
 const getRandomBool = () => getRandomIntInRange(0, 1) > 0;
 
 export const generateMovie = () => ({
-  "id": nanoid(8),
+  "id": uuidv4(),
   "name": getRandomMovieName(),
   "poster_image": `img/the-grand-budapest-hotel-poster.jpg`,
   "preview_image": getRandomMoviePreview(),
