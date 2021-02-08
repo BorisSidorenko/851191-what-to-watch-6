@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import GenresList from '../genres-list/genres-list';
-import MovieCard from '../movie-card/movie-card';
+import PromoMovie from '../promo-movie/promo-movie';
 import MoviesList from '../movies-list/movies-list';
 import Footer from '../footer/footer';
 
 
-const Startup = ({currentMovie, allMovies}) => (
+const Startup = ({promoMovie, allMovies}) => (
   <>
-    <MovieCard
-      {...currentMovie}
+    <PromoMovie
+      {...promoMovie}
     />
 
     <div className="page-content">
@@ -35,7 +35,7 @@ const Startup = ({currentMovie, allMovies}) => (
 );
 
 Startup.propTypes = {
-  currentMovie: PropTypes.object.isRequired,
+  promoMovie: PropTypes.object.isRequired,
   allMovies: PropTypes.array.isRequired
 };
 

@@ -2,7 +2,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MovieCardInfo = ({name, poster_image: poster, genre, released}) => (
+const PromoMovieInfo = ({name, poster_image: poster, genre, released}) => (
   <div className="movie-card__info">
     <div className="movie-card__poster">
       <img src={poster} alt={name} width="218" height="327" />
@@ -33,11 +33,11 @@ const MovieCardInfo = ({name, poster_image: poster, genre, released}) => (
   </div>
 );
 
-MovieCardInfo.propTypes = {
+PromoMovieInfo.propTypes = {
   "poster_image": PropTypes.string.isRequired,
   "name": PropTypes.string.isRequired,
   "genre": PropTypes.string.isRequired,
   "released": PropTypes.number.isRequired
 };
 
-export default MovieCardInfo;
+export default PromoMovieInfo;
