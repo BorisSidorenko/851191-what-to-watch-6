@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SmallMovieCard = ({name, preview}) => (
+const MovieCard = ({name, preview}) => (
   <article className="small-movie-card catalog__movies-card">
     <div className="small-movie-card__image">
       <img src={preview} alt={name} width="280" height="175" />
@@ -12,9 +12,9 @@ const SmallMovieCard = ({name, preview}) => (
   </article>
 );
 
-SmallMovieCard.propTypes = {
+MovieCard.propTypes = {
   preview: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired
 };
 
-export default SmallMovieCard;
+export default MovieCard;
