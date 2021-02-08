@@ -6,36 +6,33 @@ import MoviesList from '../movies-list/movies-list';
 import Footer from '../footer/footer';
 
 
-const Startup = (props) => {
-  const {currentMovie, allMovies} = props;
-  return (
-    <>
-      <MovieCard
-        {...currentMovie}
-      />
+const Startup = ({currentMovie, allMovies}) => (
+  <>
+    <MovieCard
+      {...currentMovie}
+    />
 
-      <div className="page-content">
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
+    <div className="page-content">
+      <section className="catalog">
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
 
-          <GenresList />
+        <GenresList />
 
-          <div className="catalog__movies-list">
-            <MoviesList
-              allMovies = {allMovies}
-            />
-          </div>
+        <div className="catalog__movies-list">
+          <MoviesList
+            allMovies = {allMovies}
+          />
+        </div>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
-        </section>
+        <div className="catalog__more">
+          <button className="catalog__button" type="button">Show more</button>
+        </div>
+      </section>
 
-        <Footer />
-      </div>
-    </>
-  );
-};
+      <Footer />
+    </div>
+  </>
+);
 
 Startup.propTypes = {
   currentMovie: PropTypes.object.isRequired,
