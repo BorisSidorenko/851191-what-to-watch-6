@@ -12,7 +12,7 @@ const PromoMovie = ({background_image: background, name, ...rest}) => (
 
     <h1 className="visually-hidden">WTW</h1>
 
-    <Header />
+    <Header headerClassName = "page-header movie-card__head"/>
 
     <div className="movie-card__wrap">
       <PromoMovieInfo

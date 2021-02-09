@@ -1,16 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Logo from '../logo/logo';
+import UserBlock from '../user-block/user-block';
 
-const Header = () => (
-  <header className="page-header movie-card__head">
+const Header = ({headerClassName, isUserAuthenticated, children}) => (
+  <header className={headerClassName}>
     <Logo />
-
-    <div className="user-block">
-      <div className="user-block__avatar">
-        <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-      </div>
-    </div>
+    <UserBlock
+      isUserAuthenticated = {isUserAuthenticated}
+    />
+    {children}
   </header>
 );
+
+Header.defaultProps = {
+  isUserAuthenticated: true
+};
+
+Header.propTypes = {
+  headerClassName: PropTypes.string.isRequired,
+  isUserAuthenticated: PropTypes.bool.isRequired,
+  children: PropTypes.node
+};
 
 export default Header;
