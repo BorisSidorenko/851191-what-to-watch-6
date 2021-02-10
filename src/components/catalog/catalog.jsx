@@ -4,9 +4,9 @@ import GenresList from '../genres-list/genres-list';
 import MoviesList from '../movies-list/movies-list';
 import CatalogButton from '../catalog-button/catalog-button';
 
-const Catalog = ({allMovies, showGenres}) => (
-  <section className="catalog">
-    <h2 className="catalog__title visually-hidden">Catalog</h2>
+const Catalog = ({allMovies, catalogClass, showGenres, children}) => (
+  <section className={catalogClass}>
+    {children}
 
     {showGenres && <GenresList />}
 
@@ -25,7 +25,9 @@ Catalog.defaultProps = {
 
 Catalog.propTypes = {
   allMovies: PropTypes.array.isRequired,
-  showGenres: PropTypes.bool.isRequired
+  catalogClass: PropTypes.string.isRequired,
+  showGenres: PropTypes.bool.isRequired,
+  children: PropTypes.node
 };
 
 export default Catalog;

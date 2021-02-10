@@ -14,7 +14,10 @@ const Startup = ({promoMovie, allMovies}) => (
     <div className="page-content">
       <Catalog
         allMovies = {allMovies}
-      />
+        catalogClass = "catalog"
+      >
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
+      </Catalog>
 
       <Footer />
     </div>

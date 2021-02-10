@@ -15,8 +15,11 @@ const MyList = ({allMovies}) => (
 
     <Catalog
       allMovies = {allMovies}
+      catalogClass = "catalog"
       showGenres = {false}
-    />
+    >
+      <h2 className="catalog__title visually-hidden">Catalog</h2>
+    </Catalog>
 
     <Footer />
   </div>
