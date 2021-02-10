@@ -85,3 +85,8 @@ export const RELEASE_YEAR = {
 };
 
 export const MOVIE_AMOUNT_TO_GENERATE = 16;
+
+export const REVIEW_DATE_FORMAT = {
+  DEFAULT: `YYYY-MM-DD`,
+  MONTH_FULL_DESC: `MMMM DD, YYYY`
+};
