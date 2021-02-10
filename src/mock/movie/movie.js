@@ -13,9 +13,15 @@ const getRandomRating = (max, min) => {
   return raiting === max ? raiting : parseFloat(`${raiting}.${getRandomIntInRange(max - 1, min)}`);
 };
 
-const getRandomDirectors = () => DIRECTORS[getRandomInt(DIRECTORS.length)];
+const getRandomDirectors = () => {
+  const arrSize = getRandomIntInRange(DIRECTORS.length, 1);
+  return Array(arrSize).fill().map(() => DIRECTORS[getRandomInt(DIRECTORS.length)]);
+};
 
-const getRandomActor = () => ACTORS[getRandomInt(ACTORS.length)];
+const getRandomActors = () => {
+  const arrSize = getRandomIntInRange(ACTORS.length, 1);
+  return Array(arrSize).fill().map(() => ACTORS[getRandomInt(ACTORS.length)]);
+};
 
 const getRandomGenre = () => MOVIE_GENRES[getRandomInt(MOVIE_GENRES.length)];
 
@@ -34,7 +40,7 @@ export const generateMovie = () => ({
   "rating": getRandomRating(MOVIE_RATING.MAX, MOVIE_RATING.MIN),
   "scores_count": getRandomIntInRange(SCORE.MAX, SCORE.MIN),
   "director": getRandomDirectors(),
-  "starring": getRandomActor(),
+  "starring": getRandomActors(),
   "run_time": getRandomIntInRange(RUN_TIME.MAX, RUN_TIME.MIN),
   "genre": getRandomGenre(),
   "released": getRandomIntInRange(RELEASE_YEAR.MAX, RELEASE_YEAR.MIN),
