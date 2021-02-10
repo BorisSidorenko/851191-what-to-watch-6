@@ -55,6 +55,14 @@ export const MOVIE_RATING = {
   MIN: 0
 };
 
+export const MOVIE_RATING_DESC = {
+  BAD: 2,
+  NORMAL: 4,
+  GOOD: 7,
+  VERY_GOOD: 9,
+  AWESOME: 10
+};
+
 export const SCORE = {
   MAX: 500,
   MIN: 0

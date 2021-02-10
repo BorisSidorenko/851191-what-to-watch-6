@@ -10,7 +10,7 @@ const getRandomBGColor = () => BGColors[getRandomInt(BGColors.length)];
 
 const getRandomRating = (max, min) => {
   const raiting = getRandomIntInRange(max, min);
-  return raiting === max ? raiting : `${raiting}.${getRandomIntInRange(max - 1, min)}`;
+  return raiting === max ? raiting : parseFloat(`${raiting}.${getRandomIntInRange(max - 1, min)}`);
 };
 
 const getRandomDirectors = () => DIRECTORS[getRandomInt(DIRECTORS.length)];
