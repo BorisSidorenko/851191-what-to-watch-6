@@ -90,3 +90,5 @@ export const REVIEW_DATE_FORMAT = {
   DEFAULT: `YYYY-MM-DD`,
   MONTH_FULL_DESC: `MMMM DD, YYYY`
 };
+
+export const AMOUNT_OF_SIMILAR_MOVIES = 4;

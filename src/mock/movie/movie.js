@@ -27,8 +27,8 @@ const getRandomGenre = () => MOVIE_GENRES[getRandomInt(MOVIE_GENRES.length)];
 
 const getRandomBool = () => getRandomIntInRange(0, 1) > 0;
 
-export const generateMovie = () => ({
-  "id": uuidv4(),
+export const generateMovie = (id = uuidv4()) => ({
+  "id": id,
   "name": getRandomMovieName(),
   "poster_image": `img/the-grand-budapest-hotel-poster.jpg`,
   "preview_image": getRandomMoviePreview(),
@@ -47,4 +47,4 @@ export const generateMovie = () => ({
   "is_favorite": getRandomBool()
 });
 
-export const generateMovies = () => getArrayOfObjects(MOVIE_AMOUNT_TO_GENERATE, generateMovie);
+export const generateMovies = (amount = MOVIE_AMOUNT_TO_GENERATE) => getArrayOfObjects(amount, generateMovie);
