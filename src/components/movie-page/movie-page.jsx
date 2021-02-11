@@ -84,4 +84,8 @@ const MoviePage = ({match}) => {
   );
 };
 
+MoviePage.propTypes = {
+  match: PropTypes.object.isRequired
+};
+
 export default MoviePage;

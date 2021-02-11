@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
+import AddReviewBreadcrumbs from '../add-review-breadcrumbs/add-review-breadcrumbs';
 
 import {generateMovie} from '../../mock/movie/movie';
 
@@ -20,19 +21,10 @@ const AddReview = ({match}) => {
 
         <Header
           headerClassName = "page-header"
-        >
-          <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <a href="movie-page.html" className="breadcrumbs__link">{name}</a>
-              </li>
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
-              </li>
-            </ul>
-          </nav>
-
-        </Header>
+          breadcrumbs = {
+            <AddReviewBreadcrumbs name = {name}/>
+          }
+        />
 
         <div className="movie-card__poster movie-card__poster--small">
           <img src={poster} alt={name} width="218" height="327" />
@@ -43,6 +35,10 @@ const AddReview = ({match}) => {
 
     </section>
   );
+};
+
+AddReview.propTypes = {
+  match: PropTypes.object.isRequired
 };
 
 export default AddReview;
