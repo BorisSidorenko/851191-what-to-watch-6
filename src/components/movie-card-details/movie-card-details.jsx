@@ -36,8 +36,8 @@ const MovieCardDetails = ({director, starring, run_time: duration, genre, releas
 MovieCardDetails.propTypes = {
   "released": PropTypes.number.isRequired,
   "genre": PropTypes.string.isRequired,
-  "director": PropTypes.string.isRequired,
-  "starring": PropTypes.string.isRequired,
+  "director": PropTypes.array.isRequired,
+  "starring": PropTypes.array.isRequired,
   "run_time": PropTypes.number.isRequired
 };
 

@@ -25,8 +25,8 @@ const MovieCardOverview = ({rating, description, director, starring, scores_coun
 MovieCardOverview.propTypes = {
   "rating": PropTypes.number.isRequired,
   "description": PropTypes.string.isRequired,
-  "director": PropTypes.string.isRequired,
-  "starring": PropTypes.string.isRequired,
+  "director": PropTypes.array.isRequired,
+  "starring": PropTypes.array.isRequired,
   "scores_count": PropTypes.number.isRequired
 };
 
