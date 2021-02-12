@@ -8,21 +8,23 @@ import NotFound from '../not-found/not-found';
 import Player from '../player/player';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 
+import {RoutePaths} from '../../utils/constatns';
+
 const App = (props) => (
   <BrowserRouter>
     <Switch>
-      <Route exact path="/">
+      <Route exact path={RoutePaths.INDEX}>
         <Startup {...props} />
       </Route>
-      <Route exact path="/login">
+      <Route exact path={RoutePaths.SIGN_IN}>
         <SignIn />
       </Route>
-      <Route exact path="/mylist">
+      <Route exact path={RoutePaths.MY_LIST}>
         <MyList {...props} />
       </Route>
-      <Route exact path="/films/:id" component={MoviePage}/>
-      <Route exact path="/films/:id/review" component={AddReview}/>
-      <Route exact path="/player/:id"
+      <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id`} component={MoviePage}/>
+      <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}`} component={AddReview}/>
+      <Route exact path={`${RoutePaths.PLAYER}/:id`}
         render={(routeProps) => (
           <Player
             {...props}

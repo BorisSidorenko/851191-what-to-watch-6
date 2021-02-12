@@ -92,3 +92,12 @@ export const REVIEW_DATE_FORMAT = {
 };
 
 export const AMOUNT_OF_SIMILAR_MOVIES = 4;
+
+export const RoutePaths = {
+  INDEX: `/`,
+  SIGN_IN: `/login`,
+  MY_LIST: `/mylist`,
+  MOVIE_PAGE: `/films`,
+  REVIEW: `/review`,
+  PLAYER: `/player`
+};

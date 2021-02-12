@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
-import AddReviewBreadcrumbs from '../add-review-breadcrumbs/add-review-breadcrumbs';
 
 import {generateMovie} from '../../mock/movie/movie';
 
@@ -21,9 +20,8 @@ const AddReview = ({match}) => {
 
         <Header
           headerClassName = "page-header"
-          breadcrumbs = {
-            <AddReviewBreadcrumbs name = {name}/>
-          }
+          name = {name}
+          movieId = {movieId}
         />
 
         <div className="movie-card__poster movie-card__poster--small">
