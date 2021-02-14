@@ -101,3 +101,8 @@ export const RoutePaths = {
   REVIEW: `/review`,
   PLAYER: `/player`
 };
+
+export const RatingStars = {
+  MAX: 10,
+  MIN: 1
+};

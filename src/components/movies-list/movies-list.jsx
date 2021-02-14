@@ -4,7 +4,7 @@ import MovieCard from '../movie-card/movie-card';
 
 const getMovieCardComponent = ({id, ...rest}) => (
   <MovieCard
-    key = {id}
+    key={id}
     {...rest}
   />
 );

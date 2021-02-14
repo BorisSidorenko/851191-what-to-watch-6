@@ -25,7 +25,7 @@ const MoviePage = ({match}) => {
           <h1 className="visually-hidden">WTW</h1>
 
           <Header
-            headerClassName = "page-header movie-card__head"
+            headerClassName="page-header movie-card__head"
           />
 
           <div className="movie-card__wrap">
@@ -70,9 +70,9 @@ const MoviePage = ({match}) => {
 
       <div className="page-content">
         <Catalog
-          allMovies = {generateMovies(AMOUNT_OF_SIMILAR_MOVIES)}
-          showGenres = {false}
-          shwoButton = {false}
+          allMovies={generateMovies(AMOUNT_OF_SIMILAR_MOVIES)}
+          showGenres={false}
+          shwoButton={false}
           catalogClass = "catalog catalog--like-this"
         >
           <h2 className="catalog__title">More like this</h2>

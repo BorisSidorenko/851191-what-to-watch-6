@@ -11,9 +11,9 @@ const Header = ({headerClassName, name, movieId, children, isUserAuthenticated, 
   <header className={headerClassName}>
     <Logo />
 
-    {match.path === `${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}` && <AddReviewBreadcrumbs name = {name} id = {movieId}/>}
+    {match.path === `${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}` && <AddReviewBreadcrumbs name={name} id={movieId}/>}
 
-    {showUserBlock && <UserBlock isUserAuthenticated = {isUserAuthenticated} />}
+    {showUserBlock && <UserBlock isUserAuthenticated={isUserAuthenticated} />}
 
     {children}
   </header>

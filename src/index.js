@@ -6,8 +6,8 @@ import {generateMovie, generateMovies} from './mock/movie/movie';
 
 ReactDOM.render(
     <App
-      promoMovie = {generateMovie()}
-      allMovies = {generateMovies()}
+      promoMovie={generateMovie()}
+      allMovies={generateMovies()}
     />,
     document.querySelector(`#root`)
 );

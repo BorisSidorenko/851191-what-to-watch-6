@@ -11,7 +11,7 @@ const Catalog = ({allMovies, catalogClass, showGenres, shwoButton, children}) =>
     {showGenres && <GenresList />}
 
     <MoviesList
-      allMovies = {allMovies}
+      allMovies={allMovies}
     />
 
     {shwoButton && <CatalogButton />}

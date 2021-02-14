@@ -4,7 +4,7 @@ import Logo from '../logo/logo';
 const Footer = () => (
   <footer className="page-footer">
     <Logo
-      isLogoLight = {true}
+      isLogoLight={true}
     />
 
     <div className="copyright">

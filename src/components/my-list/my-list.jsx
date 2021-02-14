@@ -7,16 +7,16 @@ import Footer from '../footer/footer';
 const MyList = ({allMovies}) => (
   <div className="user-page">
     <Header
-      headerClassName = "page-header user-page__head"
-      isUserAuthenticated = {true}
+      headerClassName="page-header user-page__head"
+      isUserAuthenticated={true}
     >
       <h1 className="page-title user-page__title">My list</h1>
     </Header>
 
     <Catalog
-      allMovies = {allMovies}
-      catalogClass = "catalog"
-      showGenres = {false}
+      allMovies={allMovies}
+      catalogClass="catalog"
+      showGenres={false}
     >
       <h2 className="catalog__title visually-hidden">Catalog</h2>
     </Catalog>

@@ -11,7 +11,7 @@ const PromoMovieInfo = ({name, poster_image: poster, ...rest}) => (
     </div>
 
     <MovieCardDescription
-      name = {name}
+      name={name}
       {...rest}
     >
 
