@@ -1,4 +1,5 @@
-import {MovieRatingDesc} from './constatns';
+import AllMovies from '../mock/movie/data';
+import {MovieRatingDesc, AMOUNT_OF_SIMILAR_MOVIES} from './constatns';
 
 export const getRandomIntInRange = (a = 1, b = 0) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -26,4 +27,12 @@ export const getRatingDescription = (rating) => {
   }
 
   return ratingDesc;
+};
+
+export const getMovieById = ({match}) => AllMovies.find(({id}) => id === match.params.id);
+
+export const getSimilarMovies = (currentMovieId, currentMovieGenre) => {
+  const allMoviesSameGenre = AllMovies.filter(({id, genre}) => genre === currentMovieGenre && id !== currentMovieId);
+  const similarMoviesToShow = allMoviesSameGenre.slice(0, AMOUNT_OF_SIMILAR_MOVIES);
+  return similarMoviesToShow;
 };

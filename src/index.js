@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
+import AllMovies from '../src/mock/movie/data';
+import {getRandomInt} from './utils/common';
 
-import {generateMovie, generateMovies} from './mock/movie/movie';
+const movie = AllMovies[getRandomInt(AllMovies.length)];
 
 ReactDOM.render(
     <App
-      promoMovie={generateMovie()}
-      allMovies={generateMovies()}
+      promoMovie={movie}
+      allMovies={AllMovies}
     />,
     document.querySelector(`#root`)
 );

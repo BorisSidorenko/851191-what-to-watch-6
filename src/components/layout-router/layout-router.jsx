@@ -8,6 +8,7 @@ import NotFound from '../not-found/not-found';
 import Player from '../player/player';
 import {Switch, Route} from 'react-router-dom';
 import {RoutePaths} from '../../utils/constatns';
+import {getMovieById} from '../../utils/common';
 
 const LayoutRouter = (props) => (
   <Switch>
@@ -20,7 +21,13 @@ const LayoutRouter = (props) => (
     <Route exact path={RoutePaths.MY_LIST}>
       <MyList {...props} />
     </Route>
-    <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id`} component={MoviePage}/>
+    <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id`}
+      render={(routeProps) => (
+        <MoviePage
+          {...getMovieById(routeProps)}
+        />
+      )}
+    />
     <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}`} component={AddReview}/>
     <Route exact path={`${RoutePaths.PLAYER}/:id`}
       render={(routeProps) => (

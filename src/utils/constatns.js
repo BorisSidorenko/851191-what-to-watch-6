@@ -84,7 +84,7 @@ export const ReleaseYear = {
   MIN: 1962
 };
 
-export const MOVIE_AMOUNT_TO_GENERATE = 16;
+export const MOVIE_AMOUNT_TO_GENERATE = 25;
 
 export const ReviewDateFormat = {
   DEFAULT: `YYYY-MM-DD`,
