@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import AddReviewBreadcrumbs from '../add-review-breadcrumbs/add-review-breadcrumbs';
@@ -7,17 +8,25 @@ import {withRouter} from 'react-router-dom';
 
 import {RoutePaths} from '../../utils/constatns';
 
-const Header = ({headerClassName, name, movieId, children, isUserAuthenticated, showUserBlock, match}) => (
-  <header className={headerClassName}>
-    <Logo />
+const Header = ({name, movieId, children, isUserAuthenticated, showUserBlock, match}) => {
+  const {path, isExact} = match;
+  const headerClass = classNames(`page-header`, {
+    'movie-card__head': path === `${RoutePaths.MOVIE_PAGE}/:id` || path === RoutePaths.INDEX && isExact,
+    'user-page__head': path === RoutePaths.MY_LIST || path === RoutePaths.SIGN_IN || !isExact
+  });
 
-    {match.path === `${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}` && <AddReviewBreadcrumbs name={name} id={movieId}/>}
+  return (
+    <header className={headerClass}>
+      <Logo />
 
-    {showUserBlock && <UserBlock isUserAuthenticated={isUserAuthenticated} />}
+      {path === `${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}` && <AddReviewBreadcrumbs name={name} id={movieId}/>}
 
-    {children}
-  </header>
-);
+      {showUserBlock && <UserBlock isUserAuthenticated={isUserAuthenticated} />}
+
+      {children}
+    </header>
+  );
+};
 
 Header.defaultProps = {
   isUserAuthenticated: true,
@@ -25,7 +34,6 @@ Header.defaultProps = {
 };
 
 Header.propTypes = {
-  headerClassName: PropTypes.string.isRequired,
   isUserAuthenticated: PropTypes.bool.isRequired,
   match: PropTypes.object.isRequired,
   name: PropTypes.string,

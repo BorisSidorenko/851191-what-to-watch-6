@@ -24,9 +24,7 @@ const MoviePage = ({match}) => {
 
           <h1 className="visually-hidden">WTW</h1>
 
-          <Header
-            headerClassName="page-header movie-card__head"
-          />
+          <Header />
 
           <div className="movie-card__wrap">
             <MovieCardDescription

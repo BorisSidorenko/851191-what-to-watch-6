@@ -19,7 +19,6 @@ const AddReview = ({match}) => {
         <h1 className="visually-hidden">WTW</h1>
 
         <Header
-          headerClassName="page-header"
           name={name}
           movieId={movieId}
         />

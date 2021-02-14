@@ -5,7 +5,6 @@ import Footer from '../footer/footer';
 const SignIn = () => (
   <div className="user-page">
     <Header
-      headerClassName="page-header user-page__head"
       isUserAuthenticated={false}
     >
       <h1 className="page-title user-page__title">Sign in</h1>

@@ -4,7 +4,6 @@ import Header from '../header/header';
 const NotFound = () => (
   <div className="user-page">
     <Header
-      headerClassName="page-header user-page__head"
       isUserAuthenticated={false}
       showUserBlock={false}
     />
