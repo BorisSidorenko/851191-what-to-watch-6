@@ -28,7 +28,13 @@ const LayoutRouter = (props) => (
         />
       )}
     />
-    <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}`} component={AddReview}/>
+    <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}`}
+      render={(routeProps) => (
+        <AddReview
+          {...getMovieById(routeProps)}
+        />
+      )}
+    />
     <Route exact path={`${RoutePaths.PLAYER}/:id`}
       render={(routeProps) => (
         <Player

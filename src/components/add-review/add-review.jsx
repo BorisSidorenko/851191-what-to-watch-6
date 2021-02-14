@@ -3,12 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
 
-import {generateMovie} from '../../mock/movie/movie';
-
-const AddReview = ({match}) => {
-  const movieId = match.params.id;
-  const {background_image: background, name, poster_image: poster} = generateMovie(movieId);
-
+const AddReview = ({id, background_image: background, name, poster_image: poster}) => {
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
@@ -20,7 +15,7 @@ const AddReview = ({match}) => {
 
         <Header
           name={name}
-          movieId={movieId}
+          movieId={id}
         />
 
         <div className="movie-card__poster movie-card__poster--small">
@@ -35,7 +30,11 @@ const AddReview = ({match}) => {
 };
 
 AddReview.propTypes = {
-  match: PropTypes.object.isRequired
+  "id": PropTypes.string.isRequired,
+  "background_image": PropTypes.string.isRequired,
+  "name": PropTypes.string.isRequired,
+  "poster_image": PropTypes.string.isRequired
 };
+
 
 export default AddReview;
