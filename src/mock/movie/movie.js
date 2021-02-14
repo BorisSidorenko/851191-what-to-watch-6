@@ -1,12 +1,12 @@
 import {v4 as uuidv4} from 'uuid';
 import {getRandomInt, getRandomIntInRange, getArrayOfObjects} from '../../utils/common';
-import {MovieNames, IMG_PATH, MoviePreviews, BGColors, MovieDescription, MOVIE_RATING, SCORE, DIRECTORS, ACTORS, RUN_TIME, MOVIE_GENRES, RELEASE_YEAR, MOVIE_AMOUNT_TO_GENERATE} from '../../utils/constatns';
+import {MovieNames, IMG_PATH, MoviePreviews, BG_COLORS, MovieDescription, MovieRating, Score, DIRECTORS, ACTORS, RunTime, MOVIE_GENRES, ReleaseYear, MOVIE_AMOUNT_TO_GENERATE} from '../../utils/constatns';
 
 const getRandomMoviePreview = () => IMG_PATH + MoviePreviews[getRandomInt(MoviePreviews.length)];
 
 const getRandomMovieName = () => MovieNames[getRandomInt(MovieNames.length)];
 
-const getRandomBGColor = () => BGColors[getRandomInt(BGColors.length)];
+const getRandomBGColor = () => BG_COLORS[getRandomInt(BG_COLORS.length)];
 
 const getRandomRating = (max, min) => {
   const raiting = getRandomIntInRange(max, min);
@@ -37,13 +37,13 @@ export const generateMovie = (id = uuidv4()) => ({
   "video_link": `https://some-link`,
   "preview_video_link": `https://some-link`,
   "description": MovieDescription,
-  "rating": getRandomRating(MOVIE_RATING.MAX, MOVIE_RATING.MIN),
-  "scores_count": getRandomIntInRange(SCORE.MAX, SCORE.MIN),
+  "rating": getRandomRating(MovieRating.MAX, MovieRating.MIN),
+  "scores_count": getRandomIntInRange(Score.MAX, Score.MIN),
   "director": getRandomDirectors(),
   "starring": getRandomActors(),
-  "run_time": getRandomIntInRange(RUN_TIME.MAX, RUN_TIME.MIN),
+  "run_time": getRandomIntInRange(RunTime.MAX, RunTime.MIN),
   "genre": getRandomGenre(),
-  "released": getRandomIntInRange(RELEASE_YEAR.MAX, RELEASE_YEAR.MIN),
+  "released": getRandomIntInRange(ReleaseYear.MAX, ReleaseYear.MIN),
   "is_favorite": getRandomBool()
 });
 

@@ -8,18 +8,21 @@ import {withRouter} from 'react-router-dom';
 
 import {RoutePaths} from '../../utils/constatns';
 
-const Header = ({name, movieId, children, isUserAuthenticated, showUserBlock, match}) => {
+const Header = ({name, movieId, children, isUserAuthenticated = true, showUserBlock = true, match}) => {
   const {path, isExact} = match;
+
   const headerClass = classNames(`page-header`, {
     'movie-card__head': path === `${RoutePaths.MOVIE_PAGE}/:id` || path === RoutePaths.INDEX && isExact,
     'user-page__head': path === RoutePaths.MY_LIST || path === RoutePaths.SIGN_IN || !isExact
   });
 
+  const isMoviePage = path === `${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}`;
+
   return (
     <header className={headerClass}>
       <Logo />
 
-      {path === `${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}` && <AddReviewBreadcrumbs name={name} id={movieId}/>}
+      {isMoviePage && <AddReviewBreadcrumbs name={name} id={movieId} />}
 
       {showUserBlock && <UserBlock isUserAuthenticated={isUserAuthenticated} />}
 
@@ -28,13 +31,9 @@ const Header = ({name, movieId, children, isUserAuthenticated, showUserBlock, ma
   );
 };
 
-Header.defaultProps = {
-  isUserAuthenticated: true,
-  showUserBlock: true
-};
 
 Header.propTypes = {
-  isUserAuthenticated: PropTypes.bool.isRequired,
+  isUserAuthenticated: PropTypes.bool,
   match: PropTypes.object.isRequired,
   name: PropTypes.string,
   movieId: PropTypes.string,

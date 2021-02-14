@@ -1,4 +1,4 @@
-import {MOVIE_RATING_DESC} from './constatns';
+import {MovieRatingDesc} from './constatns';
 
 export const getRandomIntInRange = (a = 1, b = 0) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -13,15 +13,15 @@ export const getArrayOfObjects = (count, cb) => Array(count).fill().map(() => cb
 export const getRatingDescription = (rating) => {
   let ratingDesc = ``;
 
-  if (rating <= MOVIE_RATING_DESC.BAD) {
+  if (rating <= MovieRatingDesc.BAD) {
     ratingDesc = `Bad`;
-  } else if (rating <= MOVIE_RATING_DESC.NORMAL) {
+  } else if (rating <= MovieRatingDesc.NORMAL) {
     ratingDesc = `Normal`;
-  } else if (rating <= MOVIE_RATING_DESC.GOOD) {
+  } else if (rating <= MovieRatingDesc.GOOD) {
     ratingDesc = `Good`;
-  } else if (rating <= MOVIE_RATING_DESC.AWESOME) {
+  } else if (rating <= MovieRatingDesc.AWESOME) {
     ratingDesc = `Very good`;
-  } else if (rating === MOVIE_RATING_DESC.AWESOME) {
+  } else if (rating === MovieRatingDesc.AWESOME) {
     ratingDesc = `Awesome`;
   }
 

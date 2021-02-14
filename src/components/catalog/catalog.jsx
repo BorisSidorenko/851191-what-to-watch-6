@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GenresList from '../genres-list/genres-list';
 import MoviesList from '../movies-list/movies-list';
-import CatalogButton from '../catalog-button/catalog-button';
+import ShowMore from '../show-more/show-more';
 
-const Catalog = ({allMovies, catalogClass, showGenres, shwoButton, children}) => (
+const Catalog = ({allMovies, catalogClass, showGenres = true, shwoButton = true, children}) => (
   <section className={catalogClass}>
     {children}
 
@@ -14,21 +14,16 @@ const Catalog = ({allMovies, catalogClass, showGenres, shwoButton, children}) =>
       allMovies={allMovies}
     />
 
-    {shwoButton && <CatalogButton />}
+    {shwoButton && <ShowMore />}
 
   </section>
 );
 
-Catalog.defaultProps = {
-  showGenres: true,
-  shwoButton: true
-};
-
 Catalog.propTypes = {
   allMovies: PropTypes.array.isRequired,
   catalogClass: PropTypes.string.isRequired,
-  showGenres: PropTypes.bool.isRequired,
-  shwoButton: PropTypes.bool.isRequired,
+  showGenres: PropTypes.bool,
+  shwoButton: PropTypes.bool,
   children: PropTypes.node
 };
 

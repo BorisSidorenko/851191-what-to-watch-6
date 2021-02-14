@@ -5,7 +5,7 @@ import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 
 
-const Startup = ({promoMovie, allMovies}) => (
+const Index = ({promoMovie, allMovies}) => (
   <>
     <PromoMovie
       {...promoMovie}
@@ -24,9 +24,9 @@ const Startup = ({promoMovie, allMovies}) => (
   </>
 );
 
-Startup.propTypes = {
+Index.propTypes = {
   promoMovie: PropTypes.object.isRequired,
   allMovies: PropTypes.array.isRequired
 };
 
-export default Startup;
+export default Index;

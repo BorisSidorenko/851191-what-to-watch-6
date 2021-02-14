@@ -1,22 +1,29 @@
 import React from 'react';
 import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
-import {REVIEW_DATE_FORMAT} from '../../utils/constatns';
+import {ReviewDateFormat} from '../../utils/constatns';
 
-const getReviewComponent = ({user, comment, date, rating}) => (
-  <div className="review">
-    <blockquote className="review__quote">
-      <p className="review__text">{comment}</p>
+const getReviewComponent = ({user, comment, date, rating}) => {
+  const dayjsDate = dayjs(date);
 
-      <footer className="review__details">
-        <cite className="review__author">{user.name}</cite>
-        <time className="review__date" dateTime={`${dayjs(date).format(REVIEW_DATE_FORMAT.DEFAULT)}`}>{dayjs(date).format(REVIEW_DATE_FORMAT.MONTH_FULL_DESC)}</time>
-      </footer>
-    </blockquote>
+  const reviewDateDefaultFormat = dayjsDate.format(ReviewDateFormat.DEFAULT);
+  const reviewDateMonthFormat = dayjsDate.format(ReviewDateFormat.MONTH_FULL_DESC);
 
-    <div className="review__rating">{rating}</div>
-  </div>
-);
+  return (
+    <div className="review">
+      <blockquote className="review__quote">
+        <p className="review__text">{comment}</p>
+
+        <footer className="review__details">
+          <cite className="review__author">{user.name}</cite>
+          <time className="review__date" dateTime={reviewDateDefaultFormat}>{reviewDateMonthFormat}</time>
+        </footer>
+      </blockquote>
+
+      <div className="review__rating">{rating}</div>
+    </div>
+  );
+};
 
 const MovieCardReviews = ({reviews}) => (
   <div className="movie-card__reviews movie-card__row">

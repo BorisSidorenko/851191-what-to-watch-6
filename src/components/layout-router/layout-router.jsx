@@ -1,5 +1,5 @@
 import React from 'react';
-import Startup from '../startup/startup';
+import Index from '../index';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
 import MoviePage from '../movie-page/movie-page';
@@ -12,7 +12,7 @@ import {RoutePaths} from '../../utils/constatns';
 const LayoutRouter = (props) => (
   <Switch>
     <Route exact path={RoutePaths.INDEX}>
-      <Startup {...props} />
+      <Index {...props} />
     </Route>
     <Route exact path={RoutePaths.SIGN_IN}>
       <SignIn />

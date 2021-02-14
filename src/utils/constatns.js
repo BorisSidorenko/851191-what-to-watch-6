@@ -46,16 +46,16 @@ export const MoviePreviews = [
   `mindhunter.jpg`
 ];
 
-export const BGColors = [`#ffffff`, `#000000`, `#aaaaaa`, `#bbbbbb`, `#cccccc`, `#dddddd`, `#eeeeee`];
+export const BG_COLORS = [`#ffffff`, `#000000`, `#aaaaaa`, `#bbbbbb`, `#cccccc`, `#dddddd`, `#eeeeee`];
 
 export const MovieDescription = `In the 1930s, the Grand Budapest Hotel is a popular European ski resort, presided over by concierge Gustave H. (Ralph Fiennes). Zero, a junior lobby boy, becomes Gustave's friend and protege.`;
 
-export const MOVIE_RATING = {
+export const MovieRating = {
   MAX: 10,
   MIN: 0
 };
 
-export const MOVIE_RATING_DESC = {
+export const MovieRatingDesc = {
   BAD: 2,
   NORMAL: 4,
   GOOD: 7,
@@ -63,7 +63,7 @@ export const MOVIE_RATING_DESC = {
   AWESOME: 10
 };
 
-export const SCORE = {
+export const Score = {
   MAX: 500,
   MIN: 0
 };
@@ -72,21 +72,21 @@ export const DIRECTORS = [`Luc Beson`, `Wes Andreson`, `Lu Jui`, `Christopher No
 
 export const ACTORS = [`Bill Murray`, `Edward Norton`, `Jude Law`, `Willem Dafoe`, `Saoirse Ronan`];
 
-export const RUN_TIME = {
+export const RunTime = {
   MAX: 180,
   MIN: 30
 };
 
 export const MOVIE_GENRES = [`Comedy`, `Drama`, `Western`, `Horror`, `History`, `Adventure`];
 
-export const RELEASE_YEAR = {
+export const ReleaseYear = {
   MAX: 2021,
   MIN: 1962
 };
 
 export const MOVIE_AMOUNT_TO_GENERATE = 16;
 
-export const REVIEW_DATE_FORMAT = {
+export const ReviewDateFormat = {
   DEFAULT: `YYYY-MM-DD`,
   MONTH_FULL_DESC: `MMMM DD, YYYY`
 };
