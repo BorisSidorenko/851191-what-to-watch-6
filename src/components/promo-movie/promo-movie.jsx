@@ -16,7 +16,7 @@ const PromoMovie = ({background_image: background, name, ...rest}) => (
 
     <div className="movie-card__wrap">
       <PromoMovieInfo
-        name = {name}
+        name={name}
         {...rest}
       />
     </div>

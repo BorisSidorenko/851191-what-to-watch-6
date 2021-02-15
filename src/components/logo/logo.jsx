@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-const Logo = ({isLogoLight}) => (
+const Logo = ({isLogoLight = false}) => (
   <div className="logo">
     <a className={classNames(`logo__link `, {'logo__link--light': isLogoLight})}>
       <span className="logo__letter logo__letter--1">W</span>
@@ -12,12 +12,8 @@ const Logo = ({isLogoLight}) => (
   </div>
 );
 
-Logo.defaultProps = {
-  isLogoLight: false
-};
-
 Logo.propTypes = {
-  isLogoLight: PropTypes.bool.isRequired
+  isLogoLight: PropTypes.bool
 };
 
 export default Logo;
