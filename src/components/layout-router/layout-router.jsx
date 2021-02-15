@@ -1,5 +1,5 @@
 import React from 'react';
-import Index from '../index';
+import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
 import MoviePage from '../movie-page/movie-page';
@@ -12,8 +12,8 @@ import {getMovieById} from '../../utils/common';
 
 const LayoutRouter = (props) => (
   <Switch>
-    <Route exact path={RoutePaths.INDEX}>
-      <Index {...props} />
+    <Route exact path={RoutePaths.MAIN}>
+      <Main {...props} />
     </Route>
     <Route exact path={RoutePaths.SIGN_IN}>
       <SignIn />

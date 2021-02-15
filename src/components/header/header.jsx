@@ -12,7 +12,7 @@ const Header = ({name, movieId, children, isUserAuthenticated = true, showUserBl
   const {path, isExact} = match;
 
   const headerClass = classNames(`page-header`, {
-    'movie-card__head': path === `${RoutePaths.MOVIE_PAGE}/:id` || path === RoutePaths.INDEX && isExact,
+    'movie-card__head': path === `${RoutePaths.MOVIE_PAGE}/:id` || path === RoutePaths.MAIN && isExact,
     'user-page__head': path === RoutePaths.MY_LIST || path === RoutePaths.SIGN_IN || !isExact
   });
 

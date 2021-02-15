@@ -94,7 +94,7 @@ export const ReviewDateFormat = {
 export const AMOUNT_OF_SIMILAR_MOVIES = 4;
 
 export const RoutePaths = {
-  INDEX: `/`,
+  MAIN: `/`,
   SIGN_IN: `/login`,
   MY_LIST: `/mylist`,
   MOVIE_PAGE: `/films`,
@@ -102,7 +102,4 @@ export const RoutePaths = {
   PLAYER: `/player`
 };
 
-export const RatingStars = {
-  MAX: 10,
-  MIN: 1
-};
+export const RATING_STARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
