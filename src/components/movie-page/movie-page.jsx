@@ -79,7 +79,7 @@ const MoviePage = ({id, background_image: background, name, genre, ...rest}) => 
 );
 
 MoviePage.propTypes = {
-  "id": PropTypes.string.isRequired,
+  "id": PropTypes.number.isRequired,
   "background_image": PropTypes.string.isRequired,
   "name": PropTypes.string.isRequired,
   "genre": PropTypes.string.isRequired

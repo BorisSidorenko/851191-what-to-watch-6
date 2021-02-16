@@ -30,7 +30,7 @@ const AddReview = ({id, background_image: background, name, poster_image: poster
 };
 
 AddReview.propTypes = {
-  "id": PropTypes.string.isRequired,
+  "id": PropTypes.number.isRequired,
   "background_image": PropTypes.string.isRequired,
   "name": PropTypes.string.isRequired,
   "poster_image": PropTypes.string.isRequired

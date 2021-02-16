@@ -23,7 +23,7 @@ const AddReviewBreadcrumbs = ({name, id}) => {
 
 AddReviewBreadcrumbs.propTypes = {
   name: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired
+  id: PropTypes.number.isRequired
 };
 
 export default AddReviewBreadcrumbs;
