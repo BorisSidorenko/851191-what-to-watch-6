@@ -10,12 +10,12 @@ const MovieCard = ({movieId, name, preview_image: preview, onMovieCardMouseEnter
 
   return (
     <article onMouseEnter={handleCardMouseEnter} className="small-movie-card catalog__movies-card">
-      <div className="small-movie-card__image">
-        <img src={preview} alt={name} width="280" height="175" />
-      </div>
-      <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to={`${RoutePaths.MOVIE_PAGE}/${movieId}`}>{name}</Link>
-      </h3>
+      <Link className="small-movie-card__link" to={`${RoutePaths.MOVIE_PAGE}/${movieId}`}>
+        <div className="small-movie-card__image">
+          <img src={preview} alt={name} width="280" height="175" />
+        </div>
+        <h3 className="small-movie-card__title">{name}</h3>
+      </Link>
     </article>
   );
 };

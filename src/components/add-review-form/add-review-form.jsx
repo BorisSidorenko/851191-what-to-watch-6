@@ -25,12 +25,7 @@ const AddReviewForm = () => {
     evt.preventDefault();
   };
 
-  const handleRatingChange = ({target}) => {
-    const {name, value} = target;
-    setReviewForm({...reviewForm, [name]: value});
-  };
-
-  const handleReviewTextChange = ({target}) => {
+  const handleUserInput = ({target}) => {
     const {name, value} = target;
     setReviewForm({...reviewForm, [name]: value});
   };
@@ -39,12 +34,12 @@ const AddReviewForm = () => {
     <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
       <div className="rating">
         <div className="rating__stars">
-          {Array(RATING_STARS.length).fill().map((el, i) => <GetRaitingInputComponent key={i} index={i} onRatingChange={handleRatingChange} />)}
+          {Array(RATING_STARS.length).fill().map((el, i) => <GetRaitingInputComponent key={i} index={i} onRatingChange={handleUserInput} />)}
         </div>
       </div>
 
       <div className="add-review__text">
-        <textarea onBlur={handleReviewTextChange} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+        <textarea onBlur={handleUserInput} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">Post</button>
         </div>
