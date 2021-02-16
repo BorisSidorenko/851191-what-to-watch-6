@@ -23,7 +23,9 @@ const AddReview = ({id, background_image: background, name, poster_image: poster
         </div>
       </div>
 
-      <AddReviewForm />
+      <div className="add-review">
+        <AddReviewForm />
+      </div>
 
     </section>
   );
