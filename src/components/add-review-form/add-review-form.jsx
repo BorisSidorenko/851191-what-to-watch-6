@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {RATING_STARS} from '../../utils/constatns';
 
-const GetRaitingInputComponent = ({index, onRatingChange}) => {
+const RaitingInput = ({index, onRatingChange}) => {
   const starNumber = RATING_STARS[index];
   const inputId = `star-${starNumber}`;
   const labelValue = `Rating ${starNumber}`;
@@ -34,7 +34,7 @@ const AddReviewForm = () => {
     <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
       <div className="rating">
         <div className="rating__stars">
-          {Array(RATING_STARS.length).fill().map((el, i) => <GetRaitingInputComponent key={i} index={i} onRatingChange={handleUserInput} />)}
+          {RATING_STARS.map((item) => <RaitingInput key={`raiting-${item}`} index={item} onRatingChange={handleUserInput} />)}
         </div>
       </div>
 
@@ -49,7 +49,7 @@ const AddReviewForm = () => {
   );
 };
 
-GetRaitingInputComponent.propTypes = {
+RaitingInput.propTypes = {
   index: PropTypes.number.isRequired,
   onRatingChange: PropTypes.func.isRequired
 };

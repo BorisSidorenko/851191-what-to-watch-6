@@ -5,9 +5,10 @@ import Header from '../header/header';
 import MovieCardDescription from '../movie-card-description/movie-card-description';
 import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
 import MovieCardOverview from '../movie-card-overview/movie-card-overview';
+import MovieCardNavigation from '../movie-card-navigation/movie-card-navigation';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
-import {RoutePaths} from '../../utils/constatns';
+import {RoutePaths, MovieCardNavigationItems} from '../../utils/constatns';
 import {getSimilarMovies} from '../../utils/common';
 
 const MoviePage = ({id, background_image: background, name, genre, ...rest}) => {
@@ -45,19 +46,9 @@ const MoviePage = ({id, background_image: background, name, genre, ...rest}) => 
             </div>
 
             <div className="movie-card__desc">
-              <nav className="movie-nav movie-card__nav">
-                <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <a href="#" className="movie-nav__link">Overview</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Details</a>
-                  </li>
-                  <li className="movie-nav__item">
-                    <a href="#" className="movie-nav__link">Reviews</a>
-                  </li>
-                </ul>
-              </nav>
+              <MovieCardNavigation
+                currentSection={MovieCardNavigationItems.OVERVIEW}
+              />
 
               <MovieCardOverview
                 {...rest}
@@ -84,7 +75,10 @@ const MoviePage = ({id, background_image: background, name, genre, ...rest}) => 
 };
 
 MoviePage.propTypes = {
-  "id": PropTypes.number.isRequired,
+  "id": PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
   "background_image": PropTypes.string.isRequired,
   "name": PropTypes.string.isRequired,
   "genre": PropTypes.string.isRequired

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {GENRES} from '../../utils/constatns';
 
-const GetGenreComponent = ({genre}) => (
+const Genre = ({genre}) => (
   <li className="catalog__genres-item">
     <a href="#" className="catalog__genres-link">{genre}</a>
   </li>
@@ -10,11 +10,11 @@ const GetGenreComponent = ({genre}) => (
 
 const GenresList = () => (
   <ul className="catalog__genres-list">
-    {GENRES.map((genre, i) => <GetGenreComponent key={i} genre={genre}/>)}
+    {GENRES.map((genre, i) => <Genre key={i} genre={genre}/>)}
   </ul>
 );
 
-GetGenreComponent.propTypes = {
+Genre.propTypes = {
   genre: PropTypes.string.isRequired
 };
 
