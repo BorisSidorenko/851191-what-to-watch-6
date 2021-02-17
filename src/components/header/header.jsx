@@ -36,7 +36,7 @@ Header.propTypes = {
   isUserAuthenticated: PropTypes.bool,
   match: PropTypes.object.isRequired,
   name: PropTypes.string,
-  movieId: PropTypes.string,
+  movieId: PropTypes.number,
   children: PropTypes.node,
   showUserBlock: PropTypes.bool
 };

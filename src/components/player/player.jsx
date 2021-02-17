@@ -10,7 +10,7 @@ const getHumanizeDuration = (durationInMinutes) => {
   return `${parsedDuration.$d.hours}:${parsedDuration.$d.minutes}`;
 };
 
-const Player = ({promoMovie}) => (
+const Player = ({selectedMovie}) => (
   <div className="player">
     <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
 
@@ -22,7 +22,7 @@ const Player = ({promoMovie}) => (
           <progress className="player__progress" value="30" max="100"></progress>
           <div className="player__toggler" style={{left: 30 + `%`}}>Toggler</div>
         </div>
-        <div className="player__time-value">{getHumanizeDuration(promoMovie.run_time)}</div>
+        <div className="player__time-value">{getHumanizeDuration(selectedMovie.run_time)}</div>
       </div>
 
       <div className="player__controls-row">
@@ -46,7 +46,7 @@ const Player = ({promoMovie}) => (
 );
 
 Player.propTypes = {
-  promoMovie: PropTypes.object.isRequired
+  selectedMovie: PropTypes.object.isRequired
 };
 
 export default Player;
