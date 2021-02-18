@@ -24,16 +24,16 @@ const LayoutRouter = ({currentMovie, allMovies}) => (
     <Route exact path={RoutePaths.MY_LIST}>
       <MyList allMovies={allMovies} />
     </Route>
-    <Route path={`${RoutePaths.MOVIE_PAGE}/:id`}
+    <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}`}
       render={(routeProps) => (
-        <MoviePage
+        <AddReview
           {...routeProps}
         />
       )}
     />
-    <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}`}
+    <Route path={`${RoutePaths.MOVIE_PAGE}/:id`}
       render={(routeProps) => (
-        <AddReview
+        <MoviePage
           {...routeProps}
         />
       )}
