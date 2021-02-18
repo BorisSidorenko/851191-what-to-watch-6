@@ -10,11 +10,11 @@ import MovieCardReviews from '../movie-card-reviews/movie-card-reviews';
 import MovieCardDetails from '../movie-card-details/movie-card-details';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
-import {RoutePaths, MovieCardNavigationItems} from '../../utils/constatns';
+import {RoutePaths} from '../../utils/constatns';
 import {getMovieById, getSimilarMovies, getRandomInt} from '../../utils/common';
 import Reviews from '../../mocks/reviews';
 
-const MoviePage = ({match}) => {
+const MoviePage = ({match, location}) => {
   const {id, background_image: background, name, genre, ...rest} = getMovieById(match.params.id);
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
   const reviews = Reviews.slice(0, getRandomInt(Reviews.length));
@@ -52,7 +52,8 @@ const MoviePage = ({match}) => {
 
             <div className="movie-card__desc">
               <MovieCardNavigation
-                currentSection={MovieCardNavigationItems.OVERVIEW}
+                url={match.url}
+                pathname={location.pathname}
               />
 
               <Switch>
@@ -96,7 +97,8 @@ const MoviePage = ({match}) => {
 };
 
 MoviePage.propTypes = {
-  match: PropTypes.object.isRequired
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 export default MoviePage;

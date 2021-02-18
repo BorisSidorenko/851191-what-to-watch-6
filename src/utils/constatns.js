@@ -100,14 +100,9 @@ export const RoutePaths = {
   MOVIE_PAGE: `/films`,
   REVIEW: `/review`,
   PLAYER: `/player`,
+  MOVIE_OVERVIEW: `/overview`,
   MOVIE_DETAILS: `/details`,
   MOVIE_REVIEWS: `/reviews`
 };
 
 export const RATING_STARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-export const MovieCardNavigationItems = {
-  OVERVIEW: `Overview`,
-  DETAILS: `Details`,
-  REVIEWS: `Reviews`
-};
