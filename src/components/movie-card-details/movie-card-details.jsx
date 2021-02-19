@@ -1,5 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {directorProp, genreProp, releasedProp, starringProp, runTimeProp} from '../props/movie-props';
+
 
 const MovieCardDetails = ({director, starring, run_time: duration, genre, released}) => (
   <div className="movie-card__text movie-card__row">
@@ -34,11 +35,11 @@ const MovieCardDetails = ({director, starring, run_time: duration, genre, releas
 );
 
 MovieCardDetails.propTypes = {
-  "released": PropTypes.number.isRequired,
-  "genre": PropTypes.string.isRequired,
-  "director": PropTypes.array.isRequired,
-  "starring": PropTypes.array.isRequired,
-  "run_time": PropTypes.number.isRequired
+  "released": releasedProp,
+  "genre": genreProp,
+  "director": directorProp,
+  "starring": starringProp,
+  "run_time": runTimeProp
 };
 
 

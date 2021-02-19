@@ -2,6 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {RoutePaths} from '../../utils/constatns';
+import {idProp, previewProp, nameProp} from '../props/movie-props';
 
 const MovieCard = ({movieId, name, preview_image: preview, onMovieCardMouseEnter}) => {
   const handleCardMouseEnter = () => {
@@ -23,12 +24,9 @@ const MovieCard = ({movieId, name, preview_image: preview, onMovieCardMouseEnter
 };
 
 MovieCard.propTypes = {
-  "movieId": PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]),
-  "preview_image": PropTypes.string.isRequired,
-  "name": PropTypes.string.isRequired,
+  "movieId": idProp,
+  "preview_image": previewProp,
+  "name": nameProp,
   "onMovieCardMouseEnter": PropTypes.func.isRequired
 };
 

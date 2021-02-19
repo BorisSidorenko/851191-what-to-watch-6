@@ -1,8 +1,8 @@
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import Header from '../header/header';
 import PromoMovieInfo from '../promo-movie-info/promo-movie-info';
+import {backgroundImageProp, nameProp} from '../props/movie-props';
 
 const PromoMovie = ({background_image: background, name, ...rest}) => (
   <section className="movie-card">
@@ -24,8 +24,8 @@ const PromoMovie = ({background_image: background, name, ...rest}) => (
 );
 
 PromoMovie.propTypes = {
-  "background_image": PropTypes.string.isRequired,
-  "name": PropTypes.string.isRequired
+  "background_image": backgroundImageProp,
+  "name": nameProp
 };
 
 export default PromoMovie;

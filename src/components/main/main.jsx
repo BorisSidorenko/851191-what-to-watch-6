@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import PromoMovie from '../promo-movie/promo-movie';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
-
+import {movieProp} from '../props/movie-props';
 
 const Main = ({promoMovie, allMovies}) => (
   <>
@@ -25,8 +25,8 @@ const Main = ({promoMovie, allMovies}) => (
 );
 
 Main.propTypes = {
-  promoMovie: PropTypes.object.isRequired,
-  allMovies: PropTypes.array.isRequired
+  promoMovie: movieProp,
+  allMovies: PropTypes.arrayOf(movieProp).isRequired
 };
 
 export default Main;

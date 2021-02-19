@@ -7,6 +7,7 @@ import MoviePage from '../movie-page/movie-page';
 import AddReview from '../add-review/add-review';
 import NotFound from '../not-found/not-found';
 import Player from '../player/player';
+import {movieProp} from '../props/movie-props';
 import {Switch, Route} from 'react-router-dom';
 import {RoutePaths} from '../../utils/constatns';
 
@@ -53,8 +54,8 @@ const LayoutRouter = ({currentMovie, allMovies}) => (
 );
 
 LayoutRouter.propTypes = {
-  currentMovie: PropTypes.object.isRequired,
-  allMovies: PropTypes.arrayOf(PropTypes.object).isRequired
+  currentMovie: movieProp,
+  allMovies: PropTypes.arrayOf(movieProp).isRequired
 };
 
 export default LayoutRouter;

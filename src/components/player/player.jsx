@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import {movieProp} from '../props/movie-props';
 
 dayjs.extend(duration);
 
@@ -46,7 +46,7 @@ const Player = ({selectedMovie}) => (
 );
 
 Player.propTypes = {
-  selectedMovie: PropTypes.object.isRequired
+  selectedMovie: movieProp
 };
 
 export default Player;

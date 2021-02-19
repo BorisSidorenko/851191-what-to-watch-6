@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import MovieCard from '../movie-card/movie-card';
+import {movieProp} from '../props/movie-props';
 
 const MoviesList = ({allMovies}) => {
   const [currentMovieId, setCurrentMovieId] = useState({
@@ -19,7 +20,7 @@ const MoviesList = ({allMovies}) => {
 };
 
 MoviesList.propTypes = {
-  allMovies: PropTypes.array.isRequired
+  allMovies: PropTypes.arrayOf(movieProp).isRequired
 };
 
 export default MoviesList;

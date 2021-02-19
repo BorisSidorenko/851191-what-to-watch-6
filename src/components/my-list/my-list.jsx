@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Header from '../header/header';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
+import {movieProp} from '../props/movie-props';
 
 const MyList = ({allMovies}) => (
   <div className="user-page">
@@ -25,7 +26,7 @@ const MyList = ({allMovies}) => (
 );
 
 MyList.propTypes = {
-  allMovies: PropTypes.array.isRequired
+  allMovies: PropTypes.arrayOf(movieProp).isRequired
 };
 
 export default MyList;
