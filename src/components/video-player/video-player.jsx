@@ -37,6 +37,7 @@ const VideoPlayer = ({match, isPlaying = false, isPreview = false}) => {
   useEffect(() => {
     videoRef.current.oncanplaythrough = () => setIsLoading(false);
     videoRef.current.muted = isPreview;
+    videoRef.current.autoplay = isPreview;
 
     return () => {
       videoRef.current.oncanplaythrough = null;
@@ -46,7 +47,6 @@ const VideoPlayer = ({match, isPlaying = false, isPreview = false}) => {
     };
   }, [id]);
 
-  useEffect(() => isPlaying ? videoRef.current.play() : videoRef.current.pause(), [isPlaying]);
 
   return (
     <div className="player">
