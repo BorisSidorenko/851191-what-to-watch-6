@@ -29,9 +29,10 @@ const PlayButtonIcon = () => (
   </>
 );
 
-const VideoPlayer = ({match, isPlaying = false, isPreview = false}) => {
+const VideoPlayer = ({match, isPreview = false}) => {
   const {id, run_time: movieDuration, preview_video_link: previewVideo, video_link: video} = getMovieById(match.params.id);
   const [isLoading, setIsLoading] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef();
 
   useEffect(() => {
@@ -47,6 +48,15 @@ const VideoPlayer = ({match, isPlaying = false, isPreview = false}) => {
     };
   }, [id]);
 
+  useEffect(() => {
+    if (isPlaying) {
+      videoRef.current.play();
+    } else {
+      videoRef.current.pause();
+    }
+  }, [isPlaying]);
+
+  const onPlayButtonClick = () => setIsPlaying(() => !isPlaying);
 
   return (
     <div className="player">
@@ -64,7 +74,7 @@ const VideoPlayer = ({match, isPlaying = false, isPreview = false}) => {
         </div>
 
         <div className="player__controls-row">
-          <button type="button" className="player__play" disabled={isLoading}>
+          <button type="button" className="player__play" disabled={isLoading} onClick={onPlayButtonClick}>
             {isPlaying ? <PauseButtonIcon /> : <PlayButtonIcon />}
           </button>
           <div className="player__name">Transpotting</div>
