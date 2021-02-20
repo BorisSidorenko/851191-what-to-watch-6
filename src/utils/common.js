@@ -29,7 +29,7 @@ export const getRatingDescription = (rating) => {
   return ratingDesc;
 };
 
-export const getMovieById = (movieId) => Movies.find(({id}) => id.toString() === movieId);
+export const getMovieById = (movieId) => Movies.find(({id}) => id.toString() === movieId.toString());
 
 export const getSimilarMovies = (currentMovieId, currentMovieGenre) => {
   const allMoviesSameGenre = Movies.filter(({id, genre}) => genre === currentMovieGenre && id !== currentMovieId);

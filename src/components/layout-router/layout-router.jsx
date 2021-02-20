@@ -40,9 +40,9 @@ const LayoutRouter = ({currentMovie, allMovies}) => (
       )}
     />
     <Route exact path={`${RoutePaths.PLAYER}/:id`}
-      render={(routeProps) => (
+      render={({match}) => (
         <VideoPlayer
-          {...routeProps}
+          movieId={match.params.id}
         />
       )}
     />

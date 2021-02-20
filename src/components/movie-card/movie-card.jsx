@@ -1,33 +1,52 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import VideoPlayer from '../video-player/video-player';
 import {RoutePaths} from '../../utils/constatns';
 import {idProp, previewProp, nameProp} from '../props/movie-props';
 
-const MovieCard = ({movieId, name, preview_image: preview, onMovieCardMouseEnter}) => {
-  const handleCardMouseEnter = () => {
-    onMovieCardMouseEnter(movieId);
-  };
+const MovieCardImage = ({preview, name}) => <img src={preview} alt={name} width="280" height="175" />;
+
+const MovieCardTitle = ({movieId, name}) => (
+  <h3 className="small-movie-card__title">
+    <Link className="small-movie-card__link" to={`${RoutePaths.MOVIE_PAGE}/${movieId}`}>{name}</Link>
+  </h3>
+);
+
+const MovieCard = ({movieId, name, preview_image: preview, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId}) => {
+  const isNeedToPlay = movieId === currentMovieId;
+
+  const handleCardMouseEnter = () => onMovieCardMouseEnter(movieId);
 
   return (
-    <article onMouseEnter={handleCardMouseEnter} className="small-movie-card catalog__movies-card">
+    <article onMouseEnter={handleCardMouseEnter} onMouseLeave={onMovieCardMouseLeave} className="small-movie-card catalog__movies-card">
       <Link className="small-movie-card__link" to={`${RoutePaths.MOVIE_PAGE}/${movieId}`}>
         <div className="small-movie-card__image">
-          <img src={preview} alt={name} width="280" height="175" />
+          {isNeedToPlay ? <VideoPlayer movieId={movieId} isPreview={true}/> : <MovieCardImage preview={preview} name={name}/>}
         </div>
       </Link>
-      <h3 className="small-movie-card__title">
-        <Link className="small-movie-card__link" to={`${RoutePaths.MOVIE_PAGE}/${movieId}`}>{name}</Link>
-      </h3>
+      {!isNeedToPlay && <MovieCardTitle movieId={movieId} name={name}/>}
     </article>
   );
 };
 
+MovieCardImage.propTypes = {
+  preview: previewProp,
+  name: nameProp
+};
+
+MovieCardTitle.propTypes = {
+  movieId: idProp,
+  name: nameProp
+};
+
 MovieCard.propTypes = {
   "movieId": idProp,
+  "currentMovieId": idProp,
   "preview_image": previewProp,
   "name": nameProp,
-  "onMovieCardMouseEnter": PropTypes.func.isRequired
+  "onMovieCardMouseEnter": PropTypes.func.isRequired,
+  "onMovieCardMouseLeave": PropTypes.func.isRequired
 };
 
 export default MovieCard;
