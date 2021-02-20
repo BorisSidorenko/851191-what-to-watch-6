@@ -64,9 +64,14 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
   const videoRef = useRef();
 
   useEffect(() => {
-    videoRef.current.oncanplaythrough = () => setIsLoading(false);
-    videoRef.current.muted = isPreview;
-    videoRef.current.autoplay = isPreview;
+    videoRef.current.oncanplaythrough = () => {
+      setIsLoading(false);
+
+      if (isPreview) {
+        videoRef.current.muted = true;
+        videoRef.current.play();
+      }
+    };
 
     return () => {
       videoRef.current.oncanplaythrough = null;
