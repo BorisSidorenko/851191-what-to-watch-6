@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import VideoPlayer from '../video-player/video-player';
@@ -15,11 +15,22 @@ const MovieCardTitle = ({movieId, name}) => (
 
 const MovieCard = ({movieId, name, preview_image: preview, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId}) => {
   const isNeedToPlay = movieId === currentMovieId;
+  const [delayHandler, setDelayHandler] = useState(null);
 
-  const handleCardMouseEnter = () => onMovieCardMouseEnter(movieId);
+  const handleCardMouseEnter = () => {
+    setDelayHandler(setTimeout(() => {
+      onMovieCardMouseEnter(movieId);
+
+    }, 1000));
+  };
+
+  const handleCardMouseLeave = () => {
+    clearTimeout(delayHandler);
+    onMovieCardMouseLeave();
+  };
 
   return (
-    <article onMouseEnter={handleCardMouseEnter} onMouseLeave={onMovieCardMouseLeave} className="small-movie-card catalog__movies-card">
+    <article onMouseEnter={handleCardMouseEnter} onMouseLeave={handleCardMouseLeave} className="small-movie-card catalog__movies-card">
       <Link className="small-movie-card__link" to={`${RoutePaths.MOVIE_PAGE}/${movieId}`}>
         <div className="small-movie-card__image">
           {isNeedToPlay ? <VideoPlayer movieId={movieId} isPreview={true}/> : <MovieCardImage preview={preview} name={name}/>}
