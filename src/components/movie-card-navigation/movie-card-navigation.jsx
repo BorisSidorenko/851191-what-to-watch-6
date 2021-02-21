@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
@@ -7,14 +7,16 @@ const NAVIGATION_ITEMS = [`Overview`, `Details`, `Reviews`];
 
 const NavigationItem = ({tab, url, pathname}) => {
   const [defaultTab] = NAVIGATION_ITEMS;
-  const currentTab = pathname.replace(`${url}/`, ``);
-  const isDefaultTab = url === pathname && tab === defaultTab;
+  const currentTab = url === pathname ? defaultTab.toLowerCase() : pathname.replace(`${url}/`, ``);
 
   return (
     <li className={classNames(`movie-nav__item`, {
-      "movie-nav__item--active": isDefaultTab || currentTab === tab.toLowerCase()
+      "movie-nav__item--active": currentTab === tab.toLowerCase()
     })}>
-      <Link to={tab === defaultTab ? `${url}` : `${url}/${tab.toLowerCase()}`} className="movie-nav__link">{tab}</Link>
+      {currentTab === tab.toLowerCase() ?
+        <span className="movie-nav__link">{tab}</span>
+        : <NavLink to={tab === defaultTab ? `${url}` : `${url}/${tab.toLowerCase()}`} className="movie-nav__link">{tab}</NavLink>
+      }
     </li>
   );
 };
