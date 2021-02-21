@@ -12,21 +12,26 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
   const videoRef = useRef();
 
   useEffect(() => {
-    videoRef.current.oncanplaythrough = () => {
-      setIsLoading(false);
+    if (videoRef.current) {
+      videoRef.current.oncanplaythrough = () => {
+        setIsLoading(false);
 
-      if (isPreview) {
-        videoRef.current.muted = true;
-        videoRef.current.play();
-      }
-    };
+        if (isPreview) {
+          videoRef.current.muted = true;
+          videoRef.current.play();
+        }
+      };
 
-    return () => {
-      videoRef.current.oncanplaythrough = null;
-      videoRef.current.onplay = null;
-      videoRef.current.onpause = null;
-      videoRef.current = null;
-    };
+
+      return () => {
+        videoRef.current.oncanplaythrough = null;
+        videoRef.current.onplay = null;
+        videoRef.current.onpause = null;
+        videoRef.current = null;
+      };
+    }
+
+    return () => {};
   }, [id]);
 
   useEffect(() => {
@@ -37,7 +42,7 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
     }
   }, [isPlaying]);
 
-  const onPlayButtonClick = () => setIsPlaying(() => !isPlaying);
+  const onPlayButtonClick = () => setIsPlaying(!isPlaying);
 
   return (
     <div className="player">

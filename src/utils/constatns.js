@@ -100,7 +100,6 @@ export const RoutePaths = {
   MOVIE_PAGE: `/films`,
   REVIEW: `/review`,
   PLAYER: `/player`,
-  MOVIE_OVERVIEW: `/overview`,
   MOVIE_DETAILS: `/details`,
   MOVIE_REVIEWS: `/reviews`
 };
