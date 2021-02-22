@@ -1,4 +1,4 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useRef, useEffect, useReducer} from 'react';
 import PropTypes from 'prop-types';
 import ExitButton from '../exit-button/exit-button';
 import VideoPlayerControls from '../video-player-controls/video-player-controls';
@@ -7,21 +7,37 @@ import {idProp} from '../props/movie-props';
 
 const VideoPlayer = ({movieId, isPreview = false}) => {
   const {id, run_time: movieDuration, preview_video_link: previewVideo, video_link: video} = getMovieById(movieId);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
+
+  const initialState = {
+    isLoading: true,
+    isPlaying: false
+  };
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case `loaded`:
+        return {...state, isLoading: true};
+      case `playing`:
+        return {...state, isPlaying: true};
+      default:
+        return state;
+    }
+  };
+
+  const [{isLoading, isPlaying}, dispatch] = useReducer(reducer, initialState);
+
   const videoRef = useRef();
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.oncanplaythrough = () => {
-        setIsLoading(false);
+        dispatch({type: `loaded`});
 
         if (isPreview) {
           videoRef.current.muted = true;
           videoRef.current.play();
         }
       };
-
 
       return () => {
         videoRef.current.oncanplaythrough = null;
@@ -42,7 +58,7 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
     }
   }, [isPlaying]);
 
-  const onPlayButtonClick = () => setIsPlaying(!isPlaying);
+  const onPlayButtonClick = () => dispatch({type: `playing`});
 
   return (
     <div className="player">
