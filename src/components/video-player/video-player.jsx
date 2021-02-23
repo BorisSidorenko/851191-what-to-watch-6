@@ -16,9 +16,11 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
   const reducer = (state, action) => {
     switch (action.type) {
       case `loaded`:
-        return {...state, isLoading: true};
-      case `playing`:
+        return {...state, isLoading: false};
+      case `play`:
         return {...state, isPlaying: true};
+      case `pause`:
+        return {...state, isPlaying: false};
       default:
         return state;
     }
@@ -58,15 +60,15 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
     }
   }, [isPlaying]);
 
-  const onPlayButtonClick = () => dispatch({type: `playing`});
+  const onPlayButtonClick = () => isPlaying ? dispatch({type: `pause`}) : dispatch({type: `play`});
 
   return (
     <div className="player">
       <video ref={videoRef} src={isPreview ? previewVideo : video} className="player__video" poster="img/player-poster.jpg"></video>
 
-      {!isPreview && <ExitButton />}
+      {isPreview || <ExitButton />}
 
-      {!isPreview && <VideoPlayerControls isPlaying={isPlaying} isLoading={isLoading} movieDuration={movieDuration} onPlayButtonClick={onPlayButtonClick}/>}
+      {isPreview || <VideoPlayerControls isPlaying={isPlaying} isLoading={isLoading} movieDuration={movieDuration} onPlayButtonClick={onPlayButtonClick}/>}
 
     </div>
   );

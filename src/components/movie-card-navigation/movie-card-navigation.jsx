@@ -7,7 +7,8 @@ const NAVIGATION_ITEMS = [`Overview`, `Details`, `Reviews`];
 
 const NavigationItem = ({tab, url, pathname}) => {
   const [defaultTab] = NAVIGATION_ITEMS;
-  const currentTab = url === pathname ? defaultTab.toLowerCase() : pathname.replace(`${url}/`, ``);
+  const [, requestedTab] = pathname.split(`${url}/`);
+  const currentTab = requestedTab ? requestedTab : defaultTab.toLowerCase();
 
   return (
     <li className={classNames(`movie-nav__item`, {
