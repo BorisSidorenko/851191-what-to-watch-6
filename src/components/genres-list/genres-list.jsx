@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import {movieProp, genreProp} from '../props/movie-props';
-import {ActionType} from '../../store/action';
+import {ActionCreator} from '../../store/action';
 
 const Genre = ({genre, onGenreClick, isCurrentGenre}) => {
   const handleGenreChange = (evt) => {
@@ -38,13 +38,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreClick(selectedGenre) {
-    dispatch({
-      type: ActionType.CHANGE_GENRE,
-      payload: selectedGenre
-    });
-    dispatch({
-      type: ActionType.LOAD_MOVIE_LIST
-    });
+    dispatch(ActionCreator.changeGenre(selectedGenre));
+    dispatch(ActionCreator.loadMovieList());
   }
 });
 

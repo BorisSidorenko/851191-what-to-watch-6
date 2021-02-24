@@ -29,4 +29,4 @@ MoviesList.propTypes = {
 const mapStateToProps = (state) => ({movies: state.filteredMoviesByGenre});
 
 export {MoviesList};
-export default connect(mapStateToProps, null)(MoviesList);
+export default connect(mapStateToProps)(MoviesList);
