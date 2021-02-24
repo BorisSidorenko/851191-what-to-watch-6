@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import PropTypes from 'prop-types';
 import {ReviewDateFormat} from '../../utils/constatns';
 
-const getReviewComponent = ({user, comment, date, rating}) => {
+const Review = ({user, comment, date, rating}) => {
   const dayjsDate = dayjs(date);
 
   const reviewDateDefaultFormat = dayjsDate.format(ReviewDateFormat.DEFAULT);
@@ -25,13 +25,29 @@ const getReviewComponent = ({user, comment, date, rating}) => {
   );
 };
 
-const MovieCardReviews = ({reviews}) => (
-  <div className="movie-card__reviews movie-card__row">
-    <div className="movie-card__reviews-col">
-      {reviews.map(getReviewComponent)}
+const MovieCardReviews = ({reviews}) => {
+  const leftColumnReviewsCount = Math.ceil(reviews.length / 2);
+  const leftColumnReviews = reviews.slice(0, leftColumnReviewsCount);
+  const rightColumnReviews = reviews.slice(leftColumnReviewsCount);
+
+  return (
+    <div className="movie-card__reviews movie-card__row">
+      <div className="movie-card__reviews-col">
+        {leftColumnReviews.map(({id, ...rest}) => <Review key={id} {...rest} />)}
+      </div>
+      <div className="movie-card__reviews-col">
+        {rightColumnReviews.map(({id, ...rest}) => <Review key={id} {...rest} />)}
+      </div>
     </div>
-  </div>
-);
+  );
+};
+
+Review.propTypes = {
+  user: PropTypes.object.isRequired,
+  comment: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired
+};
 
 MovieCardReviews.propTypes = {
   reviews: PropTypes.array.isRequired

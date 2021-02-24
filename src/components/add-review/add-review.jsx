@@ -2,8 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
+import {getMovieById} from '../../utils/common';
 
-const AddReview = ({id, background_image: background, name, poster_image: poster}) => {
+const AddReview = ({match}) => {
+  const {id, background_image: background, name, poster_image: poster} = getMovieById(match.params.id);
+
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
@@ -32,10 +35,7 @@ const AddReview = ({id, background_image: background, name, poster_image: poster
 };
 
 AddReview.propTypes = {
-  "id": PropTypes.number.isRequired,
-  "background_image": PropTypes.string.isRequired,
-  "name": PropTypes.string.isRequired,
-  "poster_image": PropTypes.string.isRequired
+  match: PropTypes.object.isRequired
 };
 
 

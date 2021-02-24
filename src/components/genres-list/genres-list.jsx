@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {GENRES} from '../../utils/constatns';
+import {genreProp} from '../props/movie-props';
 
 const Genre = ({genre}) => (
   <li className="catalog__genres-item">
@@ -15,7 +15,7 @@ const GenresList = () => (
 );
 
 Genre.propTypes = {
-  genre: PropTypes.string.isRequired
+  genre: genreProp
 };
 
 export default GenresList;

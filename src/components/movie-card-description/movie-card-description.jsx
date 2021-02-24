@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {nameProp, genreProp, releasedProp} from '../props/movie-props';
 
 const MovieCardDescription = ({name, genre, released, children}) => (
   <div className="movie-card__desc">
@@ -19,9 +20,9 @@ MovieCardDescription.propTypes = {
 };
 
 MovieCardDescription.propTypes = {
-  "name": PropTypes.string.isRequired,
-  "genre": PropTypes.string.isRequired,
-  "released": PropTypes.number.isRequired
+  "name": nameProp,
+  "genre": genreProp,
+  "released": releasedProp
 };
 
 export default MovieCardDescription;

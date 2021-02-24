@@ -6,10 +6,10 @@ import MyList from '../my-list/my-list';
 import MoviePage from '../movie-page/movie-page';
 import AddReview from '../add-review/add-review';
 import NotFound from '../not-found/not-found';
-import Player from '../player/player';
+import VideoPlayer from '../video-player/video-player';
+import {movieProp} from '../props/movie-props';
 import {Switch, Route} from 'react-router-dom';
 import {RoutePaths} from '../../utils/constatns';
-import {getMovieById} from '../../utils/common';
 
 const LayoutRouter = ({currentMovie, allMovies}) => (
   <Switch>
@@ -25,25 +25,24 @@ const LayoutRouter = ({currentMovie, allMovies}) => (
     <Route exact path={RoutePaths.MY_LIST}>
       <MyList allMovies={allMovies} />
     </Route>
-    <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id`}
-      render={(routeProps) => (
-        <MoviePage
-          {...getMovieById(routeProps)}
-        />
-      )}
-    />
     <Route exact path={`${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}`}
       render={(routeProps) => (
         <AddReview
-          {...getMovieById(routeProps)}
+          {...routeProps}
+        />
+      )}
+    />
+    <Route path={`${RoutePaths.MOVIE_PAGE}/:id`}
+      render={(routeProps) => (
+        <MoviePage
+          {...routeProps}
         />
       )}
     />
     <Route exact path={`${RoutePaths.PLAYER}/:id`}
-      render={(routeProps) => (
-        <Player
-          {...routeProps}
-          selectedMovie={currentMovie}
+      render={({match}) => (
+        <VideoPlayer
+          movieId={match.params.id}
         />
       )}
     />
@@ -54,8 +53,8 @@ const LayoutRouter = ({currentMovie, allMovies}) => (
 );
 
 LayoutRouter.propTypes = {
-  currentMovie: PropTypes.object.isRequired,
-  allMovies: PropTypes.arrayOf(PropTypes.object).isRequired
+  currentMovie: movieProp,
+  allMovies: PropTypes.arrayOf(movieProp).isRequired
 };
 
 export default LayoutRouter;

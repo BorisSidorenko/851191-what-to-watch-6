@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {getRatingDescription} from '../../utils/common';
+import {directorProp, descriptionProp, starringProp, ratingProp, scoresCountProp} from '../props/movie-props';
 
 const MovieCardOverview = ({rating, description, director, starring, scores_count: score}) => (
   <>
@@ -23,11 +23,11 @@ const MovieCardOverview = ({rating, description, director, starring, scores_coun
 );
 
 MovieCardOverview.propTypes = {
-  "rating": PropTypes.number.isRequired,
-  "description": PropTypes.string.isRequired,
-  "director": PropTypes.array.isRequired,
-  "starring": PropTypes.array.isRequired,
-  "scores_count": PropTypes.number.isRequired
+  "rating": ratingProp,
+  "description": descriptionProp,
+  "director": directorProp,
+  "starring": starringProp,
+  "scores_count": scoresCountProp
 };
 
 export default MovieCardOverview;

@@ -1,18 +1,23 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Header from '../header/header';
 import MovieCardDescription from '../movie-card-description/movie-card-description';
 import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
-import MovieCardOverview from '../movie-card-overview/movie-card-overview';
 import MovieCardNavigation from '../movie-card-navigation/movie-card-navigation';
+import MovieCardOverview from '../movie-card-overview/movie-card-overview';
+import MovieCardReviews from '../movie-card-reviews/movie-card-reviews';
+import MovieCardDetails from '../movie-card-details/movie-card-details';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
-import {RoutePaths, MovieCardNavigationItems} from '../../utils/constatns';
-import {getSimilarMovies} from '../../utils/common';
+import {RoutePaths} from '../../utils/constatns';
+import {getMovieById, getSimilarMovies, getRandomInt} from '../../utils/common';
+import Reviews from '../../mocks/reviews';
 
-const MoviePage = ({id, background_image: background, name, genre, ...rest}) => {
-  const reviewPageLink = `${RoutePaths.MOVIE_PAGE}/${id}${RoutePaths.REVIEW}`;
+const MoviePage = ({match, location}) => {
+  const {id, background_image: background, name, genre, ...rest} = getMovieById(match.params.id);
+  const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
+  const reviews = Reviews.slice(0, getRandomInt(Reviews.length));
 
   return (
     <>
@@ -47,12 +52,29 @@ const MoviePage = ({id, background_image: background, name, genre, ...rest}) => 
 
             <div className="movie-card__desc">
               <MovieCardNavigation
-                currentSection={MovieCardNavigationItems.OVERVIEW}
+                url={match.url}
+                pathname={location.pathname}
               />
 
-              <MovieCardOverview
-                {...rest}
-              />
+              <Switch>
+                <Route exact path={`${match.path}${RoutePaths.MOVIE_REVIEWS}`}>
+                  <MovieCardReviews
+                    reviews = {reviews}
+                  />
+                </Route>
+                <Route exact path={`${match.path}${RoutePaths.MOVIE_DETAILS}`}>
+                  <MovieCardDetails
+                    genre={genre}
+                    {...rest}
+                  />
+                </Route>
+                <Route exact path={match.path}>
+                  <MovieCardOverview
+                    {...rest}
+                  />
+                </Route>
+              </Switch>
+
             </div>
           </div>
         </div>
@@ -75,13 +97,8 @@ const MoviePage = ({id, background_image: background, name, genre, ...rest}) => 
 };
 
 MoviePage.propTypes = {
-  "id": PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.number
-  ]),
-  "background_image": PropTypes.string.isRequired,
-  "name": PropTypes.string.isRequired,
-  "genre": PropTypes.string.isRequired
+  match: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 };
 
 export default MoviePage;

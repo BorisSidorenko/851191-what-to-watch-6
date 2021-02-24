@@ -1,6 +1,6 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import {idProp, nameProp} from '../props/movie-props';
 
 import {RoutePaths} from '../../utils/constatns';
 
@@ -22,8 +22,8 @@ const AddReviewBreadcrumbs = ({name, id}) => {
 };
 
 AddReviewBreadcrumbs.propTypes = {
-  name: PropTypes.string.isRequired,
-  id: PropTypes.number.isRequired
+  name: nameProp,
+  id: idProp
 };
 
 export default AddReviewBreadcrumbs;
