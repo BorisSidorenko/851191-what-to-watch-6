@@ -77,8 +77,6 @@ export const RunTime = {
   MIN: 30
 };
 
-export const MOVIE_GENRES = [`Comedy`, `Drama`, `Western`, `Horror`, `History`, `Adventure`];
-
 export const ReleaseYear = {
   MAX: 2021,
   MIN: 1962
