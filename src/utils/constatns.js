@@ -1,4 +1,4 @@
-export const GENRES = [`All genres`, `Comedies`, `Crime`, `Documentary`, `Dramas`, `Horror`, `Kids & Family`, `Romance`, `Sci-Fi`, `Thrillers`];
+export const DEFAULT_GENRE = `All genres`;
 
 export const MovieNames = [
   `Fantastic Beasts: The Crimes of Grindelwald`,

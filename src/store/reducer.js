@@ -1,12 +1,10 @@
 import Movies from '../mocks/movies';
-import {GENRES} from '../utils/constatns';
+import {DEFAULT_GENRE} from '../utils/constatns';
 import {getMoviesByGenre} from '../utils/common';
 import {ActionType} from '../store/action';
 
-const [allGenres] = GENRES;
-
 const initialState = {
-  genre: allGenres,
+  genre: DEFAULT_GENRE,
   movies: Movies
 };
 
