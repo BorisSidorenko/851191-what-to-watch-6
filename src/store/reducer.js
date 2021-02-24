@@ -5,7 +5,9 @@ import {ActionType} from '../store/action';
 
 const initialState = {
   genre: DEFAULT_GENRE,
-  movies: Movies
+  filteredMoviesByGenre: Movies,
+  allMovies: Movies,
+  similarMovies: Movies
 };
 
 export const reducer = (state = initialState, action) => {
@@ -15,10 +17,10 @@ export const reducer = (state = initialState, action) => {
         ...state,
         genre: action.payload
       };
-    case ActionType.MOVIE_LIST:
+    case ActionType.LOAD_MOVIE_LIST:
       return {
         ...state,
-        movies: getMoviesByGenre(Movies, state.genre)
+        filteredMoviesByGenre: getMoviesByGenre(state.allMovies, state.genre)
       };
     default:
       return state;

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
 import {movieProp} from '../props/movie-props';
 
@@ -7,7 +8,7 @@ const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouse
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
 };
 
-const MoviesList = ({allMovies}) => {
+const MoviesList = ({movies}) => {
   const [currentMovieId, setCurrentMovieId] = useState(-1);
 
   const onMovieCardMouseEnter = (id) => setCurrentMovieId(id);
@@ -16,13 +17,16 @@ const MoviesList = ({allMovies}) => {
 
   return (
     <div className="catalog__movies-list">
-      {allMovies.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId))}
+      {movies.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId))}
     </div>
   );
 };
 
 MoviesList.propTypes = {
-  allMovies: PropTypes.arrayOf(movieProp).isRequired
+  movies: PropTypes.arrayOf(movieProp).isRequired
 };
 
-export default MoviesList;
+const mapStateToProps = (state) => ({movies: state.filteredMoviesByGenre});
+
+export {MoviesList};
+export default connect(mapStateToProps, null)(MoviesList);

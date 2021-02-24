@@ -1,34 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {movieProp, genreProp} from '../props/movie-props';
 import {connect} from 'react-redux';
+import classNames from 'classnames';
+import {movieProp, genreProp} from '../props/movie-props';
+import {ActionType} from '../../store/action';
 
-const Genre = ({genre}) => (
-  <li className="catalog__genres-item">
-    <a href="#" className="catalog__genres-link">{genre}</a>
-  </li>
-);
+const Genre = ({genre, onGenreClick, isCurrentGenre}) => {
+  const handleGenreChange = (evt) => {
+    evt.preventDefault();
+    onGenreClick(genre);
+  };
 
-const GenresList = ({movies}) => {
+  return (
+    <li className={classNames(`catalog__genres-item`, {
+      "catalog__genres-item--active": isCurrentGenre
+    })}>
+      <a href="#" className="catalog__genres-link" onClick={handleGenreChange}>{genre}</a>
+    </li>
+  );
+};
+
+const GenresList = ({currentGenre, movies, onGenreClick}) => {
   const allGenres = movies.map(({genre}) => genre);
   const uniqueGenres = [`All genres`, ...new Set(allGenres)];
 
   return (
     <ul className="catalog__genres-list">
-      {uniqueGenres.map((genre, i) => <Genre key={i} genre={genre}/>)}
+      {uniqueGenres.map((genre, i) => <Genre key={i} genre={genre} onGenreClick={onGenreClick} isCurrentGenre={currentGenre === genre}/>)}
     </ul>
   );
 };
 
-const mapStateToProps = (state) => ({movies: state.movies});
+const mapStateToProps = (state) => ({
+  currentGenre: state.genre,
+  movies: state.allMovies
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGenreClick(selectedGenre) {
+    dispatch({
+      type: ActionType.CHANGE_GENRE,
+      payload: selectedGenre
+    });
+    dispatch({
+      type: ActionType.LOAD_MOVIE_LIST
+    });
+  }
+});
 
 Genre.propTypes = {
-  genre: genreProp
+  genre: genreProp,
+  onGenreClick: PropTypes.func.isRequired,
+  isCurrentGenre: PropTypes.bool.isRequired
 };
 
 GenresList.propTypes = {
-  movies: PropTypes.arrayOf(movieProp)
+  movies: PropTypes.arrayOf(movieProp),
+  onGenreClick: PropTypes.func.isRequired,
+  currentGenre: PropTypes.string.isRequired
 };
 
 export {GenresList};
-export default connect(mapStateToProps, null)(GenresList);
+export default connect(mapStateToProps, mapDispatchToProps)(GenresList);
