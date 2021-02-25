@@ -5,7 +5,7 @@ import VideoPlayer from '../video-player/video-player';
 import {RoutePaths} from '../../utils/constatns';
 import {idProp, previewProp, nameProp} from '../props/movie-props';
 
-const VIDEO_PREVIEW_DELAY = 1000;
+const VIDEO_PREVIEW_DELAY = 100;
 
 const MovieCardImage = ({preview, name}) => <img src={preview} alt={name} width="280" height="175" />;
 
