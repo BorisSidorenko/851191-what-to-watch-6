@@ -1,7 +1,6 @@
 export const ActionType = {
   CHANGE_GENRE: `genres/changeGenre`,
-  LOAD_MOVIE_LIST: `movies/getMovies`,
-  LOAD_SIMILAR_MOVIE_LIST: `movies/getSimilarMovies`
+  LOAD_MOVIE_LIST: `movies/getMovies`
 };
 
 export const ActionCreator = {
@@ -11,9 +10,5 @@ export const ActionCreator = {
   }),
   loadMovieList: () => ({
     type: ActionType.LOAD_MOVIE_LIST,
-  }),
-  loadSimilarMovies: (param) => ({
-    type: ActionType.LOAD_SIMILAR_MOVIE_LIST,
-    payload: param
-  }),
+  })
 };

@@ -4,20 +4,20 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
 import {movieProp} from '../props/movie-props';
-import {RoutePaths} from '../../utils/constatns';
+import {getMovieById, getSimilarMovies} from '../../utils/common';
 
 const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId) => {
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
 };
 
-const MoviesList = ({movies, similarMovies, match}) => {
+const MoviesList = ({movies, similarMovies}) => {
   const [currentMovieId, setCurrentMovieId] = useState(-1);
 
   const onMovieCardMouseEnter = (id) => setCurrentMovieId(id);
 
   const onMovieCardMouseLeave = () => setCurrentMovieId(-1);
 
-  const moviesToDisplay = match.path === RoutePaths.MAIN ? movies : similarMovies;
+  const moviesToDisplay = similarMovies ? similarMovies : movies;
 
   return (
     <div className="catalog__movies-list">
@@ -32,10 +32,23 @@ MoviesList.propTypes = {
   similarMovies: PropTypes.arrayOf(movieProp)
 };
 
-const mapStateToProps = (state) => ({
-  movies: state.filteredMoviesByGenre,
-  similarMovies: state.similarMovies
-});
+const mapStateToProps = (state, {match}) => {
+  const id = match.params.id;
+
+  if (id) {
+    const movie = getMovieById(id);
+    const similarMovies = getSimilarMovies(state.allMovies, movie);
+
+    return {
+      movies: state.filteredMoviesByGenre,
+      similarMovies
+    };
+  }
+
+  return {
+    movies: state.filteredMoviesByGenre
+  };
+};
 
 export {MoviesList};
 export default withRouter(connect(mapStateToProps)(MoviesList));
