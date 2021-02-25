@@ -33,13 +33,12 @@ const GenresList = ({currentGenre, movies, onGenreClick}) => {
 
 const mapStateToProps = (state) => ({
   currentGenre: state.genre,
-  movies: state.allMovies
+  movies: state.movies
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreClick(selectedGenre) {
     dispatch(ActionCreator.changeGenre(selectedGenre));
-    dispatch(ActionCreator.loadMovieList());
   }
 });
 

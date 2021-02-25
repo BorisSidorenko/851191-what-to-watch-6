@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import GenresList from '../genres-list/genres-list';
 import MoviesList from '../movies-list/movies-list';
 import ShowMore from '../show-more/show-more';
-import {movieProp} from '../props/movie-props';
 
 const Catalog = ({catalogClass, showGenres = true, shwoButton = true, children}) => (
   <section className={catalogClass}>
@@ -19,7 +18,6 @@ const Catalog = ({catalogClass, showGenres = true, shwoButton = true, children})
 );
 
 Catalog.propTypes = {
-  allMovies: PropTypes.arrayOf(movieProp).isRequired,
   catalogClass: PropTypes.string.isRequired,
   showGenres: PropTypes.bool,
   shwoButton: PropTypes.bool,

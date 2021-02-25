@@ -11,11 +11,11 @@ import MovieCardDetails from '../movie-card-details/movie-card-details';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import {RoutePaths} from '../../utils/constatns';
-import {getMovieById, getSimilarMovies, getRandomInt} from '../../utils/common';
+import {getMovieById, getRandomInt} from '../../utils/common';
 import Reviews from '../../mocks/reviews';
 
 const MoviePage = ({match, location}) => {
-  const {id, background_image: background, name, genre, ...rest} = getMovieById(match.params.id);
+  const {background_image: background, name, genre, ...rest} = getMovieById(match.params.id);
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
   const reviews = Reviews.slice(0, getRandomInt(Reviews.length));
 
@@ -82,7 +82,6 @@ const MoviePage = ({match, location}) => {
 
       <div className="page-content">
         <Catalog
-          allMovies={getSimilarMovies(id, genre)}
           showGenres={false}
           shwoButton={false}
           catalogClass = "catalog catalog--like-this"

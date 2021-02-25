@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
 import {movieProp} from '../props/movie-props';
-import {getMovieById, getSimilarMovies} from '../../utils/common';
+import {getMovieById, getSimilarMovies, getMoviesByGenre} from '../../utils/common';
 
 const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId) => {
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
@@ -37,16 +37,18 @@ const mapStateToProps = (state, {match}) => {
 
   if (id) {
     const movie = getMovieById(id);
-    const similarMovies = getSimilarMovies(state.allMovies, movie);
+    const similarMovies = getSimilarMovies(state.movies, movie);
 
     return {
-      movies: state.filteredMoviesByGenre,
+      movies: state.movies,
       similarMovies
     };
   }
 
+  const filteredMoviesByGenre = getMoviesByGenre(state.movies, state.genre);
+
   return {
-    movies: state.filteredMoviesByGenre
+    movies: filteredMoviesByGenre
   };
 };
 
