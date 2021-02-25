@@ -5,15 +5,13 @@ import MoviesList from '../movies-list/movies-list';
 import ShowMore from '../show-more/show-more';
 import {movieProp} from '../props/movie-props';
 
-const Catalog = ({allMovies, catalogClass, showGenres = true, shwoButton = true, children}) => (
+const Catalog = ({catalogClass, showGenres = true, shwoButton = true, children}) => (
   <section className={catalogClass}>
     {children}
 
     {showGenres && <GenresList />}
 
-    <MoviesList
-      allMovies={allMovies}
-    />
+    <MoviesList />
 
     {shwoButton && <ShowMore />}
 

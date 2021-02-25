@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import VideoPlayer from '../video-player/video-player';
 import {RoutePaths} from '../../utils/constatns';
-import {idProp, previewProp, nameProp} from '../props/movie-props';
+import {idProp, previewProp, nameProp, genreProp} from '../props/movie-props';
+import {ActionCreator} from '../../store/action';
 
 const VIDEO_PREVIEW_DELAY = 1000;
 
@@ -15,7 +17,7 @@ const MovieCardTitle = ({movieId, name}) => (
   </h3>
 );
 
-const MovieCard = ({movieId, name, preview_image: preview, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId}) => {
+const MovieCard = ({movieId, name, genre, preview_image: preview, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId, onMovieCardClick}) => {
   const isNeedToPlay = movieId === currentMovieId;
   const [delayHandler, setDelayHandler] = useState(null);
 
@@ -31,8 +33,17 @@ const MovieCard = ({movieId, name, preview_image: preview, onMovieCardMouseEnter
     onMovieCardMouseLeave();
   };
 
+  const handleMovieCardClick = () => {
+    const param = {
+      clickedMovieId: movieId,
+      similarGenre: genre
+    };
+
+    onMovieCardClick(param);
+  };
+
   return (
-    <article onMouseEnter={handleCardMouseEnter} onMouseLeave={handleCardMouseLeave} className="small-movie-card catalog__movies-card">
+    <article onMouseEnter={handleCardMouseEnter} onMouseLeave={handleCardMouseLeave} onClick={handleMovieCardClick} className="small-movie-card catalog__movies-card">
       <Link className="small-movie-card__link" to={`${RoutePaths.MOVIE_PAGE}/${movieId}`}>
         <div className="small-movie-card__image">
           {isNeedToPlay ? <VideoPlayer movieId={movieId} isPreview={true}/> : <MovieCardImage preview={preview} name={name}/>}
@@ -58,8 +69,17 @@ MovieCard.propTypes = {
   "currentMovieId": idProp,
   "preview_image": previewProp,
   "name": nameProp,
+  "genre": genreProp,
   "onMovieCardMouseEnter": PropTypes.func.isRequired,
-  "onMovieCardMouseLeave": PropTypes.func.isRequired
+  "onMovieCardMouseLeave": PropTypes.func.isRequired,
+  "onMovieCardClick": PropTypes.func.isRequired
 };
 
-export default MovieCard;
+const mapDispatchToProps = (dispatch) => ({
+  onMovieCardClick(param) {
+    dispatch(ActionCreator.loadSimilarMovies(param));
+  }
+});
+
+export {MovieCard};
+export default connect(null, mapDispatchToProps)(MovieCard);

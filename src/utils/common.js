@@ -40,8 +40,8 @@ export const getMoviesByGenre = (movies, selectedGenre) => {
   return movies;
 };
 
-export const getSimilarMovies = (currentMovieId, currentMovieGenre) => {
-  const allMoviesSameGenre = Movies.filter(({id, genre}) => genre === currentMovieGenre && id !== currentMovieId);
+export const getSimilarMovies = ({clickedMovieId, similarGenre}) => {
+  const allMoviesSameGenre = Movies.filter(({id, genre}) => genre === similarGenre && id !== clickedMovieId);
   const similarMoviesToShow = allMoviesSameGenre.slice(0, AMOUNT_OF_SIMILAR_MOVIES);
   return similarMoviesToShow;
 };
