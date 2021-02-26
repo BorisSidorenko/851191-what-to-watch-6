@@ -1,10 +1,14 @@
 import Movies from '../mocks/movies';
+import Reviews from '../mocks/reviews';
+import {getRandomInt} from '../utils/common';
 import {DEFAULT_GENRE} from '../utils/constatns';
 import {ActionType} from '../store/action';
 
 const initialState = {
+  movies: Movies,
+  promoMovie: Movies[getRandomInt(Movies.length)],
+  reviews: Reviews,
   genre: DEFAULT_GENRE,
-  movies: Movies
 };
 
 export const reducer = (state = initialState, action) => {

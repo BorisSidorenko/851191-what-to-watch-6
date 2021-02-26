@@ -57,5 +57,4 @@ GenresList.propTypes = {
   currentGenre: PropTypes.string.isRequired
 };
 
-export {GenresList};
 export default connect(mapStateToProps, mapDispatchToProps)(GenresList);

@@ -41,5 +41,4 @@ const mapStateToProps = (state, {match}) => {
   };
 };
 
-export {MoviesList};
 export default withRouter(connect(mapStateToProps)(MoviesList));

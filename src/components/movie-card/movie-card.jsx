@@ -16,16 +16,12 @@ const MovieCardTitle = ({movieId, name}) => (
 const MovieCard = ({movieId, name, preview_image: preview, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId}) => {
   const isNeedToPlay = movieId === currentMovieId;
 
-  const handleCardMouseEnter = () => {
-    onMovieCardMouseEnter(movieId);
-  };
+  const handleCardMouseEnter = (id) => onMovieCardMouseEnter(id);
 
-  const handleCardMouseLeave = () => {
-    onMovieCardMouseLeave();
-  };
+  const handleCardMouseLeave = () => onMovieCardMouseLeave();
 
   return (
-    <article onMouseEnter={handleCardMouseEnter} onMouseLeave={handleCardMouseLeave} className="small-movie-card catalog__movies-card">
+    <article onMouseEnter={() => handleCardMouseEnter(movieId)} onMouseLeave={handleCardMouseLeave} className="small-movie-card catalog__movies-card">
       <Link className="small-movie-card__link" to={`${RoutePaths.MOVIE_PAGE}/${movieId}`}>
         <div className="small-movie-card__image">
           {isNeedToPlay ? <VideoPlayer movieId={movieId} isPreview={true}/> : <MovieCardImage preview={preview} name={name}/>}

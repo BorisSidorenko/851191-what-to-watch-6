@@ -1,11 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Header from '../header/header';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
-import {movieProp} from '../props/movie-props';
 
-const MyList = ({allMovies}) => (
+const MyList = () => (
   <div className="user-page">
     <Header
       isUserAuthenticated={true}
@@ -14,7 +12,6 @@ const MyList = ({allMovies}) => (
     </Header>
 
     <Catalog
-      allMovies={allMovies}
       catalogClass="catalog"
       showGenres={false}
     >
@@ -24,9 +21,5 @@ const MyList = ({allMovies}) => (
     <Footer />
   </div>
 );
-
-MyList.propTypes = {
-  allMovies: PropTypes.arrayOf(movieProp).isRequired
-};
 
 export default MyList;
