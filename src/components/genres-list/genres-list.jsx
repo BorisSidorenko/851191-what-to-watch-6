@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
@@ -15,7 +16,7 @@ const Genre = ({genre, onGenreClick, isCurrentGenre}) => {
     <li className={classNames(`catalog__genres-item`, {
       "catalog__genres-item--active": isCurrentGenre
     })}>
-      <a href="#" className="catalog__genres-link" onClick={handleGenreChange}>{genre}</a>
+      <Link to="#" className="catalog__genres-link" onClick={handleGenreChange}>{genre}</Link>
     </li>
   );
 };
@@ -24,16 +25,18 @@ const GenresList = ({currentGenre, movies, onGenreClick}) => {
   const allGenres = movies.map(({genre}) => genre);
   const uniqueGenres = [`All genres`, ...new Set(allGenres)];
 
+  const getGenreComponent = (genre, i) => <Genre key={i} genre={genre} onGenreClick={onGenreClick} isCurrentGenre={currentGenre === genre}/>;
+
   return (
     <ul className="catalog__genres-list">
-      {uniqueGenres.map((genre, i) => <Genre key={i} genre={genre} onGenreClick={onGenreClick} isCurrentGenre={currentGenre === genre}/>)}
+      {uniqueGenres.map((genre, i) => getGenreComponent(genre, i))}
     </ul>
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentGenre: state.genre,
-  movies: state.movies
+const mapStateToProps = ({genre, movies}) => ({
+  currentGenre: genre,
+  movies
 });
 
 const mapDispatchToProps = (dispatch) => ({

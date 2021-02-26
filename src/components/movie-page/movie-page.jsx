@@ -1,6 +1,8 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import {Link, Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {movieProp} from '../props/movie-props';
 import Header from '../header/header';
 import MovieCardDescription from '../movie-card-description/movie-card-description';
 import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
@@ -14,8 +16,8 @@ import {RoutePaths} from '../../utils/constatns';
 import {getMovieById, getRandomInt} from '../../utils/common';
 import Reviews from '../../mocks/reviews';
 
-const MoviePage = ({match, location}) => {
-  const {background_image: background, name, genre, ...rest} = getMovieById(match.params.id);
+const MoviePage = ({movies, match, location}) => {
+  const {background_image: background, name, genre, ...rest} = getMovieById(movies, match.params.id);
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
   const reviews = Reviews.slice(0, getRandomInt(Reviews.length));
 
@@ -96,8 +98,13 @@ const MoviePage = ({match, location}) => {
 };
 
 MoviePage.propTypes = {
+  movies: PropTypes.arrayOf(movieProp),
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
 };
 
-export default MoviePage;
+const mapStateToProps = ({movies}) => ({
+  movies
+});
+
+export default connect(mapStateToProps)(MoviePage);

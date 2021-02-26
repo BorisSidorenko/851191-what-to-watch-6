@@ -1,11 +1,13 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
+import {movieProp} from '../props/movie-props';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
 import {getMovieById} from '../../utils/common';
 
-const AddReview = ({match}) => {
-  const {id, background_image: background, name, poster_image: poster} = getMovieById(match.params.id);
+const AddReview = ({movies, match}) => {
+  const {id, background_image: background, name, poster_image: poster} = getMovieById(movies, match.params.id);
 
   return (
     <section className="movie-card movie-card--full">
@@ -35,8 +37,12 @@ const AddReview = ({match}) => {
 };
 
 AddReview.propTypes = {
+  movies: PropTypes.arrayOf(movieProp),
   match: PropTypes.object.isRequired
 };
 
+const mapStateToProps = ({movies}) => ({
+  movies
+});
 
-export default AddReview;
+export default connect(mapStateToProps)(AddReview);

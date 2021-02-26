@@ -1,12 +1,13 @@
 import React, {useRef, useEffect, useReducer} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import ExitButton from '../exit-button/exit-button';
 import VideoPlayerControls from '../video-player-controls/video-player-controls';
 import {getMovieById} from '../../utils/common';
-import {idProp} from '../props/movie-props';
+import {movieProp, idProp} from '../props/movie-props';
 
-const VideoPlayer = ({movieId, isPreview = false}) => {
-  const {id, run_time: movieDuration, preview_video_link: previewVideo, video_link: video} = getMovieById(movieId);
+const VideoPlayer = ({movies, movieId, isPreview = false}) => {
+  const {id, run_time: movieDuration, preview_video_link: previewVideo, video_link: video} = getMovieById(movies, movieId);
 
   const initialState = {
     isLoading: true,
@@ -75,9 +76,14 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
 };
 
 VideoPlayer.propTypes = {
+  movies: PropTypes.arrayOf(movieProp),
   movieId: idProp,
   isPlaying: PropTypes.bool,
   isPreview: PropTypes.bool
 };
 
-export default VideoPlayer;
+const mapStateToProps = ({movies}) => ({
+  movies
+});
+
+export default connect(mapStateToProps)(VideoPlayer);
