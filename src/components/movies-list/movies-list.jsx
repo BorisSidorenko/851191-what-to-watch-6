@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
@@ -10,22 +10,34 @@ const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouse
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
 };
 
-const MoviesList = ({targetMovies}) => {
+const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate}) => {
   const [currentMovieId, setCurrentMovieId] = useState(-1);
 
   const onMovieCardMouseEnter = (id) => setCurrentMovieId(id);
 
   const onMovieCardMouseLeave = () => setCurrentMovieId(-1);
 
+  const targetMoviesToShowByClick = targetMovies.slice(0, amountToDisplay);
+
+  useEffect(() => {
+    if (targetMovies.length <= amountToDisplay) {
+      onMovieListUpdate(false);
+    } else {
+      onMovieListUpdate(true);
+    }
+  }, [targetMovies, amountToDisplay]);
+
   return (
     <div className="catalog__movies-list">
-      {targetMovies.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId))}
+      {targetMoviesToShowByClick.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId))}
     </div>
   );
 };
 
 MoviesList.propTypes = {
-  targetMovies: PropTypes.arrayOf(movieProp).isRequired
+  targetMovies: PropTypes.arrayOf(movieProp).isRequired,
+  amountToDisplay: PropTypes.number.isRequired,
+  onMovieListUpdate: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state, {match}) => {

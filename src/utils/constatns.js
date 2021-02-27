@@ -103,3 +103,5 @@ export const RoutePaths = {
 };
 
 export const RATING_STARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+export const DEFAULT_CARDS_COUNT_TO_DISPLAY = 8;
