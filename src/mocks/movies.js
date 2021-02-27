@@ -14,7 +14,7 @@ const Movies = [
     "director": [`Wes Andreson`, `Luc Beson`],
     "starring": [`Saoirse Ronan`, `Willem Dafoe`, `Willem Dafoe`],
     "run_time": 84,
-    "genre": `History`,
+    "genre": `Comedy`,
     "released": 2021,
     "is_favorite": true
   },
@@ -33,7 +33,7 @@ const Movies = [
     "director": [`Christopher Nolan`],
     "starring": [`Saoirse Ronan`, `Jude Law`, `Jude Law`, `Jude Law`],
     "run_time": 30,
-    "genre": `History`,
+    "genre": `Crime`,
     "released": 2001,
     "is_favorite": false
   },
@@ -52,7 +52,7 @@ const Movies = [
     "director": [`Luc Beson`, `Wes Andreson`, `Wes Andreson`, `Luc Beson`],
     "starring": [`Willem Dafoe`, `Willem Dafoe`, `Edward Norton`, `Edward Norton`],
     "run_time": 139,
-    "genre": `Adventure`,
+    "genre": `Documentary`,
     "released": 1989,
     "is_favorite": false
   },
@@ -71,7 +71,7 @@ const Movies = [
     "director": [`Wes Andreson`],
     "starring": [`Edward Norton`, `Jude Law`, `Jude Law`, `Jude Law`],
     "run_time": 82,
-    "genre": `Adventure`,
+    "genre": `Drama`,
     "released": 1982,
     "is_favorite": false
   },
@@ -90,7 +90,7 @@ const Movies = [
     "director": [`Lu Jui`, `Christopher Nolan`, `Christopher Nolan`],
     "starring": [`Willem Dafoe`, `Saoirse Ronan`, `Saoirse Ronan`, `Edward Norton`],
     "run_time": 145,
-    "genre": `Drama`,
+    "genre": `Horror`,
     "released": 2005,
     "is_favorite": false
   },
@@ -109,7 +109,7 @@ const Movies = [
     "director": [`Luc Beson`, `Christopher Nolan`, `Luc Beson`, `Wes Andreson`],
     "starring": [`Jude Law`, `Jude Law`, `Saoirse Ronan`, `Bill Murray`, `Jude Law`],
     "run_time": 120,
-    "genre": `Drama`,
+    "genre": `Sci-Fi`,
     "released": 1988,
     "is_favorite": false
   },
@@ -128,7 +128,7 @@ const Movies = [
     "director": [`Luc Beson`],
     "starring": [`Saoirse Ronan`, `Bill Murray`, `Jude Law`],
     "run_time": 174,
-    "genre": `Comedy`,
+    "genre": `Thriller`,
     "released": 2014,
     "is_favorite": false
   },
@@ -166,7 +166,7 @@ const Movies = [
     "director": [`Lu Jui`, `Luc Beson`],
     "starring": [`Bill Murray`],
     "run_time": 157,
-    "genre": `History`,
+    "genre": `Romance`,
     "released": 1982,
     "is_favorite": true
   },
@@ -185,7 +185,7 @@ const Movies = [
     "director": [`Christopher Nolan`],
     "starring": [`Willem Dafoe`, `Jude Law`, `Willem Dafoe`, `Edward Norton`],
     "run_time": 98,
-    "genre": `History`,
+    "genre": `Romance`,
     "released": 2011,
     "is_favorite": true
   },

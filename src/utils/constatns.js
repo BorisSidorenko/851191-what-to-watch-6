@@ -1,4 +1,4 @@
-export const GENRES = [`All genres`, `Comedies`, `Crime`, `Documentary`, `Dramas`, `Horror`, `Kids & Family`, `Romance`, `Sci-Fi`, `Thrillers`];
+export const DEFAULT_GENRE = `All genres`;
 
 export const MovieNames = [
   `Fantastic Beasts: The Crimes of Grindelwald`,
@@ -77,8 +77,6 @@ export const RunTime = {
   MIN: 30
 };
 
-export const MOVIE_GENRES = [`Comedy`, `Drama`, `Western`, `Horror`, `History`, `Adventure`];
-
 export const ReleaseYear = {
   MAX: 2021,
   MIN: 1962
@@ -105,3 +103,5 @@ export const RoutePaths = {
 };
 
 export const RATING_STARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+export const DEFAULT_CARDS_COUNT_TO_DISPLAY = 8;

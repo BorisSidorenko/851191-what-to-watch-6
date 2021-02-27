@@ -1,11 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import PromoMovie from '../promo-movie/promo-movie';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import {movieProp} from '../props/movie-props';
 
-const Main = ({promoMovie, allMovies}) => (
+const Main = ({promoMovie}) => (
   <>
     <PromoMovie
       {...promoMovie}
@@ -13,7 +13,6 @@ const Main = ({promoMovie, allMovies}) => (
 
     <div className="page-content">
       <Catalog
-        allMovies={allMovies}
         catalogClass="catalog"
       >
         <h2 className="catalog__title visually-hidden">Catalog</h2>
@@ -25,8 +24,11 @@ const Main = ({promoMovie, allMovies}) => (
 );
 
 Main.propTypes = {
-  promoMovie: movieProp,
-  allMovies: PropTypes.arrayOf(movieProp).isRequired
+  promoMovie: movieProp
 };
 
-export default Main;
+const mapStateToProps = ({promoMovie}) => ({
+  promoMovie
+});
+
+export default connect(mapStateToProps)(Main);

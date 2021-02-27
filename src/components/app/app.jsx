@@ -2,9 +2,9 @@ import React from 'react';
 import LayoutRouter from '../layout-router/layout-router';
 import {BrowserRouter} from 'react-router-dom';
 
-const App = (props) => (
+const App = () => (
   <BrowserRouter>
-    <LayoutRouter {...props} />
+    <LayoutRouter />
   </BrowserRouter>
 );
 

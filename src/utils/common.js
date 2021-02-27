@@ -1,5 +1,5 @@
-import Movies from '../mocks/movies';
 import {MovieRatingDesc, AMOUNT_OF_SIMILAR_MOVIES} from './constatns';
+import {DEFAULT_GENRE} from './constatns';
 
 export const getRandomIntInRange = (a = 1, b = 0) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -29,10 +29,23 @@ export const getRatingDescription = (rating) => {
   return ratingDesc;
 };
 
-export const getMovieById = (movieId) => Movies.find(({id}) => id.toString() === movieId.toString());
+export const getMovieById = (movies, movieId) => movieId ? movies.find(({id}) => id.toString() === movieId.toString()) : undefined;
 
-export const getSimilarMovies = (currentMovieId, currentMovieGenre) => {
-  const allMoviesSameGenre = Movies.filter(({id, genre}) => genre === currentMovieGenre && id !== currentMovieId);
-  const similarMoviesToShow = allMoviesSameGenre.slice(0, AMOUNT_OF_SIMILAR_MOVIES);
-  return similarMoviesToShow;
+export const getMoviesByGenre = (movies, selectedGenre) => {
+  if (selectedGenre !== DEFAULT_GENRE) {
+    return movies.filter(({genre}) => genre === selectedGenre);
+  }
+
+  return movies;
+};
+
+export const getSimilarMovies = (allMovies, movie) => {
+  if (movie) {
+    const {id: clickedMovieId, genre: similarGenre} = movie;
+    const allMoviesSameGenre = allMovies.filter(({id, genre}) => genre === similarGenre && id !== clickedMovieId);
+    const similarMoviesToShow = allMoviesSameGenre.slice(0, AMOUNT_OF_SIMILAR_MOVIES);
+    return similarMoviesToShow;
+  }
+
+  return undefined;
 };
