@@ -5,7 +5,7 @@ import {DEFAULT_GENRE, AuthorizationStatus} from '../utils/constatns';
 import {ActionType} from '../store/action';
 
 const initialState = {
-  movies: Movies,
+  movies: [],
   promoMovie: Movies[getRandomInt(Movies.length)],
   reviews: Reviews,
   genre: DEFAULT_GENRE,
@@ -14,6 +14,11 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.LOAD_MOVIES:
+      return {
+        ...state,
+        movies: action.payload
+      };
     case ActionType.CHANGE_GENRE:
       return {
         ...state,

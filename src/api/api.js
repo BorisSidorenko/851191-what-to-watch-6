@@ -32,3 +32,7 @@ export const createAPI = (onUnauthorized) => {
 
   return api;
 };
+
+export const APIRoute = {
+  MOVIES: `/films`
+};
