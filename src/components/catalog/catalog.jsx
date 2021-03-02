@@ -10,14 +10,8 @@ const Catalog = ({catalogClass, showGenres = true, shwoButton = true, children})
   const [isShowMoreNedeed, setIsShowMoreNedeed] = useState(shwoButton);
 
   const registerShowMoreClick = () => {
-    let count = 1;
-    return () => {
-      count = count + 1;
-      setCardsCountToDisplay(DEFAULT_CARDS_COUNT_TO_DISPLAY * count);
-    };
+    return setCardsCountToDisplay(cardsCountToDisplay + DEFAULT_CARDS_COUNT_TO_DISPLAY);
   };
-
-  const handleShowMoreClick = registerShowMoreClick();
 
   const handleMovieListUpdate = (showMoreButton) => {
     setIsShowMoreNedeed(showMoreButton);
@@ -31,7 +25,7 @@ const Catalog = ({catalogClass, showGenres = true, shwoButton = true, children})
 
       <MoviesList amountToDisplay={cardsCountToDisplay} onMovieListUpdate={handleMovieListUpdate}/>
 
-      {isShowMoreNedeed && <ShowMore onShowMoreClick={handleShowMoreClick}/>}
+      {isShowMoreNedeed && <ShowMore onShowMoreClick={registerShowMoreClick}/>}
 
     </section>
   );
