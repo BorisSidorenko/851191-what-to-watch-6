@@ -1,7 +1,8 @@
 export const ActionType = {
   CHANGE_GENRE: `genres/changeGenre`,
   REQUIRED_AUTH: `user/requireAuthorization`,
-  LOAD_MOVIES: `data/loadMovies`
+  LOAD_MOVIES: `data/loadMovies`,
+  LOAD_PROMO: `data/loadPromo`
 };
 
 export const ActionCreator = {
@@ -15,6 +16,10 @@ export const ActionCreator = {
   }),
   loadMovies: (data) => ({
     type: ActionType.LOAD_MOVIES,
+    payload: data
+  }),
+  loadPromo: (data) => ({
+    type: ActionType.LOAD_PROMO,
     payload: data
   })
 };
