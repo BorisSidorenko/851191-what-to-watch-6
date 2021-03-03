@@ -5,6 +5,7 @@ import {ActionType} from '../store/action';
 const initialState = {
   movies: [],
   promoMovie: null,
+  selectedMovie: null,
   reviews: Reviews,
   genre: DEFAULT_GENRE,
   isAuthtorized: AuthorizationStatus.NOT_AUTHORIZED,
@@ -25,6 +26,16 @@ export const reducer = (state = initialState, action) => {
         ...state,
         movies: action.payload,
         isMoviesLoaded: true
+      };
+    case ActionType.LOAD_MOVIE_BY_ID:
+      return {
+        ...state,
+        selectedMovie: action.payload
+      };
+    case ActionType.CLEAR_SELECTED_MOVIE:
+      return {
+        ...state,
+        selectedMovie: initialState.selectedMovie
       };
     case ActionType.CHANGE_GENRE:
       return {

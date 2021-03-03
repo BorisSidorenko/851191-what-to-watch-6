@@ -25,10 +25,10 @@ const MoviesList = ({isMoviesLoaded, targetMovies, amountToDisplay, onMovieListU
 
   const onMovieCardMouseLeave = () => setCurrentMovieId(-1);
 
-  const targetMoviesToShowByClick = targetMovies.slice(0, amountToDisplay);
+  const targetMoviesToShowByClick = targetMovies && targetMovies.slice(0, amountToDisplay);
 
   useEffect(() => {
-    if (targetMovies.length <= amountToDisplay) {
+    if (targetMovies && targetMovies.length <= amountToDisplay) {
       onMovieListUpdate(false);
     } else {
       onMovieListUpdate(true);
@@ -43,7 +43,7 @@ const MoviesList = ({isMoviesLoaded, targetMovies, amountToDisplay, onMovieListU
 };
 
 MoviesList.propTypes = {
-  targetMovies: PropTypes.arrayOf(movieProp).isRequired,
+  targetMovies: PropTypes.arrayOf(movieProp),
   amountToDisplay: PropTypes.number.isRequired,
   onMovieListUpdate: PropTypes.func.isRequired,
   isMoviesLoaded: PropTypes.bool.isRequired,
