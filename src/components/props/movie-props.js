@@ -48,7 +48,7 @@ export const ratingProp = PropTypes.number.isRequired;
 
 export const scoresCountProp = PropTypes.number.isRequired;
 
-export const directorProp = PropTypes.arrayOf(PropTypes.string).isRequired;
+export const directorProp = PropTypes.string.isRequired;
 
 export const starringProp = PropTypes.arrayOf(PropTypes.string).isRequired;
 
