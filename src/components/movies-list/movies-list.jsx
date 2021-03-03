@@ -6,6 +6,7 @@ import MovieCard from '../movie-card/movie-card';
 import {movieProp} from '../props/movie-props';
 import {getMovieById, getSimilarMovies, getMoviesByGenre} from '../../utils/common';
 import {loadMovieList} from '../../api/api-actions';
+import Loading from '../loading/loading';
 
 const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId) => {
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
@@ -36,7 +37,7 @@ const MoviesList = ({isMoviesLoaded, targetMovies, amountToDisplay, onMovieListU
 
   return (
     <div className="catalog__movies-list">
-      {targetMoviesToShowByClick.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId))}
+      {!isMoviesLoaded ? <Loading /> : targetMoviesToShowByClick.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId))}
     </div>
   );
 };

@@ -6,6 +6,7 @@ import Header from '../header/header';
 import PromoMovieInfo from '../promo-movie-info/promo-movie-info';
 import {movieProp} from '../props/movie-props';
 import {loadPromoMovie} from '../../api/api-actions';
+import Loading from '../loading/loading';
 
 const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData}) => {
   useEffect(() => {
@@ -14,14 +15,10 @@ const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData}) => {
     }
   }, [isPromoLoaded]);
 
-  if (!isPromoLoaded && !promoMovie) {
-    return <p>Loading...</p>;
-  }
-
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
-        <img src={promoMovie.background_image} alt={promoMovie.name} />
+        {!isPromoLoaded && !promoMovie ? <Loading /> : <img src={promoMovie.background_image} alt={promoMovie.name} />}
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -29,9 +26,7 @@ const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData}) => {
       <Header />
 
       <div className="movie-card__wrap">
-        <PromoMovieInfo
-          {...promoMovie}
-        />
+        {!isPromoLoaded && !promoMovie ? <Loading /> : <PromoMovieInfo {...promoMovie} />}
       </div>
     </section>
   );
