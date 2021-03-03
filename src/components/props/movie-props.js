@@ -21,7 +21,7 @@ export const movieProp = PropTypes.shape({
   "genre": PropTypes.string.isRequired,
   "released": PropTypes.number.isRequired,
   "is_favorite": PropTypes.bool.isRequired,
-}).isRequired;
+});
 
 export const idProp = PropTypes.oneOfType([
   PropTypes.string,

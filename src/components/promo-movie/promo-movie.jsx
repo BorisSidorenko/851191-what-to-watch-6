@@ -1,31 +1,57 @@
 
-import React from 'react';
+import React, {useEffect} from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import Header from '../header/header';
 import PromoMovieInfo from '../promo-movie-info/promo-movie-info';
-import {backgroundImageProp, nameProp} from '../props/movie-props';
+import {movieProp} from '../props/movie-props';
+import {loadPromoMovie} from '../../api/api-actions';
 
-const PromoMovie = ({background_image: background, name, ...rest}) => (
-  <section className="movie-card">
-    <div className="movie-card__bg">
-      <img src={background} alt={name} />
-    </div>
+const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData}) => {
+  useEffect(() => {
+    if (!isPromoLoaded) {
+      onLoadData();
+    }
+  }, [isPromoLoaded]);
 
-    <h1 className="visually-hidden">WTW</h1>
+  if (!isPromoLoaded && !promoMovie) {
+    return <p>Loading...</p>;
+  }
 
-    <Header />
+  return (
+    <section className="movie-card">
+      <div className="movie-card__bg">
+        <img src={promoMovie.background_image} alt={promoMovie.name} />
+      </div>
 
-    <div className="movie-card__wrap">
-      <PromoMovieInfo
-        name={name}
-        {...rest}
-      />
-    </div>
-  </section>
-);
+      <h1 className="visually-hidden">WTW</h1>
 
-PromoMovie.propTypes = {
-  "background_image": backgroundImageProp,
-  "name": nameProp
+      <Header />
+
+      <div className="movie-card__wrap">
+        <PromoMovieInfo
+          {...promoMovie}
+        />
+      </div>
+    </section>
+  );
 };
 
-export default PromoMovie;
+PromoMovie.propTypes = {
+  promoMovie: movieProp,
+  isPromoLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired
+};
+
+const mapStateToProps = ({isPromoLoaded, promoMovie}) => ({
+  isPromoLoaded,
+  promoMovie
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(loadPromoMovie());
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PromoMovie);

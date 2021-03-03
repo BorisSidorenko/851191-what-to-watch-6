@@ -4,7 +4,7 @@ import {ActionType} from '../store/action';
 
 const initialState = {
   movies: [],
-  promoMovie: {},
+  promoMovie: null,
   reviews: Reviews,
   genre: DEFAULT_GENRE,
   isAuthtorized: AuthorizationStatus.NOT_AUTHORIZED,
