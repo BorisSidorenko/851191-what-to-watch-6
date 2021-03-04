@@ -5,22 +5,30 @@ import {connect} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
 import {movieProp} from '../props/movie-props';
 import {getMovieById, getSimilarMovies, getMoviesByGenre} from '../../utils/common';
+import {loadMovieList} from '../../api/api-actions';
+import Loading from '../loading/loading';
 
 const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId) => {
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
 };
 
-const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate}) => {
+const MoviesList = ({isMoviesLoaded, targetMovies, amountToDisplay, onMovieListUpdate, onLoadData}) => {
   const [currentMovieId, setCurrentMovieId] = useState(-1);
+
+  useEffect(() => {
+    if (!isMoviesLoaded) {
+      onLoadData();
+    }
+  }, [isMoviesLoaded]);
 
   const onMovieCardMouseEnter = (id) => setCurrentMovieId(id);
 
   const onMovieCardMouseLeave = () => setCurrentMovieId(-1);
 
-  const targetMoviesToShowByClick = targetMovies.slice(0, amountToDisplay);
+  const targetMoviesToShowByClick = targetMovies && targetMovies.slice(0, amountToDisplay);
 
   useEffect(() => {
-    if (targetMovies.length <= amountToDisplay) {
+    if (targetMovies && targetMovies.length <= amountToDisplay) {
       onMovieListUpdate(false);
     } else {
       onMovieListUpdate(true);
@@ -29,28 +37,37 @@ const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate}) => {
 
   return (
     <div className="catalog__movies-list">
-      {targetMoviesToShowByClick.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId))}
+      {isMoviesLoaded ? targetMoviesToShowByClick.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId)) : <Loading />}
     </div>
   );
 };
 
 MoviesList.propTypes = {
-  targetMovies: PropTypes.arrayOf(movieProp).isRequired,
+  targetMovies: PropTypes.arrayOf(movieProp),
   amountToDisplay: PropTypes.number.isRequired,
-  onMovieListUpdate: PropTypes.func.isRequired
+  onMovieListUpdate: PropTypes.func.isRequired,
+  isMoviesLoaded: PropTypes.bool.isRequired,
+  onLoadData: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, {match}) => {
+const mapStateToProps = ({movies, genre, isMoviesLoaded}, {match}) => {
   const {id} = match.params;
 
-  const movie = getMovieById(state.movies, id);
-  const similarMovies = getSimilarMovies(state.movies, movie);
+  const movie = getMovieById(movies, id);
+  const similarMovies = getSimilarMovies(movies, movie);
 
-  const targetMovies = id ? similarMovies : getMoviesByGenre(state.movies, state.genre);
+  const targetMovies = id ? similarMovies : getMoviesByGenre(movies, genre);
 
   return {
+    isMoviesLoaded,
     targetMovies
   };
 };
 
-export default withRouter(connect(mapStateToProps)(MoviesList));
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData() {
+    dispatch(loadMovieList());
+  }
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MoviesList));

@@ -7,7 +7,7 @@ const MovieCardDetails = ({director, starring, run_time: duration, genre, releas
     <div className="movie-card__text-col">
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Director</strong>
-        <span className="movie-card__details-value">{director.join(`, `)}</span>
+        <span className="movie-card__details-value">{director}</span>
       </p>
       <p className="movie-card__details-item">
         <strong className="movie-card__details-name">Starring</strong>

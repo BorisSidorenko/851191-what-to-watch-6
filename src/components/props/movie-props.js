@@ -15,13 +15,13 @@ export const movieProp = PropTypes.shape({
   "description": PropTypes.string.isRequired,
   "rating": PropTypes.number.isRequired,
   "scores_count": PropTypes.number.isRequired,
-  "director": PropTypes.arrayOf(PropTypes.string).isRequired,
+  "director": PropTypes.string.isRequired,
   "starring": PropTypes.arrayOf(PropTypes.string).isRequired,
   "run_time": PropTypes.number.isRequired,
   "genre": PropTypes.string.isRequired,
   "released": PropTypes.number.isRequired,
   "is_favorite": PropTypes.bool.isRequired,
-}).isRequired;
+});
 
 export const idProp = PropTypes.oneOfType([
   PropTypes.string,
@@ -48,7 +48,7 @@ export const ratingProp = PropTypes.number.isRequired;
 
 export const scoresCountProp = PropTypes.number.isRequired;
 
-export const directorProp = PropTypes.arrayOf(PropTypes.string).isRequired;
+export const directorProp = PropTypes.string.isRequired;
 
 export const starringProp = PropTypes.arrayOf(PropTypes.string).isRequired;
 
