@@ -30,22 +30,23 @@ const getMovieCardDescComponent = (selectedMovie, reviewPageLink) => (
 const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) => {
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
   const reviews = Reviews.slice(0, getRandomInt(Reviews.length));
+  const {id} = match.params;
 
   useEffect(() => {
     if (selectedMovie) {
       onClearData();
     }
 
-    onLoadData(match.params.id);
+    onLoadData(id);
 
-  }, [match.params.id]);
+  }, [id]);
 
   return (
     <>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            {!selectedMovie ? <Loading /> : <img src={selectedMovie.background_image} alt={selectedMovie.name} />}
+            {selectedMovie ? <img src={selectedMovie.background_image} alt={selectedMovie.name} /> : <Loading />}
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -53,14 +54,14 @@ const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) =>
           <Header />
 
           <div className="movie-card__wrap">
-            {!selectedMovie ? <Loading /> : getMovieCardDescComponent(selectedMovie, reviewPageLink)}
+            {selectedMovie ? getMovieCardDescComponent(selectedMovie, reviewPageLink) : <Loading />}
           </div>
         </div>
 
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              {!selectedMovie ? <Loading /> : <img src={selectedMovie.poster_image} alt={selectedMovie.name} width="218" height="327" />}
+              {selectedMovie ? <img src={selectedMovie.poster_image} alt={selectedMovie.name} width="218" height="327" /> : <Loading />}
             </div>
 
             <div className="movie-card__desc">
@@ -74,10 +75,10 @@ const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) =>
                   <MovieCardReviews reviews = {reviews}/>
                 </Route>
                 <Route exact path={`${match.path}${RoutePaths.MOVIE_DETAILS}`}>
-                  {!selectedMovie ? <Loading/> : <MovieCardDetails {...selectedMovie} />}
+                  {selectedMovie ? <MovieCardDetails {...selectedMovie} /> : <Loading/>}
                 </Route>
                 <Route exact path={match.path}>
-                  {!selectedMovie ? <Loading/> : <MovieCardOverview {...selectedMovie} />}
+                  {selectedMovie ? <MovieCardOverview {...selectedMovie} /> : <Loading/>}
                 </Route>
               </Switch>
 
@@ -109,9 +110,7 @@ MoviePage.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({selectedMovie}) => ({
-  selectedMovie
-});
+const mapStateToProps = ({selectedMovie}) => ({selectedMovie});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {
