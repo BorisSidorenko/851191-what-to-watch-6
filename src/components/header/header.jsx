@@ -8,7 +8,7 @@ import {withRouter} from 'react-router-dom';
 
 import {RoutePaths} from '../../utils/constatns';
 
-const Header = ({name, movieId, children, isUserAuthenticated = true, showUserBlock = true, match}) => {
+const Header = ({name, movieId, children, match}) => {
   const {path, isExact} = match;
 
   const headerClass = classNames(`page-header`, {
@@ -24,7 +24,7 @@ const Header = ({name, movieId, children, isUserAuthenticated = true, showUserBl
 
       {isMoviePage && <AddReviewBreadcrumbs name={name} id={movieId} />}
 
-      {showUserBlock && <UserBlock isUserAuthenticated={isUserAuthenticated} />}
+      <UserBlock />
 
       {children}
     </header>
@@ -33,12 +33,10 @@ const Header = ({name, movieId, children, isUserAuthenticated = true, showUserBl
 
 
 Header.propTypes = {
-  isUserAuthenticated: PropTypes.bool,
   match: PropTypes.object.isRequired,
   name: PropTypes.string,
   movieId: PropTypes.number,
-  children: PropTypes.node,
-  showUserBlock: PropTypes.bool
+  children: PropTypes.node
 };
 
 export default withRouter(Header);

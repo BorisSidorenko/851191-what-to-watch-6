@@ -1,5 +1,6 @@
 import {ActionCreator} from '../store/action';
 import {APIRoute} from '../api/api';
+import {AuthorizationStatus} from '../utils/constatns';
 
 export const loadMovieList = () => (dispatch, _getState, api) => {
   api.get(APIRoute.MOVIES)
@@ -14,4 +15,10 @@ export const loadMovieById = (id) => (dispatch, _getState, api) => {
 export const loadPromoMovie = () => (dispatch, _getState, api) => {
   api.get(APIRoute.PROMO)
     .then(({data}) => dispatch(ActionCreator.loadPromo(data)));
+};
+
+export const checkAuth = () => (dispatch, _getState, api) => {
+  api.get(APIRoute.LOGIN)
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)))
+    .catch(() => {});
 };
