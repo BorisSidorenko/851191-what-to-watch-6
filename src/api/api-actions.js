@@ -22,3 +22,8 @@ export const checkAuth = () => (dispatch, _getState, api) => {
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)))
     .catch(() => {});
 };
+
+export const login = ({email, password}) => (dispatch, _getState, api) => {
+  api.post(APIRoute.LOGIN, {email, password})
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)));
+};

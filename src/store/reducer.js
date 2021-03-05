@@ -1,5 +1,5 @@
 import Reviews from '../mocks/reviews';
-import {DEFAULT_GENRE, AuthorizationStatus} from '../utils/constatns';
+import {DEFAULT_GENRE, AuthorizationStatus, RoutePaths} from '../utils/constatns';
 import {ActionType} from '../store/action';
 
 const initialState = {
@@ -10,7 +10,8 @@ const initialState = {
   genre: DEFAULT_GENRE,
   isAuthtorized: AuthorizationStatus.NOT_AUTHORIZED,
   isMoviesLoaded: false,
-  isPromoLoaded: false
+  isPromoLoaded: false,
+  requestedRoute: RoutePaths.MAIN
 };
 
 export const reducer = (state = initialState, action) => {
@@ -46,6 +47,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthtorized: action.payload
+      };
+    case ActionType.ADD_REQUESTED_ROUTE:
+      return {
+        ...state,
+        requestedRoute: action.payload
       };
     default:
       return state;
