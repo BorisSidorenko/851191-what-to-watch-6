@@ -1,11 +1,12 @@
 import React from 'react';
 import LayoutRouter from '../layout-router/layout-router';
-import {BrowserRouter} from 'react-router-dom';
+import {Router} from 'react-router-dom';
+import browserHistory from '../../browser-history';
 
 const App = () => (
-  <BrowserRouter>
+  <Router history={browserHistory}>
     <LayoutRouter />
-  </BrowserRouter>
+  </Router>
 );
 
 export default App;
