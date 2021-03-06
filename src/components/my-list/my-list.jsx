@@ -5,9 +5,7 @@ import Footer from '../footer/footer';
 
 const MyList = () => (
   <div className="user-page">
-    <Header
-      isUserAuthenticated={true}
-    >
+    <Header>
       <h1 className="page-title user-page__title">My list</h1>
     </Header>
 

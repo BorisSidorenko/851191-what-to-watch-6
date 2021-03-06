@@ -1,16 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
 import UserBlockAvatar from '../user-block-avatar/user-block-avatar';
 import UserBlockLink from '../user-block-link/user-block-link';
 
-const UserBlock = ({isUserAuthenticated}) => (
+const UserBlock = ({isAuthtorized}) => (
   <div className="user-block">
-    {isUserAuthenticated ? <UserBlockAvatar /> : <UserBlockLink />}
+    {isAuthtorized ? <UserBlockAvatar /> : <UserBlockLink />}
   </div>
 );
 
 UserBlock.propTypes = {
-  isUserAuthenticated: PropTypes.bool.isRequired
+  isAuthtorized: PropTypes.bool.isRequired
 };
 
-export default UserBlock;
+const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
+
+export default connect(mapStateToProps)(UserBlock);

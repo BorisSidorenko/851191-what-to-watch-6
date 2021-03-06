@@ -35,5 +35,6 @@ export const createAPI = (onUnauthorized) => {
 
 export const APIRoute = {
   MOVIES: `/films`,
-  PROMO: `/films/promo`
+  PROMO: `/films/promo`,
+  LOGIN: `/login`
 };

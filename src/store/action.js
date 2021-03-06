@@ -1,6 +1,8 @@
 export const ActionType = {
   CHANGE_GENRE: `genres/changeGenre`,
   REQUIRED_AUTH: `user/requireAuthorization`,
+  ADD_REQUESTED_ROUTE: `user/addRequestedRoute`,
+  REDIRECT_TO_ROUTE: `user/redirectToRoute`,
   LOAD_MOVIES: `data/loadMovies`,
   LOAD_MOVIE_BY_ID: `data/loadMovieById`,
   LOAD_PROMO: `data/loadPromo`,
@@ -30,6 +32,14 @@ export const ActionCreator = {
   }),
   loadPromo: (data) => ({
     type: ActionType.LOAD_PROMO,
+    payload: data
+  }),
+  addRequestedRoute: (data) => ({
+    type: ActionType.ADD_REQUESTED_ROUTE,
+    payload: data
+  }),
+  redirectToRoute: (data) => ({
+    type: ActionType.REDIRECT_TO_ROUTE,
     payload: data
   })
 };
