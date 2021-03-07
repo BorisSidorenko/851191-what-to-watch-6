@@ -13,6 +13,11 @@ export const loadMovieById = (id) => (dispatch, _getState, api) => {
     .catch(() => dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND)));
 };
 
+export const loadReviewsById = (id) => (dispatch, _getState, api) => {
+  api.get(`${APIRoute.REVIEWS}/${id}`)
+    .then(({data}) => dispatch(ActionCreator.loadReviewsById(data)));
+};
+
 export const loadPromoMovie = () => (dispatch, _getState, api) => {
   api.get(APIRoute.PROMO)
     .then(({data}) => dispatch(ActionCreator.loadPromo(data)));

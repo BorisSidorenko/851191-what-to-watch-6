@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link, Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {movieProp} from '../props/movie-props';
+import {reviewProp} from '../props/review-prop';
 import Header from '../header/header';
 import MovieCardDescription from '../movie-card-description/movie-card-description';
 import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
@@ -13,11 +14,9 @@ import MovieCardDetails from '../movie-card-details/movie-card-details';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import {RoutePaths} from '../../utils/constatns';
-import {getRandomInt} from '../../utils/common';
-import {loadMovieById} from '../../api/api-actions';
+import {loadMovieById, loadReviewsById} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
-import Reviews from '../../mocks/reviews';
 
 const getMovieCardDescComponent = (selectedMovie, reviewPageLink) => (
   <MovieCardDescription {...selectedMovie}>
@@ -27,9 +26,8 @@ const getMovieCardDescComponent = (selectedMovie, reviewPageLink) => (
   </MovieCardDescription>
 );
 
-const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) => {
+const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoadData, onClearData}) => {
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
-  const reviews = Reviews.slice(0, getRandomInt(Reviews.length));
   const {id} = match.params;
 
   useEffect(() => {
@@ -72,7 +70,7 @@ const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) =>
 
               <Switch>
                 <Route exact path={`${match.path}${RoutePaths.MOVIE_REVIEWS}`}>
-                  <MovieCardReviews reviews = {reviews}/>
+                  <MovieCardReviews reviews = {selectedMovieReviews}/>
                 </Route>
                 <Route exact path={`${match.path}${RoutePaths.MOVIE_DETAILS}`}>
                   {selectedMovie ? <MovieCardDetails {...selectedMovie} /> : <Loading/>}
@@ -104,20 +102,26 @@ const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) =>
 
 MoviePage.propTypes = {
   selectedMovie: movieProp,
+  selectedMovieReviews: PropTypes.arrayOf(reviewProp),
   onLoadData: PropTypes.func.isRequired,
   onClearData: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({selectedMovie}) => ({selectedMovie});
+const mapStateToProps = ({selectedMovie, selectedMovieReviews}) => ({
+  selectedMovie,
+  selectedMovieReviews
+});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {
     dispatch(loadMovieById(id));
+    dispatch(loadReviewsById(id));
   },
   onClearData() {
     dispatch(ActionCreator.clearSelectedMovie());
+    dispatch(ActionCreator.clearSelectedMovieReviews());
   }
 });
 

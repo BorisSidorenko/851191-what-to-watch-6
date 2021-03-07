@@ -1,4 +1,3 @@
-import Reviews from '../mocks/reviews';
 import {DEFAULT_GENRE, AuthorizationStatus, RoutePaths} from '../utils/constatns';
 import {ActionType} from '../store/action';
 
@@ -6,7 +5,7 @@ const initialState = {
   movies: [],
   promoMovie: null,
   selectedMovie: null,
-  reviews: Reviews,
+  selectedMovieReviews: [],
   genre: DEFAULT_GENRE,
   isAuthtorized: AuthorizationStatus.NOT_AUTHORIZED,
   isMoviesLoaded: false,
@@ -32,6 +31,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         selectedMovie: action.payload
+      };
+    case ActionType.LOAD_REVIEWS_BY_ID:
+      return {
+        ...state,
+        selectedMovieReviews: action.payload
       };
     case ActionType.CLEAR_SELECTED_MOVIE:
       return {
