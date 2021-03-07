@@ -1,30 +1,44 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
+import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {loadMovieById} from '../../api/api-actions';
+import {ActionCreator} from '../../store/action';
 import {movieProp} from '../props/movie-props';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
-import {getMovieById} from '../../utils/common';
 
-const AddReview = ({movies, match}) => {
-  const {id, background_image: background, name, poster_image: poster} = getMovieById(movies, match.params.id);
+const NUMBER_PATTERN = /\d+/;
+
+const AddReview = ({selectedMovie, location, onClearData, onLoadData}) => {
+  const [stringId] = NUMBER_PATTERN.exec(location.pathname);
+  const id = parseInt(stringId, 10);
+
+  useEffect(() => {
+    if (selectedMovie && selectedMovie.id !== id) {
+      onClearData();
+    }
+
+    onLoadData(id);
+
+  }, [id]);
 
   return (
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src={background} alt={name} />
+          <img src={selectedMovie.background_image} alt={selectedMovie.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
 
         <Header
-          name={name}
+          name={selectedMovie.name}
           movieId={id}
         />
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src={poster} alt={name} width="218" height="327" />
+          <img src={selectedMovie.poster_image} alt={selectedMovie.name} width="218" height="327" />
         </div>
       </div>
 
@@ -37,12 +51,21 @@ const AddReview = ({movies, match}) => {
 };
 
 AddReview.propTypes = {
-  movies: PropTypes.arrayOf(movieProp),
-  match: PropTypes.object.isRequired
+  selectedMovie: movieProp,
+  location: PropTypes.object.isRequired,
+  onLoadData: PropTypes.func.isRequired,
+  onClearData: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({movies}) => ({
-  movies
+const mapStateToProps = ({selectedMovie}) => ({selectedMovie});
+
+const mapDispatchToProps = (dispatch) => ({
+  onLoadData(id) {
+    dispatch(loadMovieById(id));
+  },
+  onClearData() {
+    dispatch(ActionCreator.clearSelectedMovie());
+  }
 });
 
-export default connect(mapStateToProps)(AddReview);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddReview));

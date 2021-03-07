@@ -33,7 +33,7 @@ const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) =>
   const {id} = match.params;
 
   useEffect(() => {
-    if (selectedMovie) {
+    if (selectedMovie && selectedMovie.id !== id) {
       onClearData();
     }
 
