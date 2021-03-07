@@ -37,7 +37,7 @@ const MoviesList = ({isMoviesLoaded, targetMovies, amountToDisplay, onMovieListU
 
   return (
     <div className="catalog__movies-list">
-      {isMoviesLoaded ? targetMoviesToShowByClick.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId)) : <Loading />}
+      {isMoviesLoaded && targetMoviesToShowByClick ? targetMoviesToShowByClick.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId)) : <Loading />}
     </div>
   );
 };

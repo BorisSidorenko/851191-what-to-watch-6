@@ -1,6 +1,6 @@
 import {ActionCreator} from '../store/action';
 import {APIRoute} from '../api/api';
-import {AuthorizationStatus} from '../utils/constatns';
+import {AuthorizationStatus, RoutePaths} from '../utils/constatns';
 
 export const loadMovieList = () => (dispatch, _getState, api) => {
   api.get(APIRoute.MOVIES)
@@ -9,7 +9,8 @@ export const loadMovieList = () => (dispatch, _getState, api) => {
 
 export const loadMovieById = (id) => (dispatch, _getState, api) => {
   api.get(`${APIRoute.MOVIES}/${id}`)
-    .then(({data}) => dispatch(ActionCreator.loadMovieById(data)));
+    .then(({data}) => dispatch(ActionCreator.loadMovieById(data)))
+    .catch(() => dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND)));
 };
 
 export const loadPromoMovie = () => (dispatch, _getState, api) => {

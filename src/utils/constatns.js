@@ -99,7 +99,8 @@ export const RoutePaths = {
   REVIEW: `/review`,
   PLAYER: `/player`,
   MOVIE_DETAILS: `/details`,
-  MOVIE_REVIEWS: `/reviews`
+  MOVIE_REVIEWS: `/reviews`,
+  NOT_FOUND: `/404`
 };
 
 export const RATING_STARS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
