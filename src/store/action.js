@@ -6,7 +6,7 @@ export const ActionType = {
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
   LOAD_MOVIES: `data/loadMovies`,
   LOAD_MOVIE_BY_ID: `data/loadMovieById`,
-  LOAD_REVIEWS_BY_ID: `data/loadReviewsById`,
+  LOAD_REVIEWS_BY_ID: `data/loadReviewsByMovieId`,
   LOAD_PROMO: `data/loadPromo`,
   CLEAR_SELECTED_MOVIE: `data/clearSelectedMovie`,
   CLEAR_SELECTED_MOVIE_REVIEWS: `data/clearSelectedMovieReviews`
@@ -29,7 +29,7 @@ export const ActionCreator = {
     type: ActionType.LOAD_MOVIE_BY_ID,
     payload: data
   }),
-  loadReviewsById: (data) => ({
+  loadReviewsByMovieId: (data) => ({
     type: ActionType.LOAD_REVIEWS_BY_ID,
     payload: data
   }),

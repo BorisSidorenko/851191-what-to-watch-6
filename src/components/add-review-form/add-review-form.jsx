@@ -1,6 +1,9 @@
 import React, {useState} from 'react';
+import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {RATING_STARS} from '../../utils/constatns';
+import {addReview} from '../../api/api-actions';
+import {idProp} from '../../components/props/movie-props';
 
 const RaitingInput = ({index, onRatingChange}) => {
   const starNumber = RATING_STARS[index];
@@ -15,14 +18,19 @@ const RaitingInput = ({index, onRatingChange}) => {
   );
 };
 
-const AddReviewForm = () => {
+const AddReviewForm = ({id, onSubmit}) => {
+  const [isSubmitDisabled, setIsSubmitEnabled] = useState(false);
   const [reviewForm, setReviewForm] = useState({
-    "rating": ``,
-    "review-text": ``
+    rating: ``,
+    comment: ``
   });
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
+
+    setIsSubmitEnabled(true);
+
+    onSubmit(id, reviewForm);
   };
 
   const handleUserInput = ({target}) => {
@@ -34,14 +42,14 @@ const AddReviewForm = () => {
     <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
       <div className="rating">
         <div className="rating__stars">
-          {RATING_STARS.map((item) => <RaitingInput key={`raiting-${item}`} index={item} onRatingChange={handleUserInput} />)}
+          {RATING_STARS.map((item, index) => <RaitingInput key={`raiting-${item}`} index={index} onRatingChange={handleUserInput} />)}
         </div>
       </div>
 
       <div className="add-review__text">
-        <textarea onBlur={handleUserInput} className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+        <textarea onBlur={handleUserInput} className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" required></textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">Post</button>
+          <button className="add-review__btn" type="submit" disabled={isSubmitDisabled}>Post</button>
         </div>
 
       </div>
@@ -54,4 +62,15 @@ RaitingInput.propTypes = {
   onRatingChange: PropTypes.func.isRequired
 };
 
-export default AddReviewForm;
+AddReviewForm.propTypes = {
+  id: idProp,
+  onSubmit: PropTypes.func.isRequired
+};
+
+const mapDispatchToProps = (dispatch) => ({
+  onSubmit(id, data) {
+    dispatch(addReview(id, data));
+  }
+});
+
+export default connect(null, mapDispatchToProps)(AddReviewForm);

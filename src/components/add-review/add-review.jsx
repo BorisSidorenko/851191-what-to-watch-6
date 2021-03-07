@@ -43,7 +43,7 @@ const AddReview = ({selectedMovie, location, onClearData, onLoadData}) => {
       </div>
 
       <div className="add-review">
-        <AddReviewForm />
+        <AddReviewForm id={id}/>
       </div>
 
     </section>

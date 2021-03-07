@@ -14,7 +14,7 @@ import MovieCardDetails from '../movie-card-details/movie-card-details';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import {RoutePaths} from '../../utils/constatns';
-import {loadMovieById, loadReviewsById} from '../../api/api-actions';
+import {loadMovieById, loadReviewsByMovieId} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
 
@@ -117,7 +117,7 @@ const mapStateToProps = ({selectedMovie, selectedMovieReviews}) => ({
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {
     dispatch(loadMovieById(id));
-    dispatch(loadReviewsById(id));
+    dispatch(loadReviewsByMovieId(id));
   },
   onClearData() {
     dispatch(ActionCreator.clearSelectedMovie());

@@ -13,9 +13,14 @@ export const loadMovieById = (id) => (dispatch, _getState, api) => {
     .catch(() => dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND)));
 };
 
-export const loadReviewsById = (id) => (dispatch, _getState, api) => {
-  api.get(`${APIRoute.REVIEWS}/${id}`)
-    .then(({data}) => dispatch(ActionCreator.loadReviewsById(data)));
+export const loadReviewsByMovieId = (movieId) => (dispatch, _getState, api) => {
+  api.get(`${APIRoute.REVIEWS}/${movieId}`)
+    .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)));
+};
+
+export const addReview = (movieId, {rating, comment}) => (dispatch, _getState, api) => {
+  api.post(`${APIRoute.REVIEWS}/${movieId}`, {rating, comment})
+    .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)));
 };
 
 export const loadPromoMovie = () => (dispatch, _getState, api) => {
