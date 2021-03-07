@@ -31,6 +31,7 @@ export const checkAuth = () => (dispatch, _getState, api) => {
 
 export const login = ({email, password}) => (dispatch, getState, api) => {
   api.post(APIRoute.LOGIN, {email, password})
+    .then(({data}) => dispatch(ActionCreator.login(data)))
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)))
     .then(() => dispatch(ActionCreator.redirectToRoute(getState().requestedRoute)));
 };

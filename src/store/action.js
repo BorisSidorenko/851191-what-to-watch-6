@@ -1,5 +1,6 @@
 export const ActionType = {
   CHANGE_GENRE: `genres/changeGenre`,
+  LOGIN: `user/login`,
   REQUIRED_AUTH: `user/requireAuthorization`,
   ADD_REQUESTED_ROUTE: `user/addRequestedRoute`,
   REDIRECT_TO_ROUTE: `user/redirectToRoute`,
@@ -50,6 +51,10 @@ export const ActionCreator = {
   }),
   redirectToRoute: (data) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
+    payload: data
+  }),
+  login: (data) => ({
+    type: ActionType.LOGIN,
     payload: data
   })
 };

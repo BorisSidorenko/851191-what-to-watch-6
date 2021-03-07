@@ -2,6 +2,7 @@ import {DEFAULT_GENRE, AuthorizationStatus, RoutePaths} from '../utils/constatns
 import {ActionType} from '../store/action';
 
 const initialState = {
+  user: null,
   movies: [],
   promoMovie: null,
   selectedMovie: null,
@@ -15,6 +16,11 @@ const initialState = {
 
 export const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case ActionType.LOGIN:
+      return {
+        ...state,
+        user: action.payload
+      };
     case ActionType.LOAD_PROMO:
       return {
         ...state,
