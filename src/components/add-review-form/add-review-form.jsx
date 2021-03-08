@@ -21,17 +21,35 @@ const RaitingInput = ({index, onRatingChange}) => {
   );
 };
 
+const isRatingInvalid = (rating) => {
+  if (!rating || isNaN(rating) || !RATING_STARS.includes(parseInt(rating, 10))) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
+const isCommentInvalid = (comment) => {
+  if (!comment || comment.length < COMMENT_LENGTH_MIN || comment.length > COMMENT_LENGTH_MAX) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 const AddReviewForm = ({id, onSubmit}) => {
-  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [reviewForm, setReviewForm] = useState({
     rating: ``,
     comment: ``
   });
 
+  const isSubmitDisabled = () => {
+    const {rating, comment} = reviewForm;
+    return isRatingInvalid(rating) || isCommentInvalid(comment);
+  };
+
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
-
-    setIsSubmitDisabled(true);
 
     onSubmit(id, reviewForm);
   };
@@ -52,7 +70,7 @@ const AddReviewForm = ({id, onSubmit}) => {
       <div className="add-review__text">
         <textarea onChange={handleUserInput} className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" required minLength={COMMENT_LENGTH_MIN} maxLength={COMMENT_LENGTH_MAX}></textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit" disabled={isSubmitDisabled}>Post</button>
+          <button className="add-review__btn" type="submit" disabled={isSubmitDisabled()}>Post</button>
         </div>
 
       </div>
