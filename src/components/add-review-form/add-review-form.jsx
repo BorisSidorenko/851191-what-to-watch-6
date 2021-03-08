@@ -5,6 +5,9 @@ import {RATING_STARS} from '../../utils/constatns';
 import {addReview} from '../../api/api-actions';
 import {idProp} from '../../components/props/movie-props';
 
+const COMMENT_LENGTH_MIN = 50;
+const COMMENT_LENGTH_MAX = 400;
+
 const RaitingInput = ({index, onRatingChange}) => {
   const starNumber = RATING_STARS[index];
   const inputId = `star-${starNumber}`;
@@ -19,7 +22,7 @@ const RaitingInput = ({index, onRatingChange}) => {
 };
 
 const AddReviewForm = ({id, onSubmit}) => {
-  const [isSubmitDisabled, setIsSubmitEnabled] = useState(false);
+  const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
   const [reviewForm, setReviewForm] = useState({
     rating: ``,
     comment: ``
@@ -28,7 +31,7 @@ const AddReviewForm = ({id, onSubmit}) => {
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
 
-    setIsSubmitEnabled(true);
+    setIsSubmitDisabled(true);
 
     onSubmit(id, reviewForm);
   };
@@ -47,7 +50,7 @@ const AddReviewForm = ({id, onSubmit}) => {
       </div>
 
       <div className="add-review__text">
-        <textarea onBlur={handleUserInput} className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" required></textarea>
+        <textarea onChange={handleUserInput} className="add-review__textarea" name="comment" id="review-text" placeholder="Review text" required minLength={COMMENT_LENGTH_MIN} maxLength={COMMENT_LENGTH_MAX}></textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit" disabled={isSubmitDisabled}>Post</button>
         </div>
