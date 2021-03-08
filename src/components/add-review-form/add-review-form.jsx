@@ -38,34 +38,26 @@ const isCommentInvalid = (comment) => {
 };
 
 const AddReviewForm = ({id, onSubmit}) => {
-  const [reviewForm, setReviewForm] = useState({
+  const [reviewFormData, setReviewFormData] = useState({
     rating: ``,
     comment: ``
   });
 
   const isSubmitDisabled = () => {
-    const {rating, comment} = reviewForm;
+    const {rating, comment} = reviewFormData;
     return isRatingInvalid(rating) || isCommentInvalid(comment);
-  };
-
-  const disableForm = (form) => {
-    const elements = Array.from(form.elements);
-    elements.forEach((el) => {
-      el.disabled = true;
-    });
   };
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
+    const revieForm = evt.target;
 
-    disableForm(evt.target);
-
-    onSubmit(id, reviewForm);
+    onSubmit(id, revieForm, reviewFormData);
   };
 
   const handleUserInput = ({target}) => {
     const {name, value} = target;
-    setReviewForm({...reviewForm, [name]: value});
+    setReviewFormData({...reviewFormData, [name]: value});
   };
 
   return (
@@ -98,8 +90,8 @@ AddReviewForm.propTypes = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, data) {
-    dispatch(addReview(id, data));
+  onSubmit(id, form, data) {
+    dispatch(addReview(id, form, data));
   }
 });
 

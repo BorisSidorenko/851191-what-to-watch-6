@@ -1,5 +1,6 @@
 import {ActionCreator} from '../store/action';
 import {APIRoute} from '../api/api';
+import {needToDisableForm} from '../utils/common';
 import {AuthorizationStatus, RoutePaths} from '../utils/constatns';
 
 export const loadMovieList = () => (dispatch, _getState, api) => {
@@ -18,8 +19,14 @@ export const loadReviewsByMovieId = (movieId) => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)));
 };
 
-export const addReview = (movieId, {rating, comment}) => (dispatch, _getState, api) => {
+export const addReview = (movieId, form, {rating, comment}) => (dispatch, _getState, api) => {
+  needToDisableForm(form, true);
+
   api.post(`${APIRoute.REVIEWS}/${movieId}`, {rating, comment})
+    .then((response) => {
+      needToDisableForm(form, false);
+      return response;
+    })
     .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)))
     .then(() => dispatch(ActionCreator.redirectToRoute(`${RoutePaths.MOVIE_PAGE}/${movieId}`)));
 };

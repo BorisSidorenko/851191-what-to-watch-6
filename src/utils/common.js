@@ -49,3 +49,9 @@ export const getSimilarMovies = (allMovies, movie) => {
 
   return undefined;
 };
+
+export const needToDisableForm = (form, needToDisable) => {
+  Array.from(form.elements).forEach((el) => {
+    el.disabled = needToDisable;
+  });
+};
