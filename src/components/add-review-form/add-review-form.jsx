@@ -48,8 +48,17 @@ const AddReviewForm = ({id, onSubmit}) => {
     return isRatingInvalid(rating) || isCommentInvalid(comment);
   };
 
+  const disableForm = (form) => {
+    const elements = Array.from(form.elements);
+    elements.forEach((el) => {
+      el.disabled = true;
+    });
+  };
+
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
+
+    disableForm(evt.target);
 
     onSubmit(id, reviewForm);
   };

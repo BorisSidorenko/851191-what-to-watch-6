@@ -20,7 +20,8 @@ export const loadReviewsByMovieId = (movieId) => (dispatch, _getState, api) => {
 
 export const addReview = (movieId, {rating, comment}) => (dispatch, _getState, api) => {
   api.post(`${APIRoute.REVIEWS}/${movieId}`, {rating, comment})
-    .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)));
+    .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)))
+    .then(() => dispatch(ActionCreator.redirectToRoute(`${RoutePaths.MOVIE_PAGE}/${movieId}`)));
 };
 
 export const loadPromoMovie = () => (dispatch, _getState, api) => {
