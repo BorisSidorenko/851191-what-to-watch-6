@@ -7,6 +7,7 @@ import {ActionCreator} from '../../store/action';
 import {movieProp} from '../props/movie-props';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
+import Loading from '../loading/loading';
 
 const NUMBER_PATTERN = /\d+/;
 
@@ -27,18 +28,16 @@ const AddReview = ({selectedMovie, location, onClearData, onLoadData}) => {
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src={selectedMovie.background_image} alt={selectedMovie.name} />
+          {selectedMovie ? <img src={selectedMovie.background_image} alt={selectedMovie.name} /> : <Loading />}
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
 
-        <Header
-          name={selectedMovie.name}
-          movieId={id}
-        />
+        {selectedMovie ? <Header name={selectedMovie.name} movieId={id} /> : <Loading />}
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src={selectedMovie.poster_image} alt={selectedMovie.name} width="218" height="327" />
+
+          {selectedMovie ? <img src={selectedMovie.poster_image} alt={selectedMovie.name} width="218" height="327" /> : <Loading />}
         </div>
       </div>
 
