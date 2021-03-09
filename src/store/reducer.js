@@ -1,4 +1,4 @@
-import {DEFAULT_GENRE, AuthorizationStatus, RoutePaths} from '../utils/constatns';
+import {DEFAULT_GENRE, RoutePaths} from '../utils/constatns';
 import {ActionType} from '../store/action';
 
 const initialState = {
@@ -8,7 +8,7 @@ const initialState = {
   selectedMovie: null,
   selectedMovieReviews: [],
   genre: DEFAULT_GENRE,
-  isAuthtorized: AuthorizationStatus.NOT_AUTHORIZED,
+  isAuthtorized: null,
   isMoviesLoaded: false,
   isPromoLoaded: false,
   requestedRoute: RoutePaths.MAIN
