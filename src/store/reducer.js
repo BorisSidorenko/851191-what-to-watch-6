@@ -4,7 +4,6 @@ import {ActionType} from '../store/action';
 const initialState = {
   user: null,
   movies: [],
-  promoMovie: null,
   selectedMovie: null,
   selectedMovieReviews: [],
   genre: DEFAULT_GENRE,
@@ -24,8 +23,13 @@ export const reducer = (state = initialState, action) => {
     case ActionType.LOAD_PROMO:
       return {
         ...state,
-        promoMovie: action.payload,
+        selectedMovie: action.payload,
         isPromoLoaded: true
+      };
+    case ActionType.CLEAR_IS_PROMO_LOADDED_FLAG:
+      return {
+        ...state,
+        isPromoLoaded: initialState.isPromoLoaded
       };
     case ActionType.LOAD_MOVIES:
       return {
@@ -62,6 +66,11 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         requestedRoute: action.payload
+      };
+    case ActionType.MARK_MOVIE_AS_FAVORITE:
+      return {
+        ...state,
+        selectedMovie: action.payload
       };
     default:
       return state;

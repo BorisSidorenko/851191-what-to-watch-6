@@ -8,8 +8,10 @@ export const ActionType = {
   LOAD_MOVIE_BY_ID: `data/loadMovieById`,
   LOAD_REVIEWS_BY_ID: `data/loadReviewsByMovieId`,
   LOAD_PROMO: `data/loadPromo`,
+  CLEAR_IS_PROMO_LOADDED_FLAG: `data/clearIsPromoLoaddedFlag`,
   CLEAR_SELECTED_MOVIE: `data/clearSelectedMovie`,
-  CLEAR_SELECTED_MOVIE_REVIEWS: `data/clearSelectedMovieReviews`
+  CLEAR_SELECTED_MOVIE_REVIEWS: `data/clearSelectedMovieReviews`,
+  MARK_MOVIE_AS_FAVORITE: `data/markMovieAsFavorite`
 };
 
 export const ActionCreator = {
@@ -45,6 +47,9 @@ export const ActionCreator = {
     type: ActionType.LOAD_PROMO,
     payload: data
   }),
+  clearIsPromoLoadedFlag: () => ({
+    type: ActionType.CLEAR_IS_PROMO_LOADDED_FLAG
+  }),
   addRequestedRoute: (data) => ({
     type: ActionType.ADD_REQUESTED_ROUTE,
     payload: data
@@ -55,6 +60,10 @@ export const ActionCreator = {
   }),
   login: (data) => ({
     type: ActionType.LOGIN,
+    payload: data
+  }),
+  markMovieAsFavorite: (data) => ({
+    type: ActionType.MARK_MOVIE_AS_FAVORITE,
     payload: data
   })
 };
