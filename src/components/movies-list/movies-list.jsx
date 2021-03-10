@@ -8,6 +8,7 @@ import {getMovieById, getSimilarMovies, getMoviesByGenre, getFavoriteMovies} fro
 import {loadMovieList} from '../../api/api-actions';
 import {RoutePaths} from '../../utils/constatns';
 import Loading from '../loading/loading';
+import NothingToDisplay from '../nothing-to-display/nothing-to-display';
 
 const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId) => {
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
@@ -28,6 +29,14 @@ const MoviesList = ({isMoviesLoaded, targetMovies, amountToDisplay, onMovieListU
 
   const targetMoviesToShowByClick = targetMovies && targetMovies.slice(0, amountToDisplay);
 
+  const renderTargetMovies = () => {
+    if (targetMoviesToShowByClick.length > 0) {
+      return targetMoviesToShowByClick.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId));
+    } else {
+      return <NothingToDisplay />;
+    }
+  };
+
   useEffect(() => {
     if (targetMovies && targetMovies.length <= amountToDisplay) {
       onMovieListUpdate(false);
@@ -38,7 +47,7 @@ const MoviesList = ({isMoviesLoaded, targetMovies, amountToDisplay, onMovieListU
 
   return (
     <div className="catalog__movies-list">
-      {isMoviesLoaded && targetMoviesToShowByClick ? targetMoviesToShowByClick.map(({id, ...rest}) => getMovieCardComponent(id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId)) : <Loading />}
+      {isMoviesLoaded && targetMoviesToShowByClick ? renderTargetMovies() : <Loading />}
     </div>
   );
 };
