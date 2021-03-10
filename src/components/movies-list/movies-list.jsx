@@ -4,8 +4,9 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
 import {movieProp} from '../props/movie-props';
-import {getMovieById, getSimilarMovies, getMoviesByGenre} from '../../utils/common';
+import {getMovieById, getSimilarMovies, getMoviesByGenre, getFavoriteMovies} from '../../utils/common';
 import {loadMovieList} from '../../api/api-actions';
+import {RoutePaths} from '../../utils/constatns';
 import Loading from '../loading/loading';
 
 const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId) => {
@@ -50,13 +51,24 @@ MoviesList.propTypes = {
   onLoadData: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({movies, genre, isMoviesLoaded}, {match}) => {
+const mapStateToProps = ({movies, genre, isMoviesLoaded}, {match, location}) => {
   const {id} = match.params;
 
   const movie = getMovieById(movies, id);
-  const similarMovies = getSimilarMovies(movies, movie);
 
-  const targetMovies = id ? similarMovies : getMoviesByGenre(movies, genre);
+  let targetMovies;
+
+  switch (location.pathname) {
+    case RoutePaths.MY_LIST:
+      targetMovies = getFavoriteMovies(movies);
+      break;
+    case RoutePaths.MAIN:
+      targetMovies = getMoviesByGenre(movies, genre);
+      break;
+    default:
+      targetMovies = getSimilarMovies(movies, movie);
+      break;
+  }
 
   return {
     isMoviesLoaded,
