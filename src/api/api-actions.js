@@ -36,10 +36,10 @@ export const loadPromoMovie = () => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(ActionCreator.loadPromo(data)));
 };
 
-export const checkAuth = () => (dispatch, _getState, api) => {
+export const checkAuth = (onCheckComplete) => (dispatch, _getState, api) => {
   api.get(APIRoute.LOGIN)
     .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)))
-    .catch(() => {});
+    .catch(() => onCheckComplete(false));
 };
 
 export const login = ({email, password}) => (dispatch, getState, api) => {

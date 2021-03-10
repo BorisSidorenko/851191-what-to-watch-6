@@ -9,15 +9,11 @@ import AuthCheck from '../auth-check/auth-check';
 
 const App = ({isAuthtorized, onLoad}) => {
   const [isChecking, setIsChecking] = useState(true);
-
   useEffect(() => {
     if (isChecking) {
-      onLoad();
+      onLoad(setIsChecking);
     }
-
-    return () => setIsChecking(false);
-  }, [isAuthtorized]);
-
+  }, []);
 
   if (!isAuthtorized && isChecking) {
     return <AuthCheck />;
@@ -38,8 +34,8 @@ App.propTypes = {
 const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoad() {
-    dispatch(checkAuth());
+  onLoad(onCheckComplete) {
+    dispatch(checkAuth(onCheckComplete));
   }
 });
 
