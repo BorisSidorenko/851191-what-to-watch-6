@@ -2,10 +2,7 @@ import {ActionCreator} from '../store/action';
 import {APIRoute} from '../api/api';
 import {RoutePaths} from '../utils/constatns';
 
-export const loadMovieList = () => (dispatch, _getState, api) => {
-  api.get(APIRoute.MOVIES)
-    .then(({data}) => dispatch(ActionCreator.loadMovies(data)));
-};
+export const loadMovieList = () => (dispatch, _getState, api) => api.get(APIRoute.MOVIES);
 
 export const loadMovieById = (id) => (dispatch, _getState, api) => {
   api.get(`${APIRoute.MOVIES}/${id}`)

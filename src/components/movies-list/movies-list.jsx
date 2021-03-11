@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
 import {movieProp} from '../props/movie-props';
-import {getMovieById, getSimilarMovies, getMoviesByGenre, getFavoriteMovies} from '../../utils/common';
+import {getMovieByPathName} from '../../utils/common';
 import {loadMovieList} from '../../api/api-actions';
-import {RoutePaths} from '../../utils/constatns';
+import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
 import NothingToDisplay from '../nothing-to-display/nothing-to-display';
 
@@ -14,14 +14,17 @@ const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouse
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
 };
 
-const MoviesList = ({isMoviesLoaded, targetMovies, amountToDisplay, onMovieListUpdate, onLoadData}) => {
+const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate, onLoadData}) => {
   const [currentMovieId, setCurrentMovieId] = useState(-1);
+  const [needToLoad, setNeedToLoad] = useState(true);
 
   useEffect(() => {
-    if (!isMoviesLoaded) {
+    if (needToLoad) {
       onLoadData();
     }
-  }, [isMoviesLoaded]);
+
+    return () => setNeedToLoad(false);
+  }, []);
 
   const onMovieCardMouseEnter = (id) => setCurrentMovieId(id);
 
@@ -47,7 +50,7 @@ const MoviesList = ({isMoviesLoaded, targetMovies, amountToDisplay, onMovieListU
 
   return (
     <div className="catalog__movies-list">
-      {isMoviesLoaded && targetMoviesToShowByClick ? renderTargetMovies() : <Loading />}
+      {needToLoad && targetMoviesToShowByClick ? renderTargetMovies() : <Loading />}
     </div>
   );
 };
@@ -56,38 +59,21 @@ MoviesList.propTypes = {
   targetMovies: PropTypes.arrayOf(movieProp),
   amountToDisplay: PropTypes.number.isRequired,
   onMovieListUpdate: PropTypes.func.isRequired,
-  isMoviesLoaded: PropTypes.bool.isRequired,
   onLoadData: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({movies, genre, isMoviesLoaded}, {match, location}) => {
-  const {id} = match.params;
-
-  const movie = getMovieById(movies, id);
-
-  let targetMovies;
-
-  switch (location.pathname) {
-    case RoutePaths.MY_LIST:
-      targetMovies = getFavoriteMovies(movies);
-      break;
-    case RoutePaths.MAIN:
-      targetMovies = getMoviesByGenre(movies, genre);
-      break;
-    default:
-      targetMovies = getSimilarMovies(movies, movie);
-      break;
-  }
+const mapStateToProps = (state, componentProps) => {
+  const targetMovies = getMovieByPathName(state, componentProps);
 
   return {
-    isMoviesLoaded,
     targetMovies
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
-    dispatch(loadMovieList());
+    dispatch(loadMovieList())
+      .then(({data}) => dispatch(ActionCreator.loadMovies(data)));
   }
 });
 

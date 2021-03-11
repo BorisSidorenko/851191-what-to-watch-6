@@ -5,7 +5,6 @@ import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import AddReviewBreadcrumbs from '../add-review-breadcrumbs/add-review-breadcrumbs';
 import {withRouter} from 'react-router-dom';
-
 import {RoutePaths} from '../../utils/constatns';
 
 const Header = ({name, movieId, children, match, location}) => {

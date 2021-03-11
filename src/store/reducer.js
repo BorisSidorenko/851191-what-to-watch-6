@@ -8,7 +8,6 @@ const initialState = {
   selectedMovieReviews: [],
   genre: DEFAULT_GENRE,
   isAuthtorized: null,
-  isMoviesLoaded: false,
   isPromoLoaded: false,
   requestedRoute: RoutePaths.MAIN
 };
@@ -34,8 +33,7 @@ export const reducer = (state = initialState, action) => {
     case ActionType.LOAD_MOVIES:
       return {
         ...state,
-        movies: action.payload,
-        isMoviesLoaded: true
+        movies: action.payload
       };
     case ActionType.LOAD_MOVIE_BY_ID:
       return {
