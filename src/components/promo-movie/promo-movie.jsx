@@ -49,7 +49,8 @@ const mapStateToProps = ({isPromoLoaded, selectedMovie}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
-    dispatch(loadPromoMovie());
+    dispatch(loadPromoMovie())
+      .then(({data}) => dispatch(ActionCreator.loadPromo(data)));
   },
   onIsPromoLoadedClearFlag() {
     dispatch(ActionCreator.clearIsPromoLoadedFlag());

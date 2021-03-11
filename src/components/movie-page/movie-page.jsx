@@ -116,8 +116,11 @@ const mapStateToProps = ({selectedMovie, selectedMovieReviews}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {
-    dispatch(loadMovieById(id));
-    dispatch(loadReviewsByMovieId(id));
+    dispatch(loadMovieById(id))
+      .then(({data}) => dispatch(ActionCreator.loadMovieById(data)))
+      .catch(() => dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND)));
+    dispatch(loadReviewsByMovieId(id))
+      .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)));
   },
   onClearData() {
     dispatch(ActionCreator.clearSelectedMovie());

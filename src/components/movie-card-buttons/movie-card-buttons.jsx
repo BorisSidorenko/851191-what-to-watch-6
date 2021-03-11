@@ -3,6 +3,7 @@ import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {addMovieToFavorite} from '../../api/api-actions';
+import {ActionCreator} from '../../store/action';
 import {idProp} from '../props/movie-props';
 
 const getSVGInList = () => (
@@ -57,7 +58,9 @@ const mapStateToProps = ({isAuthtorized, selectedMovie}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onAddButtonClick(movieId, isFavorite) {
-    dispatch(addMovieToFavorite(movieId, isFavorite));
+    dispatch(addMovieToFavorite(movieId, isFavorite))
+      .then(({data}) => dispatch(ActionCreator.markMovieAsFavorite(data)))
+      .catch(() => {});
   }
 });
 

@@ -8,6 +8,7 @@ import {movieProp} from '../props/movie-props';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Loading from '../loading/loading';
+import {RoutePaths} from '../../utils/constatns';
 
 const AddReview = ({selectedMovie, match, onClearData, onLoadData}) => {
   const {id} = match.params;
@@ -59,7 +60,9 @@ const mapStateToProps = ({selectedMovie}) => ({selectedMovie});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {
-    dispatch(loadMovieById(id));
+    dispatch(loadMovieById(id))
+      .then(({data}) => dispatch(ActionCreator.loadMovieById(data)))
+      .catch(() => dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND)));
   },
   onClearData() {
     dispatch(ActionCreator.clearSelectedMovie());
