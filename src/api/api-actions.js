@@ -1,7 +1,6 @@
 import {ActionCreator} from '../store/action';
 import {APIRoute} from '../api/api';
-import {needToDisableForm} from '../utils/common';
-import {AuthorizationStatus, RoutePaths} from '../utils/constatns';
+import {RoutePaths} from '../utils/constatns';
 
 export const loadMovieList = () => (dispatch, _getState, api) => {
   api.get(APIRoute.MOVIES)
@@ -19,16 +18,8 @@ export const loadReviewsByMovieId = (movieId) => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)));
 };
 
-export const addReview = (movieId, form, {rating, comment}) => (dispatch, _getState, api) => {
-  needToDisableForm(form, true);
-
-  api.post(`${APIRoute.REVIEWS}/${movieId}`, {rating, comment})
-    .then((response) => {
-      needToDisableForm(form, false);
-      return response;
-    })
-    .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(`${RoutePaths.MOVIE_PAGE}/${movieId}`)));
+export const addReview = (movieId, {rating, comment}) => (_dispatch, _getState, api) => {
+  return api.post(`${APIRoute.REVIEWS}/${movieId}`, {rating, comment});
 };
 
 export const loadPromoMovie = () => (dispatch, _getState, api) => {
@@ -36,19 +27,9 @@ export const loadPromoMovie = () => (dispatch, _getState, api) => {
     .then(({data}) => dispatch(ActionCreator.loadPromo(data)));
 };
 
-export const checkAuth = (onCheckComplete) => (dispatch, _getState, api) => {
-  api.get(APIRoute.LOGIN)
-    .then(({data}) => dispatch(ActionCreator.login(data)))
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)))
-    .catch(() => onCheckComplete(false));
-};
+export const checkAuth = () => (_dispatch, _getState, api) => api.get(APIRoute.LOGIN);
 
-export const login = ({email, password}) => (dispatch, getState, api) => {
-  api.post(APIRoute.LOGIN, {email, password})
-    .then(({data}) => dispatch(ActionCreator.login(data)))
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(getState().requestedRoute)));
-};
+export const login = ({email, password}) => (_dispatch, _getState, api) => api.post(APIRoute.LOGIN, {email, password});
 
 export const addMovieToFavorite = (movieId, isFavorite) => (dispatch, _getState, api) => {
   api.post(`${APIRoute.FAVORITE}/${movieId}/${isFavorite ? 1 : 0}`, {movieId, isFavorite})

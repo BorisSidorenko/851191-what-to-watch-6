@@ -4,11 +4,15 @@ import LayoutRouter from '../layout-router/layout-router';
 import {Router} from 'react-router-dom';
 import browserHistory from '../../browser-history';
 import {checkAuth} from '../../api/api-actions';
+import {ActionCreator} from '../../store/action';
 import {connect} from 'react-redux';
 import AuthCheck from '../auth-check/auth-check';
+import {AuthorizationStatus} from '../../utils/constatns';
+
 
 const App = ({isAuthtorized, onLoad}) => {
   const [isChecking, setIsChecking] = useState(true);
+
   useEffect(() => {
     if (isChecking) {
       onLoad(setIsChecking);
@@ -35,7 +39,10 @@ const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoad(onCheckComplete) {
-    dispatch(checkAuth(onCheckComplete));
+    dispatch(checkAuth(onCheckComplete))
+    .then(({data}) => dispatch(ActionCreator.login(data)))
+    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)))
+    .catch(() => onCheckComplete(false));
   }
 });
 
