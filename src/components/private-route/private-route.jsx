@@ -10,8 +10,9 @@ const handleUserNotAuthtorized = ({location}, onPrivateRouteRequest) => {
   return <Redirect to={RoutePaths.SIGN_IN} />;
 };
 
-const PrivateRoute = ({render, isAuthtorized, onPrivateRouteRequest}) => (
+const PrivateRoute = ({render, isAuthtorized, onPrivateRouteRequest, ...rest}) => (
   <Route
+    {...rest}
     render={(routeProps) => (
       isAuthtorized ? render(routeProps) : handleUserNotAuthtorized(routeProps, onPrivateRouteRequest)
     )}

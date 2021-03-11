@@ -9,20 +9,18 @@ import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Loading from '../loading/loading';
 
-const NUMBER_PATTERN = /\d+/;
-
-const AddReview = ({selectedMovie, location, onClearData, onLoadData}) => {
-  const [stringId] = NUMBER_PATTERN.exec(location.pathname);
-  const id = parseInt(stringId, 10);
+const AddReview = ({selectedMovie, match, onClearData, onLoadData}) => {
+  const {id} = match.params;
+  const movieId = parseInt(id, 10);
 
   useEffect(() => {
-    if (selectedMovie && selectedMovie.id !== id) {
+    if (selectedMovie && selectedMovie.id !== movieId) {
       onClearData();
     }
 
-    onLoadData(id);
+    onLoadData(movieId);
 
-  }, [id]);
+  }, [movieId]);
 
   return (
     <section className="movie-card movie-card--full">
@@ -33,7 +31,7 @@ const AddReview = ({selectedMovie, location, onClearData, onLoadData}) => {
 
         <h1 className="visually-hidden">WTW</h1>
 
-        {selectedMovie ? <Header name={selectedMovie.name} movieId={id} /> : <Loading />}
+        {selectedMovie ? <Header name={selectedMovie.name} movieId={movieId} /> : <Loading />}
 
         <div className="movie-card__poster movie-card__poster--small">
 
@@ -42,7 +40,7 @@ const AddReview = ({selectedMovie, location, onClearData, onLoadData}) => {
       </div>
 
       <div className="add-review">
-        <AddReviewForm id={id}/>
+        <AddReviewForm id={movieId}/>
       </div>
 
     </section>
@@ -51,6 +49,7 @@ const AddReview = ({selectedMovie, location, onClearData, onLoadData}) => {
 
 AddReview.propTypes = {
   selectedMovie: movieProp,
+  match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   onLoadData: PropTypes.func.isRequired,
   onClearData: PropTypes.func.isRequired
