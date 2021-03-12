@@ -6,14 +6,18 @@ import Header from '../header/header';
 import PromoMovieInfo from '../promo-movie-info/promo-movie-info';
 import {movieProp} from '../props/movie-props';
 import {loadPromoMovie} from '../../api/api-actions';
+import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
 
-const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData}) => {
+const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData, onIsPromoLoadedClearFlag, setPromo}) => {
   useEffect(() => {
     if (!isPromoLoaded) {
-      onLoadData();
+      onLoadData()
+        .then(({data}) => setPromo(data));
     }
-  }, [isPromoLoaded]);
+
+    return () => onIsPromoLoadedClearFlag();
+  }, []);
 
   return (
     <section className="movie-card">
@@ -34,18 +38,26 @@ const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData}) => {
 
 PromoMovie.propTypes = {
   promoMovie: movieProp,
+  onIsPromoLoadedClearFlag: PropTypes.func.isRequired,
   isPromoLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired
+  onLoadData: PropTypes.func.isRequired,
+  setPromo: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({isPromoLoaded, promoMovie}) => ({
+const mapStateToProps = ({isPromoLoaded, selectedMovie}) => ({
   isPromoLoaded,
-  promoMovie
+  promoMovie: selectedMovie
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
-    dispatch(loadPromoMovie());
+    return dispatch(loadPromoMovie());
+  },
+  setPromo(data) {
+    dispatch(ActionCreator.loadPromo(data));
+  },
+  onIsPromoLoadedClearFlag() {
+    dispatch(ActionCreator.clearIsPromoLoadedFlag());
   }
 });
 

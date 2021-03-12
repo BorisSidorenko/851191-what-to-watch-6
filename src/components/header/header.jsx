@@ -5,10 +5,9 @@ import Logo from '../logo/logo';
 import UserBlock from '../user-block/user-block';
 import AddReviewBreadcrumbs from '../add-review-breadcrumbs/add-review-breadcrumbs';
 import {withRouter} from 'react-router-dom';
-
 import {RoutePaths} from '../../utils/constatns';
 
-const Header = ({name, movieId, children, match}) => {
+const Header = ({name, movieId, children, match, location}) => {
   const {path, isExact} = match;
 
   const headerClass = classNames(`page-header`, {
@@ -16,7 +15,7 @@ const Header = ({name, movieId, children, match}) => {
     'user-page__head': path === RoutePaths.MY_LIST || path === RoutePaths.SIGN_IN || !isExact
   });
 
-  const isMoviePage = path === `${RoutePaths.MOVIE_PAGE}/:id${RoutePaths.REVIEW}`;
+  const isMoviePage = location.pathname === `${RoutePaths.MOVIE_PAGE}/${movieId}${RoutePaths.REVIEW}`;
 
   return (
     <header className={headerClass}>
@@ -33,6 +32,7 @@ const Header = ({name, movieId, children, match}) => {
 
 
 Header.propTypes = {
+  location: PropTypes.object.isRequired,
   match: PropTypes.object.isRequired,
   name: PropTypes.string,
   movieId: PropTypes.number,

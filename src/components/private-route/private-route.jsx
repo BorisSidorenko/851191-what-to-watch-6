@@ -5,24 +5,24 @@ import {connect} from 'react-redux';
 import {RoutePaths} from '../../utils/constatns';
 import {ActionCreator} from '../../store/action';
 
-const handleUserNotAuthtorized = (route, onPrivateRouteRequest) => {
-  onPrivateRouteRequest(route);
+const handleUserNotAuthtorized = ({location}, onPrivateRouteRequest) => {
+  onPrivateRouteRequest(location.pathname);
   return <Redirect to={RoutePaths.SIGN_IN} />;
 };
 
-const PrivateRoute = ({render, isAuthtorized, path, onPrivateRouteRequest}) => (
+const PrivateRoute = ({render, isAuthtorized, onPrivateRouteRequest, ...rest}) => (
   <Route
+    {...rest}
     render={(routeProps) => (
-      isAuthtorized ? render(routeProps) : handleUserNotAuthtorized(path, onPrivateRouteRequest)
+      isAuthtorized ? render(routeProps) : handleUserNotAuthtorized(routeProps, onPrivateRouteRequest)
     )}
   />
 );
 
 PrivateRoute.propTypes = {
-  path: PropTypes.string.isRequired,
   onPrivateRouteRequest: PropTypes.func.isRequired,
   render: PropTypes.func.isRequired,
-  isAuthtorized: PropTypes.bool.isRequired
+  isAuthtorized: PropTypes.bool
 };
 
 const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});

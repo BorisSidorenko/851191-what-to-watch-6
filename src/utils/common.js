@@ -1,4 +1,4 @@
-import {MovieRatingDesc, AMOUNT_OF_SIMILAR_MOVIES} from './constatns';
+import {MovieRatingDesc, AMOUNT_OF_SIMILAR_MOVIES, RoutePaths} from './constatns';
 import {DEFAULT_GENRE} from './constatns';
 
 export const getRandomIntInRange = (a = 1, b = 0) => {
@@ -48,4 +48,27 @@ export const getSimilarMovies = (allMovies, movie) => {
   }
 
   return undefined;
+};
+
+export const getFavoriteMovies = (movies) => movies.filter((movie) => movie.is_favorite);
+
+export const needToDisableForm = (form, needToDisable) => {
+  Array.from(form.elements).forEach((el) => {
+    el.disabled = needToDisable;
+  });
+};
+
+export const getMovieByPathName = ({movies, genre}, {match, location}) => {
+  const {id} = match.params;
+
+  const movie = getMovieById(movies, id);
+
+  switch (location.pathname) {
+    case RoutePaths.MY_LIST:
+      return getFavoriteMovies(movies);
+    case RoutePaths.MAIN:
+      return getMoviesByGenre(movies, genre);
+    default:
+      return getSimilarMovies(movies, movie);
+  }
 };

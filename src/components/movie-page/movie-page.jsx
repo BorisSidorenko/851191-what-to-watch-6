@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {Link, Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {movieProp} from '../props/movie-props';
+import {reviewProp} from '../props/review-prop';
 import Header from '../header/header';
 import MovieCardDescription from '../movie-card-description/movie-card-description';
 import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
@@ -13,11 +14,9 @@ import MovieCardDetails from '../movie-card-details/movie-card-details';
 import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import {RoutePaths} from '../../utils/constatns';
-import {getRandomInt} from '../../utils/common';
-import {loadMovieById} from '../../api/api-actions';
+import {loadMovieById, loadReviewsByMovieId} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
-import Reviews from '../../mocks/reviews';
 
 const getMovieCardDescComponent = (selectedMovie, reviewPageLink) => (
   <MovieCardDescription {...selectedMovie}>
@@ -27,17 +26,21 @@ const getMovieCardDescComponent = (selectedMovie, reviewPageLink) => (
   </MovieCardDescription>
 );
 
-const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) => {
+const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoadDataMovie, onClearData, setSelectedMovie, redirectToNotFound, onLoadMovieReviews, loadMovieReviews}) => {
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
-  const reviews = Reviews.slice(0, getRandomInt(Reviews.length));
   const {id} = match.params;
 
   useEffect(() => {
-    if (selectedMovie) {
+    if (selectedMovie && selectedMovie.id !== id) {
       onClearData();
     }
 
-    onLoadData(id);
+    onLoadDataMovie(id)
+      .then(({data}) => setSelectedMovie(data))
+      .catch(() => redirectToNotFound());
+
+    onLoadMovieReviews(id)
+      .then(({data}) => loadMovieReviews(data));
 
   }, [id]);
 
@@ -72,7 +75,7 @@ const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) =>
 
               <Switch>
                 <Route exact path={`${match.path}${RoutePaths.MOVIE_REVIEWS}`}>
-                  <MovieCardReviews reviews = {reviews}/>
+                  <MovieCardReviews reviews = {selectedMovieReviews}/>
                 </Route>
                 <Route exact path={`${match.path}${RoutePaths.MOVIE_DETAILS}`}>
                   {selectedMovie ? <MovieCardDetails {...selectedMovie} /> : <Loading/>}
@@ -104,20 +107,41 @@ const MoviePage = ({selectedMovie, match, location, onLoadData, onClearData}) =>
 
 MoviePage.propTypes = {
   selectedMovie: movieProp,
-  onLoadData: PropTypes.func.isRequired,
+  selectedMovieReviews: PropTypes.arrayOf(reviewProp),
+  onLoadDataMovie: PropTypes.func.isRequired,
   onClearData: PropTypes.func.isRequired,
+  setSelectedMovie: PropTypes.func.isRequired,
+  redirectToNotFound: PropTypes.func.isRequired,
+  onLoadMovieReviews: PropTypes.func.isRequired,
+  loadMovieReviews: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({selectedMovie}) => ({selectedMovie});
+const mapStateToProps = ({selectedMovie, selectedMovieReviews}) => ({
+  selectedMovie,
+  selectedMovieReviews
+});
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoadData(id) {
-    dispatch(loadMovieById(id));
+  onLoadDataMovie(id) {
+    return dispatch(loadMovieById(id));
   },
   onClearData() {
     dispatch(ActionCreator.clearSelectedMovie());
+    dispatch(ActionCreator.clearSelectedMovieReviews());
+  },
+  setSelectedMovie(data) {
+    dispatch(ActionCreator.loadMovieById(data));
+  },
+  redirectToNotFound() {
+    dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND));
+  },
+  onLoadMovieReviews(id) {
+    return dispatch(loadReviewsByMovieId(id));
+  },
+  loadMovieReviews(data) {
+    dispatch(ActionCreator.loadReviewsByMovieId(data));
   }
 });
 

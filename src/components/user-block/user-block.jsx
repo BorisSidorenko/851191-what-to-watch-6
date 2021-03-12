@@ -11,7 +11,7 @@ const UserBlock = ({isAuthtorized}) => (
 );
 
 UserBlock.propTypes = {
-  isAuthtorized: PropTypes.bool.isRequired
+  isAuthtorized: PropTypes.bool
 };
 
 const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
