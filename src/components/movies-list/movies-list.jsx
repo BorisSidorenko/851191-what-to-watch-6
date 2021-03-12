@@ -14,13 +14,14 @@ const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouse
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
 };
 
-const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate, onLoadData}) => {
+const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate, onLoadData, loadMovies}) => {
   const [currentMovieId, setCurrentMovieId] = useState(-1);
   const [needToLoad, setNeedToLoad] = useState(true);
 
   useEffect(() => {
     if (needToLoad) {
-      onLoadData();
+      onLoadData()
+      .then(({data}) => loadMovies(data));
     }
 
     return () => setNeedToLoad(false);
@@ -59,6 +60,7 @@ MoviesList.propTypes = {
   targetMovies: PropTypes.arrayOf(movieProp),
   amountToDisplay: PropTypes.number.isRequired,
   onMovieListUpdate: PropTypes.func.isRequired,
+  loadMovies: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired
 };
 
@@ -72,8 +74,10 @@ const mapStateToProps = (state, componentProps) => {
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
-    dispatch(loadMovieList())
-      .then(({data}) => dispatch(ActionCreator.loadMovies(data)));
+    return dispatch(loadMovieList());
+  },
+  loadMovies(data) {
+    dispatch(ActionCreator.loadMovies(data));
   }
 });
 

@@ -10,7 +10,7 @@ import AddReviewForm from '../add-review-form/add-review-form';
 import Loading from '../loading/loading';
 import {RoutePaths} from '../../utils/constatns';
 
-const AddReview = ({selectedMovie, match, onClearData, onLoadData}) => {
+const AddReview = ({selectedMovie, match, onClearData, onLoadData, setSelectedMovie, redirectToRoute}) => {
   const {id} = match.params;
   const movieId = parseInt(id, 10);
 
@@ -19,7 +19,9 @@ const AddReview = ({selectedMovie, match, onClearData, onLoadData}) => {
       onClearData();
     }
 
-    onLoadData(movieId);
+    onLoadData(movieId)
+      .then(({data}) => setSelectedMovie(data))
+      .catch(() => redirectToRoute());
 
   }, [movieId]);
 
@@ -53,16 +55,22 @@ AddReview.propTypes = {
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
   onLoadData: PropTypes.func.isRequired,
-  onClearData: PropTypes.func.isRequired
+  onClearData: PropTypes.func.isRequired,
+  setSelectedMovie: PropTypes.func.isRequired,
+  redirectToRoute: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({selectedMovie}) => ({selectedMovie});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {
-    dispatch(loadMovieById(id))
-      .then(({data}) => dispatch(ActionCreator.loadMovieById(data)))
-      .catch(() => dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND)));
+    return dispatch(loadMovieById(id));
+  },
+  setSelectedMovie(data) {
+    dispatch(ActionCreator.loadMovieById(data));
+  },
+  redirectToRoute() {
+    dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND));
   },
   onClearData() {
     dispatch(ActionCreator.clearSelectedMovie());

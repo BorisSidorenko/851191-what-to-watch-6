@@ -10,12 +10,15 @@ import AuthCheck from '../auth-check/auth-check';
 import {AuthorizationStatus} from '../../utils/constatns';
 
 
-const App = ({isAuthtorized, onLoad}) => {
+const App = ({isAuthtorized, onLoad, login, requireAuthorization}) => {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     if (isChecking) {
-      onLoad(setIsChecking);
+      onLoad()
+        .then(({data}) => login(data))
+        .then(() => requireAuthorization())
+        .catch(() => setIsChecking(false));
     }
   }, []);
 
@@ -32,17 +35,22 @@ const App = ({isAuthtorized, onLoad}) => {
 
 App.propTypes = {
   isAuthtorized: PropTypes.bool,
-  onLoad: PropTypes.func.isRequired
+  onLoad: PropTypes.func.isRequired,
+  login: PropTypes.func.isRequired,
+  requireAuthorization: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoad(onCheckComplete) {
-    dispatch(checkAuth(onCheckComplete))
-    .then(({data}) => dispatch(ActionCreator.login(data)))
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)))
-    .catch(() => onCheckComplete(false));
+    return dispatch(checkAuth(onCheckComplete));
+  },
+  login(data) {
+    dispatch(ActionCreator.login(data));
+  },
+  requireAuthorization() {
+    dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED));
   }
 });
 

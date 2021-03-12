@@ -26,7 +26,7 @@ const getMovieCardDescComponent = (selectedMovie, reviewPageLink) => (
   </MovieCardDescription>
 );
 
-const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoadData, onClearData}) => {
+const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoadDataMovie, onClearData, setSelectedMovie, redirectToNotFound, onLoadMovieReviews, loadMovieReviews}) => {
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
   const {id} = match.params;
 
@@ -35,7 +35,12 @@ const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoad
       onClearData();
     }
 
-    onLoadData(id);
+    onLoadDataMovie(id)
+      .then(({data}) => setSelectedMovie(data))
+      .catch(() => redirectToNotFound());
+
+    onLoadMovieReviews(id)
+      .then(({data}) => loadMovieReviews(data));
 
   }, [id]);
 
@@ -103,8 +108,12 @@ const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoad
 MoviePage.propTypes = {
   selectedMovie: movieProp,
   selectedMovieReviews: PropTypes.arrayOf(reviewProp),
-  onLoadData: PropTypes.func.isRequired,
+  onLoadDataMovie: PropTypes.func.isRequired,
   onClearData: PropTypes.func.isRequired,
+  setSelectedMovie: PropTypes.func.isRequired,
+  redirectToNotFound: PropTypes.func.isRequired,
+  onLoadMovieReviews: PropTypes.func.isRequired,
+  loadMovieReviews: PropTypes.func.isRequired,
   match: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired
 };
@@ -115,16 +124,24 @@ const mapStateToProps = ({selectedMovie, selectedMovieReviews}) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onLoadData(id) {
-    dispatch(loadMovieById(id))
-      .then(({data}) => dispatch(ActionCreator.loadMovieById(data)))
-      .catch(() => dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND)));
-    dispatch(loadReviewsByMovieId(id))
-      .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)));
+  onLoadDataMovie(id) {
+    return dispatch(loadMovieById(id));
   },
   onClearData() {
     dispatch(ActionCreator.clearSelectedMovie());
     dispatch(ActionCreator.clearSelectedMovieReviews());
+  },
+  setSelectedMovie(data) {
+    dispatch(ActionCreator.loadMovieById(data));
+  },
+  redirectToNotFound() {
+    dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND));
+  },
+  onLoadMovieReviews(id) {
+    return dispatch(loadReviewsByMovieId(id));
+  },
+  loadMovieReviews(data) {
+    dispatch(ActionCreator.loadReviewsByMovieId(data));
   }
 });
 

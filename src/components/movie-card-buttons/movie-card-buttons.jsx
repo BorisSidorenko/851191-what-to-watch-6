@@ -18,9 +18,11 @@ const getSVGAddToList = () => (
   </svg>
 );
 
-const MovieCardButtons = ({isAuthtorized, id, isFavorite, children, onAddButtonClick}) => {
+const MovieCardButtons = ({isAuthtorized, id, isFavorite, children, onAddButtonClick, markMovieAsFavorite}) => {
   const handleAddButtonClick = () => {
-    onAddButtonClick(id, !isFavorite);
+    onAddButtonClick(id, !isFavorite)
+      .then(({data}) => markMovieAsFavorite(data))
+      .catch(() => {});
   };
 
   return (
@@ -46,6 +48,7 @@ MovieCardButtons.propTypes = {
   id: idProp,
   isFavorite: PropTypes.bool.isRequired,
   onAddButtonClick: PropTypes.func.isRequired,
+  markMovieAsFavorite: PropTypes.func.isRequired,
   isAuthtorized: PropTypes.bool.isRequired,
   children: PropTypes.element
 };
@@ -58,9 +61,10 @@ const mapStateToProps = ({isAuthtorized, selectedMovie}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onAddButtonClick(movieId, isFavorite) {
-    dispatch(addMovieToFavorite(movieId, isFavorite))
-      .then(({data}) => dispatch(ActionCreator.markMovieAsFavorite(data)))
-      .catch(() => {});
+    return dispatch(addMovieToFavorite(movieId, isFavorite));
+  },
+  markMovieAsFavorite(data) {
+    dispatch(ActionCreator.markMovieAsFavorite(data));
   }
 });
 

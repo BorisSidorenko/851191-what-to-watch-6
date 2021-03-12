@@ -9,10 +9,11 @@ import {loadPromoMovie} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
 
-const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData, onIsPromoLoadedClearFlag}) => {
+const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData, onIsPromoLoadedClearFlag, setPromo}) => {
   useEffect(() => {
     if (!isPromoLoaded) {
-      onLoadData();
+      onLoadData()
+        .then(({data}) => setPromo(data));
     }
 
     return () => onIsPromoLoadedClearFlag();
@@ -39,7 +40,8 @@ PromoMovie.propTypes = {
   promoMovie: movieProp,
   onIsPromoLoadedClearFlag: PropTypes.func.isRequired,
   isPromoLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired
+  onLoadData: PropTypes.func.isRequired,
+  setPromo: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({isPromoLoaded, selectedMovie}) => ({
@@ -49,8 +51,10 @@ const mapStateToProps = ({isPromoLoaded, selectedMovie}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
-    dispatch(loadPromoMovie())
-      .then(({data}) => dispatch(ActionCreator.loadPromo(data)));
+    return dispatch(loadPromoMovie());
+  },
+  setPromo(data) {
+    dispatch(ActionCreator.loadPromo(data));
   },
   onIsPromoLoadedClearFlag() {
     dispatch(ActionCreator.clearIsPromoLoadedFlag());

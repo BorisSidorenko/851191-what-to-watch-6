@@ -9,7 +9,7 @@ import {AuthorizationStatus} from '../../utils/constatns';
 
 const AMOUT_OF_PASSWORD_CHARACTERS = 6;
 
-const SignIn = ({requestedRoute, onSubmit}) => {
+const SignIn = ({requestedRoute, onSubmit, setAuth, setRequireAuthorization, redirectToRoute}) => {
   const handleSubmitForm = (evt) => {
     evt.preventDefault();
 
@@ -18,7 +18,10 @@ const SignIn = ({requestedRoute, onSubmit}) => {
     onSubmit({
       email: email.value,
       password: password.value
-    }, requestedRoute);
+    })
+      .then(({data}) => setAuth(data))
+      .then(() => setRequireAuthorization())
+      .then(() => redirectToRoute(requestedRoute));
   };
 
   return (
@@ -52,17 +55,26 @@ const SignIn = ({requestedRoute, onSubmit}) => {
 
 SignIn.propTypes = {
   requestedRoute: PropTypes.string.isRequired,
-  onSubmit: PropTypes.func.isRequired
+  onSubmit: PropTypes.func.isRequired,
+  setAuth: PropTypes.func.isRequired,
+  setRequireAuthorization: PropTypes.func.isRequired,
+  redirectToRoute: PropTypes.func.isRequired
 };
 
 const mapStateToProps = ({requestedRoute}) => ({requestedRoute});
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(formData, requestedRoute) {
-    dispatch(login(formData))
-    .then(({data}) => dispatch(ActionCreator.login(data)))
-    .then(() => dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(requestedRoute)));
+  onSubmit(formData) {
+    return dispatch(login(formData));
+  },
+  setAuth(data) {
+    dispatch(ActionCreator.login(data));
+  },
+  setRequireAuthorization() {
+    dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED));
+  },
+  redirectToRoute(requestedRoute) {
+    dispatch(ActionCreator.redirectToRoute(requestedRoute));
   }
 });
 

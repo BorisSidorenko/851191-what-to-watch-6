@@ -32,7 +32,7 @@ const getRatingComoponents = (handleUserInput) => {
   return RATING_STARS.map((item, index) => <RaitingInput key={`raiting-${item}`} value={index} onRatingChange={handleUserInput} />);
 };
 
-const AddReviewForm = ({id, onSubmit}) => {
+const AddReviewForm = ({id, addMovieReview, loadReviewsByMovieId, redirectToRoute}) => {
   const [reviewFormData, setReviewFormData] = useState({
     rating: ``,
     comment: ``
@@ -47,7 +47,14 @@ const AddReviewForm = ({id, onSubmit}) => {
     evt.preventDefault();
     const revieForm = evt.target;
 
-    onSubmit(id, revieForm, reviewFormData);
+    addMovieReview(id, revieForm, reviewFormData)
+      .then((response) => {
+        needToDisableForm(revieForm, false);
+        return response;
+      })
+    .then(({data}) => loadReviewsByMovieId(data))
+    .then(() => redirectToRoute(id))
+    .catch(() => {});
   };
 
   const handleUserInput = ({target}) => {
@@ -89,20 +96,21 @@ RaitingInput.propTypes = {
 
 AddReviewForm.propTypes = {
   id: idProp,
-  onSubmit: PropTypes.func.isRequired
+  addMovieReview: PropTypes.func.isRequired,
+  loadReviewsByMovieId: PropTypes.func.isRequired,
+  redirectToRoute: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  onSubmit(id, form, formData) {
+  addMovieReview(id, form, formData) {
     needToDisableForm(form, true);
-    dispatch(addReview(id, formData))
-    .then((response) => {
-      needToDisableForm(form, false);
-      return response;
-    })
-    .then(({data}) => dispatch(ActionCreator.loadReviewsByMovieId(data)))
-    .then(() => dispatch(ActionCreator.redirectToRoute(`${RoutePaths.MOVIE_PAGE}/${id}`)))
-    .catch(() => {});
+    return dispatch(addReview(id, formData));
+  },
+  loadReviewsByMovieId(data) {
+    dispatch(ActionCreator.loadReviewsByMovieId(data));
+  },
+  redirectToRoute(id) {
+    dispatch(ActionCreator.redirectToRoute(`${RoutePaths.MOVIE_PAGE}/${id}`));
   }
 });
 
