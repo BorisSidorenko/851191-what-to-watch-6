@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import Logo from '../logo/logo';
@@ -39,4 +39,4 @@ Header.propTypes = {
   children: PropTypes.node
 };
 
-export default withRouter(Header);
+export default withRouter(memo(Header));
