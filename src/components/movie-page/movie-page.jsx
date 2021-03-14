@@ -1,12 +1,11 @@
 import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Link, Switch, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {movieProp} from '../props/movie-props';
+import {idProp, backgroundImageProp, nameProp, posterProp, genreProp, releasedProp, directorProp, starringProp, runTimeProp, ratingProp, descriptionProp, scoresCountProp} from '../props/movie-props';
 import {reviewProp} from '../props/review-prop';
 import Header from '../header/header';
 import MovieCardDescription from '../movie-card-description/movie-card-description';
-import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
 import MovieCardNavigation from '../movie-card-navigation/movie-card-navigation';
 import MovieCardOverview from '../movie-card-overview/movie-card-overview';
 import MovieCardReviews from '../movie-card-reviews/movie-card-reviews';
@@ -18,20 +17,12 @@ import {loadMovieById, loadReviewsByMovieId} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
 
-const getMovieCardDescComponent = (selectedMovie, reviewPageLink) => (
-  <MovieCardDescription {...selectedMovie}>
-    <MovieCardButtons>
-      <Link to={reviewPageLink} className="btn movie-card__button">Add review</Link>
-    </MovieCardButtons>
-  </MovieCardDescription>
-);
-
-const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoadDataMovie, onClearData, setSelectedMovie, redirectToNotFound, onLoadMovieReviews, loadMovieReviews}) => {
+const MoviePage = ({movie, selectedMovieReviews, match, location, onLoadDataMovie, onClearData, setSelectedMovie, redirectToNotFound, onLoadMovieReviews, loadMovieReviews}) => {
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
   const {id} = match.params;
 
   useEffect(() => {
-    if (selectedMovie && selectedMovie.id !== id) {
+    if (movie && movie.id !== id) {
       onClearData();
     }
 
@@ -49,7 +40,7 @@ const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoad
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            {selectedMovie ? <img src={selectedMovie.background_image} alt={selectedMovie.name} /> : <Loading />}
+            {movie ? <img src={movie.backgroundImage} alt={movie.name} /> : <Loading />}
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -57,14 +48,14 @@ const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoad
           <Header />
 
           <div className="movie-card__wrap">
-            {selectedMovie ? getMovieCardDescComponent(selectedMovie, reviewPageLink) : <Loading />}
+            {movie ? <MovieCardDescription name={movie.name} genre={movie.genre} released={movie.released} reviewPageLink={reviewPageLink} /> : <Loading />}
           </div>
         </div>
 
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              {selectedMovie ? <img src={selectedMovie.poster_image} alt={selectedMovie.name} width="218" height="327" /> : <Loading />}
+              {movie ? <img src={movie.poster} alt={movie.name} width="218" height="327" /> : <Loading />}
             </div>
 
             <div className="movie-card__desc">
@@ -78,10 +69,10 @@ const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoad
                   <MovieCardReviews reviews = {selectedMovieReviews}/>
                 </Route>
                 <Route exact path={`${match.path}${RoutePaths.MOVIE_DETAILS}`}>
-                  {selectedMovie ? <MovieCardDetails {...selectedMovie} /> : <Loading/>}
+                  {movie ? <MovieCardDetails {...movie} /> : <Loading/>}
                 </Route>
                 <Route exact path={match.path}>
-                  {selectedMovie ? <MovieCardOverview {...selectedMovie} /> : <Loading/>}
+                  {movie ? <MovieCardOverview {...movie} /> : <Loading/>}
                 </Route>
               </Switch>
 
@@ -106,7 +97,20 @@ const MoviePage = ({selectedMovie, selectedMovieReviews, match, location, onLoad
 };
 
 MoviePage.propTypes = {
-  selectedMovie: movieProp,
+  movie: PropTypes.shape({
+    id: idProp,
+    backgroundImage: backgroundImageProp,
+    name: nameProp,
+    poster: posterProp,
+    genre: genreProp,
+    released: releasedProp,
+    director: directorProp,
+    starring: starringProp,
+    duration: runTimeProp,
+    rating: ratingProp,
+    description: descriptionProp,
+    score: scoresCountProp
+  }),
   selectedMovieReviews: PropTypes.arrayOf(reviewProp),
   onLoadDataMovie: PropTypes.func.isRequired,
   onClearData: PropTypes.func.isRequired,
@@ -118,10 +122,27 @@ MoviePage.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({selectedMovie, selectedMovieReviews}) => ({
-  selectedMovie,
-  selectedMovieReviews
-});
+const mapStateToProps = ({selectedMovie, selectedMovieReviews}) => {
+  const movie = selectedMovie ? {
+    id: selectedMovie.id,
+    backgroundImage: selectedMovie.background_image,
+    name: selectedMovie.name,
+    poster: selectedMovie.poster_image,
+    genre: selectedMovie.genre,
+    released: selectedMovie.released,
+    director: selectedMovie.director,
+    starring: selectedMovie.starring,
+    duration: selectedMovie.run_time,
+    rating: selectedMovie.rating,
+    description: selectedMovie.description,
+    score: selectedMovie.scores_count
+  } : selectedMovie;
+
+  return ({
+    movie,
+    selectedMovieReviews
+  });
+};
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadDataMovie(id) {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, memo} from 'react';
 import PropTypes from 'prop-types';
 import GenresList from '../genres-list/genres-list';
 import MoviesList from '../movies-list/movies-list';
@@ -38,4 +38,4 @@ Catalog.propTypes = {
   children: PropTypes.node
 };
 
-export default Catalog;
+export default memo(Catalog);
