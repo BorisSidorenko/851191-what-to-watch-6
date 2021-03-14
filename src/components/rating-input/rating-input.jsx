@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import PropTypes from 'prop-types';
 import {RATING_STARS} from '../../utils/constatns';
 
@@ -20,4 +20,4 @@ RatingInput.propTypes = {
   onRatingChange: PropTypes.func.isRequired
 };
 
-export default RatingInput;
+export default memo(RatingInput);

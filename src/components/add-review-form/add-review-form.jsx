@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {RATING_STARS} from '../../utils/constatns';
@@ -50,11 +50,13 @@ const AddReviewForm = ({id, addMovieReview, loadReviewsByMovieId, redirectToRout
     setReviewFormData({...reviewFormData, [name]: value});
   };
 
+  const rating = useMemo(() => getRatingComoponents(handleUserInput));
+
   return (
     <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
       <div className="rating">
         <div className="rating__stars">
-          {getRatingComoponents(handleUserInput)}
+          {rating}
         </div>
       </div>
 
