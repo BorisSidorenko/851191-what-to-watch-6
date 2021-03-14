@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import Logo from '../logo/logo';
 
 const Footer = () => (
@@ -13,4 +13,4 @@ const Footer = () => (
   </footer>
 );
 
-export default Footer;
+export default memo(Footer);
