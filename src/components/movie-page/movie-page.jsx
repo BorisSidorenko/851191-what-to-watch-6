@@ -86,9 +86,7 @@ const MoviePage = ({movie, selectedMovieReviews, match, location, onLoadDataMovi
           showGenres={false}
           shwoButton={false}
           catalogClass = "catalog catalog--like-this"
-        >
-          <h2 className="catalog__title">More like this</h2>
-        </Catalog>
+        />
 
         <Footer />
       </div>
