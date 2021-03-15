@@ -50,7 +50,9 @@ PromoMovie.propTypes = {
   setPromo: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({isPromoLoaded, selectedMovie}) => {
+const mapStateToProps = ({DATA}) => {
+  const {isPromoLoaded, selectedMovie} = DATA;
+
   const promoMovie = selectedMovie ? {
     backgroundImage: selectedMovie.background_image,
     name: selectedMovie.name,

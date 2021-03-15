@@ -120,7 +120,9 @@ MoviePage.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({selectedMovie, selectedMovieReviews}) => {
+const mapStateToProps = ({DATA}) => {
+  const {selectedMovie, selectedMovieReviews} = DATA;
+
   const movie = selectedMovie ? {
     id: selectedMovie.id,
     backgroundImage: selectedMovie.background_image,

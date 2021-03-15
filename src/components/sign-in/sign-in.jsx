@@ -61,7 +61,7 @@ SignIn.propTypes = {
   redirectToRoute: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({requestedRoute}) => ({requestedRoute});
+const mapStateToProps = ({USER}) => ({requestedRoute: USER.requestedRoute});
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(formData) {

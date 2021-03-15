@@ -24,9 +24,13 @@ UserBlockAvatar.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({user}) => ({
-  avatar: user.avatar_url,
-  name: user.name
-});
+const mapStateToProps = ({USER}) => {
+  const {user} = USER;
+
+  return ({
+    avatar: user.avatar_url,
+    name: user.name
+  });
+};
 
 export default withRouter(connect(mapStateToProps)(UserBlockAvatar));

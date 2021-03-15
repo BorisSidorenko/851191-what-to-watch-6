@@ -82,8 +82,8 @@ VideoPlayer.propTypes = {
   isPreview: PropTypes.bool
 };
 
-const mapStateToProps = ({movies}) => ({
-  movies
+const mapStateToProps = ({DATA}) => ({
+  movies: DATA.movies
 });
 
 export default connect(mapStateToProps)(VideoPlayer);

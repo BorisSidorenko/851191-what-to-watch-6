@@ -40,7 +40,7 @@ App.propTypes = {
   requireAuthorization: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
+const mapStateToProps = ({USER}) => ({isAuthtorized: USER.isAuthtorized});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoad(onCheckComplete) {

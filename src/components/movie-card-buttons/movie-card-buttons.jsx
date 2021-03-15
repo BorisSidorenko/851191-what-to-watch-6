@@ -20,6 +20,6 @@ MovieCardButtons.propTypes = {
   reviewPageLink: PropTypes.string
 };
 
-const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
+const mapStateToProps = ({USER}) => ({isAuthtorized: USER.isAuthtorized});
 
 export default withRouter(connect(mapStateToProps)(MovieCardButtons));

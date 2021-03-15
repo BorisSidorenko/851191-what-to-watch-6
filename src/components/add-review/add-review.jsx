@@ -60,7 +60,7 @@ AddReview.propTypes = {
   redirectToRoute: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({selectedMovie}) => ({selectedMovie});
+const mapStateToProps = ({DATA}) => ({selectedMovie: DATA.selectedMovie});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {

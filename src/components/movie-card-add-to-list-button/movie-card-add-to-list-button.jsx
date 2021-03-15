@@ -39,9 +39,9 @@ MovieCardAddToListButton.propTypes = {
   markMovieAsFavorite: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({selectedMovie}) => ({
-  id: selectedMovie.id,
-  isFavorite: selectedMovie.is_favorite
+const mapStateToProps = ({DATA}) => ({
+  id: DATA.selectedMovie.id,
+  isFavorite: DATA.selectedMovie.is_favorite
 });
 
 const mapDispatchToProps = (dispatch) => ({

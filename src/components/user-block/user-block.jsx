@@ -14,6 +14,6 @@ UserBlock.propTypes = {
   isAuthtorized: PropTypes.bool
 };
 
-const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
+const mapStateToProps = ({USER}) => ({isAuthtorized: USER.isAuthtorized});
 
 export default connect(mapStateToProps)(UserBlock);

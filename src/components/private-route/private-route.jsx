@@ -25,7 +25,7 @@ PrivateRoute.propTypes = {
   isAuthtorized: PropTypes.bool
 };
 
-const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
+const mapStateToProps = ({USER}) => ({isAuthtorized: USER.isAuthtorized});
 
 const mapDispatchToProps = (dispatch) => ({
   onPrivateRouteRequest(route) {

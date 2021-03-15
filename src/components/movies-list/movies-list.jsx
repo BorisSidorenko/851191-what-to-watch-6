@@ -65,7 +65,7 @@ MoviesList.propTypes = {
 };
 
 const mapStateToProps = (state, componentProps) => {
-  const targetMovies = getMovieByPathName(state, componentProps);
+  const targetMovies = getMovieByPathName(state.DATA, componentProps);
 
   return {
     targetMovies

@@ -36,9 +36,9 @@ const GenresList = ({currentGenre, movies, onGenreClick, onGenreChange}) => {
   );
 };
 
-const mapStateToProps = ({genre, movies}) => ({
-  currentGenre: genre,
-  movies
+const mapStateToProps = ({DATA}) => ({
+  currentGenre: DATA.genre,
+  movies: DATA.movies
 });
 
 const mapDispatchToProps = (dispatch) => ({
