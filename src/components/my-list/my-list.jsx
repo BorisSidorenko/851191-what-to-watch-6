@@ -12,9 +12,7 @@ const MyList = () => (
     <Catalog
       catalogClass="catalog"
       showGenres={false}
-    >
-      <h2 className="catalog__title visually-hidden">Catalog</h2>
-    </Catalog>
+    />
 
     <Footer />
   </div>
