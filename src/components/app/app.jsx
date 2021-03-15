@@ -8,6 +8,7 @@ import {ActionCreator} from '../../store/action';
 import {connect} from 'react-redux';
 import AuthCheck from '../auth-check/auth-check';
 import {AuthorizationStatus} from '../../utils/constatns';
+import {getIsAuthtorizedFlag} from '../../store/user/selectors';
 
 
 const App = ({isAuthtorized, onLoad, login, requireAuthorization}) => {
@@ -40,7 +41,7 @@ App.propTypes = {
   requireAuthorization: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({USER}) => ({isAuthtorized: USER.isAuthtorized});
+const mapStateToProps = (state) => ({isAuthtorized: getIsAuthtorizedFlag(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoad(onCheckComplete) {

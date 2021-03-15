@@ -9,6 +9,7 @@ import {loadMovieList} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
 import NothingToDisplay from '../nothing-to-display/nothing-to-display';
+import {getMovies, getGenre} from '../../store/data/selectors';
 
 const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouseLeave, currentMovieId) => {
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
@@ -65,7 +66,10 @@ MoviesList.propTypes = {
 };
 
 const mapStateToProps = (state, componentProps) => {
-  const targetMovies = getMovieByPathName(state.DATA, componentProps);
+  const movies = getMovies(state);
+  const genre = getGenre(state);
+
+  const targetMovies = getMovieByPathName(movies, genre, componentProps);
 
   return {
     targetMovies

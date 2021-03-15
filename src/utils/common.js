@@ -58,7 +58,7 @@ export const needToDisableForm = (form, needToDisable) => {
   });
 };
 
-export const getMovieByPathName = ({movies, genre}, {match, location}) => {
+export const getMovieByPathName = (movies, genre, {match, location}) => {
   const {id} = match.params;
 
   const movie = getMovieById(movies, id);

@@ -6,6 +6,7 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import {ActionCreator} from '../../store/action';
 import {AuthorizationStatus} from '../../utils/constatns';
+import {getRequestedRoute} from '../../store/user/selectors';
 
 const AMOUT_OF_PASSWORD_CHARACTERS = 6;
 
@@ -61,7 +62,7 @@ SignIn.propTypes = {
   redirectToRoute: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({USER}) => ({requestedRoute: USER.requestedRoute});
+const mapStateToProps = (state) => ({requestedRoute: getRequestedRoute(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onSubmit(formData) {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import {RoutePaths} from '../../utils/constatns';
+import {getUser} from '../../store/user/selectors';
 
 const getAvatarComponent = (avatar, name) => (
   <img src={avatar} alt={name} width="63" height="63" />
@@ -24,8 +25,8 @@ UserBlockAvatar.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({USER}) => {
-  const {user} = USER;
+const mapStateToProps = (state) => {
+  const user = getUser(state);
 
   return ({
     avatar: user.avatar_url,

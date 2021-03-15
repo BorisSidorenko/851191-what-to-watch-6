@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {idProp} from '../props/movie-props';
 import {addMovieToFavorite} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
+import {getSelectedMovie} from '../../store/data/selectors';
 
 const getSVGInList = () => (
   <svg viewBox="0 0 18 14" width="18" height="14">
@@ -39,10 +40,14 @@ MovieCardAddToListButton.propTypes = {
   markMovieAsFavorite: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = ({DATA}) => ({
-  id: DATA.selectedMovie.id,
-  isFavorite: DATA.selectedMovie.is_favorite
-});
+const mapStateToProps = (state) => {
+  const movie = getSelectedMovie(state);
+
+  return ({
+    id: movie.id,
+    isFavorite: movie.is_favorite
+  });
+};
 
 const mapDispatchToProps = (dispatch) => ({
   onAddButtonClick(movieId, isFavorite) {

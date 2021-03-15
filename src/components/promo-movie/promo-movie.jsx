@@ -8,6 +8,7 @@ import {backgroundImageProp, nameProp, posterProp, genreProp, releasedProp} from
 import {loadPromoMovie} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
+import {getIsPromoLoadedFlag, getSelectedMovie} from '../../store/data/selectors';
 
 const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData, onIsPromoLoadedClearFlag, setPromo}) => {
   useEffect(() => {
@@ -50,8 +51,9 @@ PromoMovie.propTypes = {
   setPromo: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({DATA}) => {
-  const {isPromoLoaded, selectedMovie} = DATA;
+const mapStateToProps = (state) => {
+  const isPromoLoaded = getIsPromoLoadedFlag(state);
+  const selectedMovie = getSelectedMovie(state);
 
   const promoMovie = selectedMovie ? {
     backgroundImage: selectedMovie.background_image,

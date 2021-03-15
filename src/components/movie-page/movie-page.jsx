@@ -16,6 +16,7 @@ import {RoutePaths} from '../../utils/constatns';
 import {loadMovieById, loadReviewsByMovieId} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
 import Loading from '../loading/loading';
+import {getSelectedMovie, getSelectedMovieReviews} from '../../store/data/selectors';
 
 const MoviePage = ({movie, selectedMovieReviews, match, location, onLoadDataMovie, onClearData, setSelectedMovie, redirectToNotFound, onLoadMovieReviews, loadMovieReviews}) => {
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
@@ -120,8 +121,9 @@ MoviePage.propTypes = {
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = ({DATA}) => {
-  const {selectedMovie, selectedMovieReviews} = DATA;
+const mapStateToProps = (state) => {
+  const selectedMovie = getSelectedMovie(state);
+  const selectedMovieReviews = getSelectedMovieReviews(state);
 
   const movie = selectedMovie ? {
     id: selectedMovie.id,

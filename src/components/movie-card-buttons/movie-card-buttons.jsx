@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import MovieCardPlayButton from '../movie-card-play-button/movie-card-play-button';
 import MovieCardAddToListButton from '../movie-card-add-to-list-button/movie-card-add-to-list-button';
+import {getIsAuthtorizedFlag} from '../../store/user/selectors';
 
 const MovieCardButtons = ({isAuthtorized, reviewPageLink}) => (
   <div className="movie-card__buttons">
@@ -20,6 +21,6 @@ MovieCardButtons.propTypes = {
   reviewPageLink: PropTypes.string
 };
 
-const mapStateToProps = ({USER}) => ({isAuthtorized: USER.isAuthtorized});
+const mapStateToProps = (state) => ({isAuthtorized: getIsAuthtorizedFlag(state)});
 
 export default withRouter(connect(mapStateToProps)(MovieCardButtons));
