@@ -1,5 +1,5 @@
 export const ActionType = {
-  CHANGE_GENRE: `genres/changeGenre`,
+  CHANGE_GENRE: `data/changeGenre`,
   LOGIN: `user/login`,
   REQUIRED_AUTH: `user/requireAuthorization`,
   ADD_REQUESTED_ROUTE: `user/addRequestedRoute`,

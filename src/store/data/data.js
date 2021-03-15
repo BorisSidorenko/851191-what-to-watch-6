@@ -1,24 +1,16 @@
-import {DEFAULT_GENRE, RoutePaths} from '../utils/constatns';
-import {ActionType} from '../store/action';
+import {DEFAULT_GENRE} from '../../utils/constatns';
+import {ActionType} from '../../store/action';
 
 const initialState = {
-  user: null,
   movies: [],
   selectedMovie: null,
   selectedMovieReviews: [],
   genre: DEFAULT_GENRE,
-  isAuthtorized: null,
-  isPromoLoaded: false,
-  requestedRoute: RoutePaths.MAIN
+  isPromoLoaded: false
 };
 
-export const reducer = (state = initialState, action) => {
+export const data = (state = initialState, action) => {
   switch (action.type) {
-    case ActionType.LOGIN:
-      return {
-        ...state,
-        user: action.payload
-      };
     case ActionType.LOAD_PROMO:
       return {
         ...state,
@@ -54,16 +46,6 @@ export const reducer = (state = initialState, action) => {
       return {
         ...state,
         genre: action.payload
-      };
-    case ActionType.REQUIRED_AUTH:
-      return {
-        ...state,
-        isAuthtorized: action.payload
-      };
-    case ActionType.ADD_REQUESTED_ROUTE:
-      return {
-        ...state,
-        requestedRoute: action.payload
       };
     case ActionType.MARK_MOVIE_AS_FAVORITE:
       return {
