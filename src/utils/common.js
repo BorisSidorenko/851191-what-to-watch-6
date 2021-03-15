@@ -1,5 +1,5 @@
-import {MovieRatingDesc, AMOUNT_OF_SIMILAR_MOVIES, RoutePaths} from './constatns';
-import {DEFAULT_GENRE} from './constatns';
+import {MovieRatingDesc, RoutePaths} from './constatns';
+import {getFavoriteMoviesSelector, getSimilarMoviesSelector, getMoviesByGenreSelector} from '../store/data/selectors';
 
 export const getRandomIntInRange = (a = 1, b = 0) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -31,44 +31,19 @@ export const getRatingDescription = (rating) => {
 
 export const getMovieById = (movies, movieId) => movieId ? movies.find(({id}) => id.toString() === movieId.toString()) : undefined;
 
-export const getMoviesByGenre = (movies, selectedGenre) => {
-  if (selectedGenre !== DEFAULT_GENRE) {
-    return movies.filter(({genre}) => genre === selectedGenre);
-  }
-
-  return movies;
-};
-
-export const getSimilarMovies = (allMovies, movie) => {
-  if (movie) {
-    const {id: clickedMovieId, genre: similarGenre} = movie;
-    const allMoviesSameGenre = allMovies.filter(({id, genre}) => genre === similarGenre && id !== clickedMovieId);
-    const similarMoviesToShow = allMoviesSameGenre.slice(0, AMOUNT_OF_SIMILAR_MOVIES);
-    return similarMoviesToShow;
-  }
-
-  return undefined;
-};
-
-export const getFavoriteMovies = (movies) => movies.filter((movie) => movie.is_favorite);
-
 export const needToDisableForm = (form, needToDisable) => {
   Array.from(form.elements).forEach((el) => {
     el.disabled = needToDisable;
   });
 };
 
-export const getMovieByPathName = (movies, genre, {match, location}) => {
-  const {id} = match.params;
-
-  const movie = getMovieById(movies, id);
-
+export const getMovieByPathName = (state, {location}) => {
   switch (location.pathname) {
     case RoutePaths.MY_LIST:
-      return getFavoriteMovies(movies);
+      return getFavoriteMoviesSelector(state);
     case RoutePaths.MAIN:
-      return getMoviesByGenre(movies, genre);
+      return getMoviesByGenreSelector(state);
     default:
-      return getSimilarMovies(movies, movie);
+      return getSimilarMoviesSelector(state);
   }
 };
