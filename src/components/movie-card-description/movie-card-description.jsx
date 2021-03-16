@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {memo} from 'react';
 import PropTypes from 'prop-types';
 import {nameProp, genreProp, releasedProp} from '../props/movie-props';
+import MovieCardButtons from '../movie-card-buttons/movie-card-buttons';
 
-const MovieCardDescription = ({name, genre, released, children}) => (
+const MovieCardDescription = ({name, genre, released, reviewPageLink}) => (
   <div className="movie-card__desc">
     <h2 className="movie-card__title">{name}</h2>
     <p className="movie-card__meta">
@@ -10,19 +11,19 @@ const MovieCardDescription = ({name, genre, released, children}) => (
       <span className="movie-card__year">{released}</span>
     </p>
 
-    {children}
+    <MovieCardButtons reviewPageLink={reviewPageLink}/>
 
   </div>
 );
 
 MovieCardDescription.propTypes = {
-  children: PropTypes.element.isRequired
+  reviewPageLink: PropTypes.string
 };
 
 MovieCardDescription.propTypes = {
-  "name": nameProp,
-  "genre": genreProp,
-  "released": releasedProp
+  name: nameProp,
+  genre: genreProp,
+  released: releasedProp
 };
 
-export default MovieCardDescription;
+export default memo(MovieCardDescription);

@@ -5,6 +5,7 @@ import ExitButton from '../exit-button/exit-button';
 import VideoPlayerControls from '../video-player-controls/video-player-controls';
 import {getMovieById} from '../../utils/common';
 import {movieProp, idProp} from '../props/movie-props';
+import {getMovies} from '../../store/data/selectors';
 
 const VideoPlayer = ({movies, movieId, isPreview = false}) => {
   const {id, run_time: movieDuration, preview_video_link: previewVideo, video_link: video} = getMovieById(movies, movieId);
@@ -82,8 +83,6 @@ VideoPlayer.propTypes = {
   isPreview: PropTypes.bool
 };
 
-const mapStateToProps = ({movies}) => ({
-  movies
-});
+const mapStateToProps = (state) => ({movies: getMovies(state)});
 
 export default connect(mapStateToProps)(VideoPlayer);

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useMemo} from 'react';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types';
 import {RATING_STARS} from '../../utils/constatns';
@@ -7,29 +7,17 @@ import {idProp} from '../../components/props/movie-props';
 import {needToDisableForm} from '../../utils/common';
 import {RoutePaths} from '../../utils/constatns';
 import {ActionCreator} from '../../store/action';
+import RatingInput from '../rating-input/rating-input';
 
 const COMMENT_LENGTH_MIN = 50;
 const COMMENT_LENGTH_MAX = 400;
-
-const RaitingInput = ({value, onRatingChange}) => {
-  const starNumber = RATING_STARS[value];
-  const inputId = `star-${starNumber}`;
-  const labelValue = `Rating ${starNumber}`;
-
-  return (
-    <>
-      <input onChange={onRatingChange} className="rating__input" id={inputId} type="radio" name="rating" value={starNumber}/>
-      <label className="rating__label" htmlFor={inputId}>{labelValue}</label>
-    </>
-  );
-};
 
 const isRatingInvalid = (rating) => !rating || isNaN(rating) || !RATING_STARS.includes(parseInt(rating, 10));
 
 const isCommentInvalid = (comment) => !comment || comment.length < COMMENT_LENGTH_MIN || comment.length > COMMENT_LENGTH_MAX;
 
 const getRatingComoponents = (handleUserInput) => {
-  return RATING_STARS.map((item, index) => <RaitingInput key={`raiting-${item}`} value={index} onRatingChange={handleUserInput} />);
+  return RATING_STARS.map((item, index) => <RatingInput key={`raiting-${item}`} value={index} onRatingChange={handleUserInput} />);
 };
 
 const AddReviewForm = ({id, addMovieReview, loadReviewsByMovieId, redirectToRoute}) => {
@@ -62,11 +50,13 @@ const AddReviewForm = ({id, addMovieReview, loadReviewsByMovieId, redirectToRout
     setReviewFormData({...reviewFormData, [name]: value});
   };
 
+  const rating = useMemo(() => getRatingComoponents(handleUserInput));
+
   return (
     <form action="#" className="add-review__form" onSubmit={handleFormSubmit}>
       <div className="rating">
         <div className="rating__stars">
-          {getRatingComoponents(handleUserInput)}
+          {rating}
         </div>
       </div>
 
@@ -87,11 +77,6 @@ const AddReviewForm = ({id, addMovieReview, loadReviewsByMovieId, redirectToRout
       </div>
     </form>
   );
-};
-
-RaitingInput.propTypes = {
-  value: PropTypes.number.isRequired,
-  onRatingChange: PropTypes.func.isRequired
 };
 
 AddReviewForm.propTypes = {

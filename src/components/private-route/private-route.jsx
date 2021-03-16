@@ -4,6 +4,7 @@ import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {RoutePaths} from '../../utils/constatns';
 import {ActionCreator} from '../../store/action';
+import {getIsAuthtorizedFlag} from '../../store/user/selectors';
 
 const handleUserNotAuthtorized = ({location}, onPrivateRouteRequest) => {
   onPrivateRouteRequest(location.pathname);
@@ -25,7 +26,7 @@ PrivateRoute.propTypes = {
   isAuthtorized: PropTypes.bool
 };
 
-const mapStateToProps = ({isAuthtorized}) => ({isAuthtorized});
+const mapStateToProps = (state) => ({isAuthtorized: getIsAuthtorizedFlag(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onPrivateRouteRequest(route) {

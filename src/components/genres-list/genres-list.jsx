@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import {movieProp, genreProp} from '../props/movie-props';
 import {ActionCreator} from '../../store/action';
 import {DEFAULT_CARDS_COUNT_TO_DISPLAY} from '../../utils/constatns';
+import {getGenre, getMovies} from '../../store/data/selectors';
 
 const Genre = ({genre, onGenreClick, isCurrentGenre, onGenreChange}) => {
   const handleGenreChange = (evt) => {
@@ -36,9 +37,9 @@ const GenresList = ({currentGenre, movies, onGenreClick, onGenreChange}) => {
   );
 };
 
-const mapStateToProps = ({genre, movies}) => ({
-  currentGenre: genre,
-  movies
+const mapStateToProps = (state) => ({
+  currentGenre: getGenre(state),
+  movies: getMovies(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

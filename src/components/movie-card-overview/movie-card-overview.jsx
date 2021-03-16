@@ -1,33 +1,37 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {getRatingDescription} from '../../utils/common';
 import {directorProp, descriptionProp, starringProp, ratingProp, scoresCountProp} from '../props/movie-props';
 
-const MovieCardOverview = ({rating, description, director, starring, scores_count: score}) => (
-  <>
-    <div className="movie-rating">
-      <div className="movie-rating__score">{rating}</div>
-      <p className="movie-rating__meta">
-        <span className="movie-rating__level">{getRatingDescription(rating)}</span>
-        <span className="movie-rating__count">{score} ratings</span>
-      </p>
-    </div>
+const MovieCardOverview = ({rating, description, director, starring, score}) => {
+  const raitingDesc = useMemo(() => getRatingDescription(rating));
 
-    <div className="movie-card__text">
-      <p>{description}</p>
+  return (
+    <>
+      <div className="movie-rating">
+        <div className="movie-rating__score">{rating}</div>
+        <p className="movie-rating__meta">
+          <span className="movie-rating__level">{raitingDesc}</span>
+          <span className="movie-rating__count">{score} ratings</span>
+        </p>
+      </div>
 
-      <p className="movie-card__director"><strong>Director: {director}</strong></p>
+      <div className="movie-card__text">
+        <p>{description}</p>
 
-      <p className="movie-card__starring"><strong>Starring: {starring.join(`, `)}</strong></p>
-    </div>
-  </>
-);
+        <p className="movie-card__director"><strong>Director: {director}</strong></p>
+
+        <p className="movie-card__starring"><strong>Starring: {starring.join(`, `)}</strong></p>
+      </div>
+    </>
+  );
+};
 
 MovieCardOverview.propTypes = {
-  "rating": ratingProp,
-  "description": descriptionProp,
-  "director": directorProp,
-  "starring": starringProp,
-  "scores_count": scoresCountProp
+  rating: ratingProp,
+  description: descriptionProp,
+  director: directorProp,
+  starring: starringProp,
+  score: scoresCountProp
 };
 
 export default MovieCardOverview;

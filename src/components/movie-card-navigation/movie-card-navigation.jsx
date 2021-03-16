@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {NavLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -41,4 +41,4 @@ MovieCardNavigation.propTypes = {
   pathname: PropTypes.string.isRequired
 };
 
-export default MovieCardNavigation;
+export default memo(MovieCardNavigation);

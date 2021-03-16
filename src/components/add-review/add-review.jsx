@@ -9,6 +9,7 @@ import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Loading from '../loading/loading';
 import {RoutePaths} from '../../utils/constatns';
+import {getSelectedMovie} from '../../store/data/selectors';
 
 const AddReview = ({selectedMovie, match, onClearData, onLoadData, setSelectedMovie, redirectToRoute}) => {
   const {id} = match.params;
@@ -60,7 +61,7 @@ AddReview.propTypes = {
   redirectToRoute: PropTypes.func.isRequired
 };
 
-const mapStateToProps = ({selectedMovie}) => ({selectedMovie});
+const mapStateToProps = (state) => ({selectedMovie: getSelectedMovie(state)});
 
 const mapDispatchToProps = (dispatch) => ({
   onLoadData(id) {
