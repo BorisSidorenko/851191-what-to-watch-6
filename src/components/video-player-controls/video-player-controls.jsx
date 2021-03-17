@@ -7,7 +7,8 @@ dayjs.extend(duration);
 
 const getHumanizeDuration = (durationInMinutes) => {
   const parsedDuration = dayjs.duration(durationInMinutes, `minutes`);
-  return `${parsedDuration.$d.hours}:${parsedDuration.$d.minutes}`;
+  const {hours, minutes, seconds} = parsedDuration.$d;
+  return `${hours}:${minutes}:${seconds > 0 ? seconds : `00`}`;
 };
 
 const PauseButtonIcon = () => (
