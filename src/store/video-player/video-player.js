@@ -1,9 +1,11 @@
 import {ActionType} from '../../store/action';
+import {RoutePaths} from '../../utils/constatns';
 
 const initialState = {
   movieToPlay: null,
   isLoading: true,
-  isPlaying: false
+  isPlaying: false,
+  requestedPlayerPath: RoutePaths.MAIN
 };
 
 export const videoPlayer = (state = initialState, action) => {
@@ -12,6 +14,11 @@ export const videoPlayer = (state = initialState, action) => {
       return {
         ...state,
         movieToPlay: action.payload
+      };
+    case ActionType.VIDEO_PLAYER_REQUESTED_PATH:
+      return {
+        ...state,
+        requestedPlayerPath: action.payload
       };
     case ActionType.VIDEO_PLAYER_LOADED:
       return {

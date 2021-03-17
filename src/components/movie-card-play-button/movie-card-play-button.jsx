@@ -1,15 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {getSelectedMovie} from '../../store/data/selectors';
 import {RoutePaths} from '../../utils/constatns';
 import {idProp} from '../props/movie-props';
+import {ActionCreator} from '../../store/action';
 
-const MovieCardPlayButton = ({id}) => {
+const MovieCardPlayButton = ({id, onRequestedPlayerPath}) => {
   const history = useHistory();
   const playerPath = `${RoutePaths.PLAYER}/${id}`;
 
   const handlePlayButtonClick = () => {
+    onRequestedPlayerPath(history.location.pathname);
     history.push(playerPath);
   };
 
@@ -24,9 +27,16 @@ const MovieCardPlayButton = ({id}) => {
 };
 
 MovieCardPlayButton.propTypes = {
-  id: idProp
+  id: idProp,
+  onRequestedPlayerPath: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({id: getSelectedMovie(state).id});
 
-export default connect(mapStateToProps)(MovieCardPlayButton);
+const mapDispatchToProps = (dispatch) => ({
+  onRequestedPlayerPath(path) {
+    dispatch(ActionCreator.addRequestedPlayerPath(path));
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MovieCardPlayButton);

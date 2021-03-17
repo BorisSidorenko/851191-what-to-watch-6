@@ -15,7 +15,8 @@ export const ActionType = {
   VIDEO_PLAYER_MOVIE: `player/movie`,
   VIDEO_PLAYER_LOADED: `player/movieLoaded`,
   VIDEO_PLAYER_PLAYING: `player/moviePlay`,
-  VIDEO_PLAYER_PAUSE: `player/moviePause`
+  VIDEO_PLAYER_PAUSE: `player/moviePause`,
+  VIDEO_PLAYER_REQUESTED_PATH: `player/requestedPath`
 };
 
 export const ActionCreator = {
@@ -74,6 +75,10 @@ export const ActionCreator = {
     type: ActionType.VIDEO_PLAYER_MOVIE,
     payload: data
   }),
+  playerRequestedPath: (data) => ({
+    type: ActionType.VIDEO_PLAYER_MOVIE,
+    payload: data
+  }),
   playerMovieLoaded: () => ({
     type: ActionType.VIDEO_PLAYER_LOADED
   }),
@@ -82,5 +87,9 @@ export const ActionCreator = {
   }),
   playerMoviePause: () => ({
     type: ActionType.VIDEO_PLAYER_PAUSE
+  }),
+  addRequestedPlayerPath: (data) => ({
+    type: ActionType.VIDEO_PLAYER_REQUESTED_PATH,
+    payload: data
   })
 };
