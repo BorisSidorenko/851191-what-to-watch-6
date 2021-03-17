@@ -31,6 +31,7 @@ const VideoPlayer = ({movie, movieId, isPreview = false, isMovieLoading, isMovie
       .then(({data}) => setMovieToPlay(data))
       .then(() => onMovieLoaded())
       .catch(() => redirectToNotFound());
+    return () => onMoviePause();
   }, [movieId]);
 
   const videoRef = useRef();
