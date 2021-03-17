@@ -29,7 +29,7 @@ const PlayButtonIcon = () => (
 );
 
 
-const VideoPlayerControls = ({isPlaying, isLoading, movieDuration, onPlayButtonClick}) => (
+const VideoPlayerControls = ({isPlaying, isLoading, movieDuration, onPlayButtonClick, onFullScreenButtonClick}) => (
   <div className="player__controls">
     <div className="player__controls-row">
       <div className="player__time">
@@ -44,7 +44,7 @@ const VideoPlayerControls = ({isPlaying, isLoading, movieDuration, onPlayButtonC
         {isPlaying ? <PauseButtonIcon /> : <PlayButtonIcon />}
       </button>
       <div className="player__name">Transpotting</div>
-      <button type="button" className="player__full-screen">
+      <button type="button" className="player__full-screen" onClick={onFullScreenButtonClick}>
         <svg viewBox="0 0 27 27" width="27" height="27">
           <use xlinkHref="#full-screen"></use>
         </svg>
@@ -58,7 +58,8 @@ VideoPlayerControls.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   movieDuration: runTimeProp,
-  onPlayButtonClick: PropTypes.func.isRequired
+  onPlayButtonClick: PropTypes.func.isRequired,
+  onFullScreenButtonClick: PropTypes.func.isRequired
 };
 
 export default VideoPlayerControls;

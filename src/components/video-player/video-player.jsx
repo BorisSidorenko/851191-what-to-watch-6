@@ -11,13 +11,19 @@ import {loadMovieById} from '../../api/api-actions';
 import Loading from '../loading/loading';
 import {RoutePaths} from '../../utils/constatns';
 
-const getVideoPlayerComponents = (isPreview, videoRef, movie, isMoviePlaying, isMovieLoading, onPlayButtonClick) => (
-  <>
-    <video ref={videoRef} src={isPreview ? movie.preview_video_link : movie.video_link} className="player__video" poster="img/player-poster.jpg"></video>
-    {isPreview || <ExitButton />}
-    {isPreview || <VideoPlayerControls isPlaying={isMoviePlaying} isLoading={isMovieLoading} movieDuration={movie.run_time} onPlayButtonClick={onPlayButtonClick}/>}
-  </>
-);
+const getVideoPlayerComponents = (isPreview, videoRef, movie, isMoviePlaying, isMovieLoading, handlePlayButtonClick) => {
+  const handleFullScreenButtonClick = () => {
+    videoRef.current.requestFullscreen();
+  };
+
+  return (
+    <>
+      <video ref={videoRef} src={isPreview ? movie.preview_video_link : movie.video_link} className="player__video" poster="img/player-poster.jpg"></video>
+      {isPreview || <ExitButton />}
+      {isPreview || <VideoPlayerControls isPlaying={isMoviePlaying} isLoading={isMovieLoading} movieDuration={movie.run_time} onPlayButtonClick={handlePlayButtonClick} onFullScreenButtonClick={handleFullScreenButtonClick}/>}
+    </>
+  );
+};
 
 const VideoPlayer = ({movie, movieId, isPreview = false, isMovieLoading, isMoviePlaying, onLoadDataMovie, setMovieToPlay, onMovieLoaded, onMoviePlay, onMoviePause, redirectToNotFound}) => {
   useEffect(() => {
@@ -56,11 +62,11 @@ const VideoPlayer = ({movie, movieId, isPreview = false, isMovieLoading, isMovie
     }
   }, [isMoviePlaying]);
 
-  const onPlayButtonClick = () => isMoviePlaying ? onMoviePause() : onMoviePlay();
+  const handlePlayButtonClick = () => isMoviePlaying ? onMoviePause() : onMoviePlay();
 
   return (
     <div className="player">
-      {isMovieLoading && !movie ? <Loading /> : getVideoPlayerComponents(isPreview, videoRef, movie, isMoviePlaying, isMovieLoading, onPlayButtonClick)};
+      {isMovieLoading && !movie ? <Loading /> : getVideoPlayerComponents(isPreview, videoRef, movie, isMoviePlaying, isMovieLoading, handlePlayButtonClick)};
     </div>
   );
 };
