@@ -21,7 +21,7 @@ const SignIn = ({requestedRoute, onSubmit, setAuth, setRequireAuthorization, red
       password: password.value
     })
       .then(({data}) => setAuth(data))
-      .then(() => setRequireAuthorization())
+      .then(setRequireAuthorization)
       .then(() => redirectToRoute(requestedRoute));
   };
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {getSelectedMovie} from '../../store/data/selectors';
 import {RoutePaths} from '../../utils/constatns';
 import {idProp} from '../props/movie-props';
@@ -13,16 +13,15 @@ const MovieCardPlayButton = ({id, onRequestedPlayerPath}) => {
 
   const handlePlayButtonClick = () => {
     onRequestedPlayerPath(history.location.pathname);
-    history.push(playerPath);
   };
 
   return (
-    <button className="btn btn--play movie-card__button" type="button" onClick={handlePlayButtonClick}>
+    <Link to={playerPath} className="btn btn--play movie-card__button" onClick={handlePlayButtonClick}>
       <svg viewBox="0 0 19 19" width="19" height="19">
         <use xlinkHref="#play-s"></use>
       </svg>
       <span>Play</span>
-    </button>
+    </Link>
   );
 };
 

@@ -18,7 +18,7 @@ const App = ({isAuthtorized, onLoad, login, requireAuthorization}) => {
     if (isChecking) {
       onLoad()
         .then(({data}) => login(data))
-        .then(() => requireAuthorization())
+        .then(requireAuthorization)
         .catch(() => setIsChecking(false));
     }
   }, []);
