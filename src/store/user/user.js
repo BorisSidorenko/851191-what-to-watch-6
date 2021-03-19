@@ -1,5 +1,6 @@
 import {RoutePaths} from '../../utils/constatns';
-import {ActionType} from '../../store/action';
+import {loginAction, requireAuthorizationAction, addRequestedRouteAction} from '../../store/action';
+import {createReducer} from '@reduxjs/toolkit';
 
 const initialState = {
   user: null,
@@ -7,24 +8,14 @@ const initialState = {
   requestedRoute: RoutePaths.MAIN
 };
 
-export const user = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.LOGIN:
-      return {
-        ...state,
-        user: action.payload
-      };
-    case ActionType.REQUIRED_AUTH:
-      return {
-        ...state,
-        isAuthtorized: action.payload
-      };
-    case ActionType.ADD_REQUESTED_ROUTE:
-      return {
-        ...state,
-        requestedRoute: action.payload
-      };
-    default:
-      return state;
-  }
-};
+export const user = createReducer(initialState, (builder) => {
+  builder.addCase(loginAction, (state, action) => {
+    state.user = action.payload;
+  });
+  builder.addCase(requireAuthorizationAction, (state, action) => {
+    state.isAuthtorized = action.payload;
+  });
+  builder.addCase(addRequestedRouteAction, (state, action) => {
+    state.requestedRoute = action.payload;
+  });
+});
