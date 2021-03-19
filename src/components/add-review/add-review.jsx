@@ -1,28 +1,29 @@
 import React, {useEffect} from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {loadMovieById} from '../../api/api-actions';
 import {loadMovieByIdAction, clearSelectedMovieAction, redirectToRouteAction} from '../../store/action';
-import {movieProp} from '../props/movie-props';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Loading from '../loading/loading';
 import {RoutePaths} from '../../utils/constatns';
-import {getSelectedMovie} from '../../store/data/selectors';
 
-const AddReview = ({selectedMovie, match, onClearData, onLoadData, setSelectedMovie, redirectToRoute}) => {
+const AddReview = ({match}) => {
+  const {selectedMovie} = useSelector((state) => state.DATA);
   const {id} = match.params;
   const movieId = parseInt(id, 10);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (selectedMovie && selectedMovie.id !== movieId) {
-      onClearData();
+      dispatch(clearSelectedMovieAction());
     }
 
-    onLoadData(movieId)
-      .then(({data}) => setSelectedMovie(data))
-      .catch(redirectToRoute);
+    dispatch(loadMovieById(id))
+      .then(({data}) => dispatch(loadMovieByIdAction(data)))
+      .catch(() => dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND)));
 
   }, [movieId]);
 
@@ -52,30 +53,7 @@ const AddReview = ({selectedMovie, match, onClearData, onLoadData, setSelectedMo
 };
 
 AddReview.propTypes = {
-  selectedMovie: movieProp,
-  match: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-  onClearData: PropTypes.func.isRequired,
-  setSelectedMovie: PropTypes.func.isRequired,
-  redirectToRoute: PropTypes.func.isRequired
+  match: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({selectedMovie: getSelectedMovie(state)});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData(id) {
-    return dispatch(loadMovieById(id));
-  },
-  setSelectedMovie(data) {
-    dispatch(loadMovieByIdAction(data));
-  },
-  redirectToRoute() {
-    dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND));
-  },
-  onClearData() {
-    dispatch(clearSelectedMovieAction());
-  }
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AddReview));
+export default withRouter(AddReview);
