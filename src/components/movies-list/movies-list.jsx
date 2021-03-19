@@ -6,7 +6,7 @@ import MovieCard from '../movie-card/movie-card';
 import {movieProp} from '../props/movie-props';
 import {getMovieByPathName} from '../../utils/common';
 import {loadMovieList} from '../../api/api-actions';
-import {ActionCreator} from '../../store/action';
+import {loadMoviesAction} from '../../store/action';
 import Loading from '../loading/loading';
 import NothingToDisplay from '../nothing-to-display/nothing-to-display';
 
@@ -14,14 +14,14 @@ const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouse
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
 };
 
-const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate, onLoadData, loadMovies}) => {
+const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate, onLoadData, requestMovies}) => {
   const [currentMovieId, setCurrentMovieId] = useState(-1);
   const [needToLoad, setNeedToLoad] = useState(true);
 
   useEffect(() => {
     if (needToLoad) {
       onLoadData()
-      .then(({data}) => loadMovies(data));
+      .then(({data}) => requestMovies(data));
     }
 
     return () => setNeedToLoad(false);
@@ -60,7 +60,7 @@ MoviesList.propTypes = {
   targetMovies: PropTypes.arrayOf(movieProp),
   amountToDisplay: PropTypes.number.isRequired,
   onMovieListUpdate: PropTypes.func.isRequired,
-  loadMovies: PropTypes.func.isRequired,
+  requestMovies: PropTypes.func.isRequired,
   onLoadData: PropTypes.func.isRequired
 };
 
@@ -76,8 +76,8 @@ const mapDispatchToProps = (dispatch) => ({
   onLoadData() {
     return dispatch(loadMovieList());
   },
-  loadMovies(data) {
-    dispatch(ActionCreator.loadMovies(data));
+  requestMovies(data) {
+    dispatch(loadMoviesAction(data));
   }
 });
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {idProp} from '../props/movie-props';
 import {addMovieToFavorite} from '../../api/api-actions';
-import {ActionCreator} from '../../store/action';
+import {markMovieAsFavoriteAction} from '../../store/action';
 import {getSelectedMovie} from '../../store/data/selectors';
 import {RoutePaths} from '../../utils/constatns';
 
@@ -58,7 +58,7 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(addMovieToFavorite(movieId, isFavorite));
   },
   markMovieAsFavorite(data) {
-    dispatch(ActionCreator.markMovieAsFavorite(data));
+    dispatch(markMovieAsFavoriteAction(data));
   }
 });
 

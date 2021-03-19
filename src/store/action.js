@@ -1,3 +1,5 @@
+import {createAction} from '@reduxjs/toolkit';
+
 export const ActionType = {
   CHANGE_GENRE: `data/changeGenre`,
   LOGIN: `user/login`,
@@ -10,7 +12,6 @@ export const ActionType = {
   LOAD_PROMO: `data/loadPromo`,
   CLEAR_IS_PROMO_LOADDED_FLAG: `data/clearIsPromoLoaddedFlag`,
   CLEAR_SELECTED_MOVIE: `data/clearSelectedMovie`,
-  CLEAR_SELECTED_MOVIE_REVIEWS: `data/clearSelectedMovieReviews`,
   MARK_MOVIE_AS_FAVORITE: `data/markMovieAsFavorite`,
   VIDEO_PLAYER_MOVIE: `player/movie`,
   VIDEO_PLAYER_LOADED: `player/movieLoaded`,
@@ -19,77 +20,36 @@ export const ActionType = {
   VIDEO_PLAYER_REQUESTED_PATH: `player/requestedPath`
 };
 
-export const ActionCreator = {
-  changeGenre: (genre) => ({
-    type: ActionType.CHANGE_GENRE,
-    payload: genre,
-  }),
-  requireAuthorization: (isAuthtorized) => ({
-    type: ActionType.REQUIRED_AUTH,
-    payload: isAuthtorized
-  }),
-  loadMovies: (data) => ({
-    type: ActionType.LOAD_MOVIES,
-    payload: data
-  }),
-  loadMovieById: (data) => ({
-    type: ActionType.LOAD_MOVIE_BY_ID,
-    payload: data
-  }),
-  loadReviewsByMovieId: (data) => ({
-    type: ActionType.LOAD_REVIEWS_BY_ID,
-    payload: data
-  }),
-  clearSelectedMovie: (data) => ({
-    type: ActionType.CLEAR_SELECTED_MOVIE,
-    payload: data
-  }),
-  clearSelectedMovieReviews: (data) => ({
-    type: ActionType.CLEAR_SELECTED_MOVIE_REVIEWS,
-    payload: data
-  }),
-  loadPromo: (data) => ({
-    type: ActionType.LOAD_PROMO,
-    payload: data
-  }),
-  clearIsPromoLoadedFlag: () => ({
-    type: ActionType.CLEAR_IS_PROMO_LOADDED_FLAG
-  }),
-  addRequestedRoute: (data) => ({
-    type: ActionType.ADD_REQUESTED_ROUTE,
-    payload: data
-  }),
-  redirectToRoute: (data) => ({
-    type: ActionType.REDIRECT_TO_ROUTE,
-    payload: data
-  }),
-  login: (data) => ({
-    type: ActionType.LOGIN,
-    payload: data
-  }),
-  markMovieAsFavorite: (data) => ({
-    type: ActionType.MARK_MOVIE_AS_FAVORITE,
-    payload: data
-  }),
-  playerMovieToPlay: (data) => ({
-    type: ActionType.VIDEO_PLAYER_MOVIE,
-    payload: data
-  }),
-  playerRequestedPath: (data) => ({
-    type: ActionType.VIDEO_PLAYER_MOVIE,
-    payload: data
-  }),
-  playerMovieLoaded: () => ({
-    type: ActionType.VIDEO_PLAYER_LOADED
-  }),
-  playerMoviePlay: () => ({
-    type: ActionType.VIDEO_PLAYER_PLAYING
-  }),
-  playerMoviePause: () => ({
-    type: ActionType.VIDEO_PLAYER_PAUSE
-  }),
-  addRequestedPlayerPath: (data) => ({
-    type: ActionType.VIDEO_PLAYER_REQUESTED_PATH,
-    payload: data
-  })
-};
+export const changeGenreAction = createAction(ActionType.CHANGE_GENRE, (genre) => ({payload: genre}));
+
+export const requireAuthorizationAction = createAction(ActionType.REQUIRED_AUTH, (isAuthtorized) => ({payload: isAuthtorized}));
+
+export const loadMoviesAction = createAction(ActionType.LOAD_MOVIES, (data) => ({payload: data}));
+
+export const loadMovieByIdAction = createAction(ActionType.LOAD_MOVIE_BY_ID, (data) => ({payload: data}));
+
+export const loadReviewsByMovieIdAction = createAction(ActionType.LOAD_REVIEWS_BY_ID, (data) => ({payload: data}));
+
+export const clearSelectedMovieAction = createAction(ActionType.CLEAR_SELECTED_MOVIE, () => ({}));
+
+export const loadPromoAction = createAction(ActionType.LOAD_PROMO, (data) => ({payload: data}));
+
+export const clearIsPromoLoadedFlagAction = createAction(ActionType.CLEAR_IS_PROMO_LOADDED_FLAG, () => ({}));
+
+export const addRequestedRouteAction = createAction(ActionType.ADD_REQUESTED_ROUTE, (data) => ({payload: data}));
+
+export const redirectToRouteAction = createAction(ActionType.REDIRECT_TO_ROUTE, (data) => ({payload: data}));
+
+export const loginAction = createAction(ActionType.LOGIN, (data) => ({payload: data}));
+
+export const markMovieAsFavoriteAction = createAction(ActionType.MARK_MOVIE_AS_FAVORITE, (data) => ({payload: data}));
+
+export const playerMovieToPlayAction = createAction(ActionType.VIDEO_PLAYER_MOVIE, (data) => ({payload: data}));
+
+export const playerMovieLoadedAction = createAction(ActionType.VIDEO_PLAYER_LOADED, () => ({}));
+
+export const playerMoviePlayAction = createAction(ActionType.VIDEO_PLAYER_PLAYING, () => ({}));
+
+export const playerMoviePauseAction = createAction(ActionType.VIDEO_PLAYER_PAUSE, () => ({}));
+
+export const addRequestedPlayerPathAction = createAction(ActionType.VIDEO_PLAYER_REQUESTED_PATH, (data) => ({payload: data}));

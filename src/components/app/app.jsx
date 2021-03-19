@@ -4,21 +4,21 @@ import LayoutRouter from '../layout-router/layout-router';
 import {Router} from 'react-router-dom';
 import browserHistory from '../../browser-history';
 import {checkAuth} from '../../api/api-actions';
-import {ActionCreator} from '../../store/action';
+import {requireAuthorizationAction, loginAction} from '../../store/action';
 import {connect} from 'react-redux';
 import AuthCheck from '../auth-check/auth-check';
 import {AuthorizationStatus} from '../../utils/constatns';
 import {getIsAuthtorizedFlag} from '../../store/user/selectors';
 
 
-const App = ({isAuthtorized, onLoad, login, requireAuthorization}) => {
+const App = ({isAuthtorized, onLoad, login, requestAuthorization}) => {
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
     if (isChecking) {
       onLoad()
         .then(({data}) => login(data))
-        .then(requireAuthorization)
+        .then(requestAuthorization)
         .catch(() => setIsChecking(false));
     }
   }, []);
@@ -38,7 +38,7 @@ App.propTypes = {
   isAuthtorized: PropTypes.bool,
   onLoad: PropTypes.func.isRequired,
   login: PropTypes.func.isRequired,
-  requireAuthorization: PropTypes.func.isRequired
+  requestAuthorization: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({isAuthtorized: getIsAuthtorizedFlag(state)});
@@ -48,10 +48,10 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(checkAuth(onCheckComplete));
   },
   login(data) {
-    dispatch(ActionCreator.login(data));
+    dispatch(loginAction(data));
   },
-  requireAuthorization() {
-    dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED));
+  requestAuthorization() {
+    dispatch(requireAuthorizationAction(AuthorizationStatus.AUTHORIZED));
   }
 });
 

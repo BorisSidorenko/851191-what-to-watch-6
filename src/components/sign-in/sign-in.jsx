@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {login} from '../../api/api-actions';
 import Header from '../header/header';
 import Footer from '../footer/footer';
-import {ActionCreator} from '../../store/action';
+import {requireAuthorizationAction, redirectToRouteAction, loginAction} from '../../store/action';
 import {AuthorizationStatus} from '../../utils/constatns';
 import {getRequestedRoute} from '../../store/user/selectors';
 
@@ -69,13 +69,13 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(login(formData));
   },
   setAuth(data) {
-    dispatch(ActionCreator.login(data));
+    dispatch(loginAction(data));
   },
   setRequireAuthorization() {
-    dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED));
+    dispatch(requireAuthorizationAction(AuthorizationStatus.AUTHORIZED));
   },
   redirectToRoute(requestedRoute) {
-    dispatch(ActionCreator.redirectToRoute(requestedRoute));
+    dispatch(redirectToRouteAction(requestedRoute));
   }
 });
 

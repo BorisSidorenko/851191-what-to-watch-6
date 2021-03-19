@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import classNames from 'classnames';
 import {movieProp, genreProp} from '../props/movie-props';
-import {ActionCreator} from '../../store/action';
+import {changeGenreAction} from '../../store/action';
 import {DEFAULT_CARDS_COUNT_TO_DISPLAY} from '../../utils/constatns';
 import {getGenre, getMovies} from '../../store/data/selectors';
 
@@ -44,7 +44,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onGenreClick(selectedGenre) {
-    dispatch(ActionCreator.changeGenre(selectedGenre));
+    dispatch(changeGenreAction(selectedGenre));
   }
 });
 

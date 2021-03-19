@@ -3,7 +3,7 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {loadMovieById} from '../../api/api-actions';
-import {ActionCreator} from '../../store/action';
+import {loadMovieByIdAction, clearSelectedMovieAction, redirectToRouteAction} from '../../store/action';
 import {movieProp} from '../props/movie-props';
 import Header from '../header/header';
 import AddReviewForm from '../add-review-form/add-review-form';
@@ -68,13 +68,13 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(loadMovieById(id));
   },
   setSelectedMovie(data) {
-    dispatch(ActionCreator.loadMovieById(data));
+    dispatch(loadMovieByIdAction(data));
   },
   redirectToRoute() {
-    dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND));
+    dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND));
   },
   onClearData() {
-    dispatch(ActionCreator.clearSelectedMovie());
+    dispatch(clearSelectedMovieAction());
   }
 });
 

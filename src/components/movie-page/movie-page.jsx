@@ -14,7 +14,7 @@ import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import {RoutePaths} from '../../utils/constatns';
 import {loadMovieById, loadReviewsByMovieId} from '../../api/api-actions';
-import {ActionCreator} from '../../store/action';
+import {loadMovieByIdAction, loadReviewsByMovieIdAction, clearSelectedMovieAction, redirectToRouteAction} from '../../store/action';
 import Loading from '../loading/loading';
 import {getSelectedMovie, getSelectedMovieReviews} from '../../store/data/selectors';
 
@@ -151,20 +151,19 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(loadMovieById(id));
   },
   onClearData() {
-    dispatch(ActionCreator.clearSelectedMovie());
-    dispatch(ActionCreator.clearSelectedMovieReviews());
+    dispatch(clearSelectedMovieAction());
   },
   setSelectedMovie(data) {
-    dispatch(ActionCreator.loadMovieById(data));
+    dispatch(loadMovieByIdAction(data));
   },
   redirectToNotFound() {
-    dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND));
+    dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND));
   },
   onLoadMovieReviews(id) {
     return dispatch(loadReviewsByMovieId(id));
   },
   loadMovieReviews(data) {
-    dispatch(ActionCreator.loadReviewsByMovieId(data));
+    dispatch(loadReviewsByMovieIdAction(data));
   }
 });
 

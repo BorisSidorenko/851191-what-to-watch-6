@@ -6,7 +6,7 @@ import VideoPlayerControls from '../video-player-controls/video-player-controls'
 import {movieProp, idProp} from '../props/movie-props';
 import {getMovieToPlay} from '../../store/video-player/selectors';
 import {isLoading, isPlaying} from '../../store/video-player/selectors';
-import {ActionCreator} from '../../store/action';
+import {redirectToRouteAction, playerMovieToPlayAction, playerMovieLoadedAction, playerMoviePlayAction, playerMoviePauseAction} from '../../store/action';
 import {loadMovieById} from '../../api/api-actions';
 import Loading from '../loading/loading';
 import {RoutePaths} from '../../utils/constatns';
@@ -98,19 +98,19 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(loadMovieById(id));
   },
   setMovieToPlay(movie) {
-    dispatch(ActionCreator.playerMovieToPlay(movie));
+    dispatch(playerMovieToPlayAction(movie));
   },
   onMovieLoaded() {
-    dispatch(ActionCreator.playerMovieLoaded());
+    dispatch(playerMovieLoadedAction());
   },
   onMoviePlay() {
-    dispatch(ActionCreator.playerMoviePlay());
+    dispatch(playerMoviePlayAction());
   },
   onMoviePause() {
-    dispatch(ActionCreator.playerMoviePause());
+    dispatch(playerMoviePauseAction());
   },
   redirectToNotFound() {
-    dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND));
+    dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND));
   }
 });
 

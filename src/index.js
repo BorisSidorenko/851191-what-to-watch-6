@@ -5,11 +5,11 @@ import {createAPI} from '../src/api/api';
 import App from './components/app/app';
 import rootReducer from '../src/store/root-reducer';
 import {AuthorizationStatus} from '../src/utils/constatns';
-import {ActionCreator} from '../src/store/action';
+import {requireAuthorizationAction} from '../src/store/action';
 import {redirect} from '../src/redirect';
 import {configureStore} from '@reduxjs/toolkit';
 
-const makeUserNotAuthtorized = () => store.dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.NOT_AUTHORIZED));
+const makeUserNotAuthtorized = () => store.dispatch(requireAuthorizationAction(AuthorizationStatus.NOT_AUTHORIZED));
 
 const api = createAPI(makeUserNotAuthtorized);
 

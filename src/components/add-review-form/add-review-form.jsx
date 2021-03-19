@@ -6,7 +6,7 @@ import {addReview} from '../../api/api-actions';
 import {idProp} from '../../components/props/movie-props';
 import {needToDisableForm} from '../../utils/common';
 import {RoutePaths} from '../../utils/constatns';
-import {ActionCreator} from '../../store/action';
+import {loadReviewsByMovieIdAction, redirectToRouteAction} from '../../store/action';
 import RatingInput from '../rating-input/rating-input';
 
 const COMMENT_LENGTH_MIN = 50;
@@ -92,10 +92,10 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(addReview(id, formData));
   },
   loadReviewsByMovieId(data) {
-    dispatch(ActionCreator.loadReviewsByMovieId(data));
+    dispatch(loadReviewsByMovieIdAction(data));
   },
   redirectToRoute(id) {
-    dispatch(ActionCreator.redirectToRoute(`${RoutePaths.MOVIE_PAGE}/${id}`));
+    dispatch(redirectToRouteAction(`${RoutePaths.MOVIE_PAGE}/${id}`));
   }
 });
 

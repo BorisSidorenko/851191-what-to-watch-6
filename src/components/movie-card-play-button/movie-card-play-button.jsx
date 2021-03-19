@@ -5,7 +5,7 @@ import {useHistory, Link} from 'react-router-dom';
 import {getSelectedMovie} from '../../store/data/selectors';
 import {RoutePaths} from '../../utils/constatns';
 import {idProp} from '../props/movie-props';
-import {ActionCreator} from '../../store/action';
+import {addRequestedPlayerPathAction} from '../../store/action';
 
 const MovieCardPlayButton = ({id, onRequestedPlayerPath}) => {
   const history = useHistory();
@@ -34,7 +34,7 @@ const mapStateToProps = (state) => ({id: getSelectedMovie(state).id});
 
 const mapDispatchToProps = (dispatch) => ({
   onRequestedPlayerPath(path) {
-    dispatch(ActionCreator.addRequestedPlayerPath(path));
+    dispatch(addRequestedPlayerPathAction(path));
   }
 });
 

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {RoutePaths} from '../../utils/constatns';
-import {ActionCreator} from '../../store/action';
+import {addRequestedRouteAction} from '../../store/action';
 import {getIsAuthtorizedFlag} from '../../store/user/selectors';
 
 const handleUserNotAuthtorized = ({location}, onPrivateRouteRequest) => {
@@ -30,7 +30,7 @@ const mapStateToProps = (state) => ({isAuthtorized: getIsAuthtorizedFlag(state)}
 
 const mapDispatchToProps = (dispatch) => ({
   onPrivateRouteRequest(route) {
-    dispatch(ActionCreator.addRequestedRoute(route));
+    dispatch(addRequestedRouteAction(route));
   }
 });
 

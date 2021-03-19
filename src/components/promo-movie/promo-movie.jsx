@@ -6,7 +6,7 @@ import Header from '../header/header';
 import PromoMovieInfo from '../promo-movie-info/promo-movie-info';
 import {backgroundImageProp, nameProp, posterProp, genreProp, releasedProp} from '../props/movie-props';
 import {loadPromoMovie} from '../../api/api-actions';
-import {ActionCreator} from '../../store/action';
+import {loadPromoAction, clearIsPromoLoadedFlagAction} from '../../store/action';
 import Loading from '../loading/loading';
 import {getIsPromoLoadedFlag, getSelectedMovie} from '../../store/data/selectors';
 
@@ -74,10 +74,10 @@ const mapDispatchToProps = (dispatch) => ({
     return dispatch(loadPromoMovie());
   },
   setPromo(data) {
-    dispatch(ActionCreator.loadPromo(data));
+    dispatch(loadPromoAction(data));
   },
   onIsPromoLoadedClearFlag() {
-    dispatch(ActionCreator.clearIsPromoLoadedFlag());
+    dispatch(clearIsPromoLoadedFlagAction());
   }
 });
 
