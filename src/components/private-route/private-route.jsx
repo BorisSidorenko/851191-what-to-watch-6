@@ -1,37 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {RoutePaths} from '../../utils/constatns';
 import {addRequestedRouteAction} from '../../store/action';
-import {getIsAuthtorizedFlag} from '../../store/user/selectors';
 
 const handleUserNotAuthtorized = ({location}, onPrivateRouteRequest) => {
   onPrivateRouteRequest(location.pathname);
   return <Redirect to={RoutePaths.SIGN_IN} />;
 };
 
-const PrivateRoute = ({render, isAuthtorized, onPrivateRouteRequest, ...rest}) => (
-  <Route
-    {...rest}
-    render={(routeProps) => (
-      isAuthtorized ? render(routeProps) : handleUserNotAuthtorized(routeProps, onPrivateRouteRequest)
-    )}
-  />
-);
+const PrivateRoute = ({render, ...rest}) => {
+  const {isAuthtorized} = useSelector((state) => state.USER);
+  const dispatch = useDispatch();
 
-PrivateRoute.propTypes = {
-  onPrivateRouteRequest: PropTypes.func.isRequired,
-  render: PropTypes.func.isRequired,
-  isAuthtorized: PropTypes.bool
+  const onPrivateRouteRequest = (route) => {
+    dispatch(addRequestedRouteAction(route));
+  };
+
+  return (
+    <Route
+      {...rest}
+      render={(routeProps) => (
+        isAuthtorized ? render(routeProps) : handleUserNotAuthtorized(routeProps, onPrivateRouteRequest)
+      )}
+    />
+  );
 };
 
-const mapStateToProps = (state) => ({isAuthtorized: getIsAuthtorizedFlag(state)});
+PrivateRoute.propTypes = {
+  render: PropTypes.func.isRequired
+};
 
-const mapDispatchToProps = (dispatch) => ({
-  onPrivateRouteRequest(route) {
-    dispatch(addRequestedRouteAction(route));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PrivateRoute);
+export default PrivateRoute;

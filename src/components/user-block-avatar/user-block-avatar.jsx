@@ -1,15 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import {RoutePaths} from '../../utils/constatns';
-import {getUser} from '../../store/user/selectors';
 
 const getAvatarComponent = (avatar, name) => (
   <img src={avatar} alt={name} width="63" height="63" />
 );
 
-const UserBlockAvatar = ({avatar, name, location}) => {
+const UserBlockAvatar = ({location}) => {
+  const {user} = useSelector((state) => state.USER);
+  const {avatar_url: avatar, name} = user;
   const isMylistCurrent = location.pathname === RoutePaths.MY_LIST;
 
   return (
@@ -20,18 +21,7 @@ const UserBlockAvatar = ({avatar, name, location}) => {
 };
 
 UserBlockAvatar.propTypes = {
-  avatar: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
   location: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => {
-  const user = getUser(state);
-
-  return ({
-    avatar: user.avatar_url,
-    name: user.name
-  });
-};
-
-export default withRouter(connect(mapStateToProps)(UserBlockAvatar));
+export default withRouter(UserBlockAvatar);

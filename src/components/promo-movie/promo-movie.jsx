@@ -1,29 +1,29 @@
 
 import React, {useEffect} from 'react';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import Header from '../header/header';
 import PromoMovieInfo from '../promo-movie-info/promo-movie-info';
-import {backgroundImageProp, nameProp, posterProp, genreProp, releasedProp} from '../props/movie-props';
 import {loadPromoMovie} from '../../api/api-actions';
 import {loadPromoAction, clearIsPromoLoadedFlagAction} from '../../store/action';
 import Loading from '../loading/loading';
-import {getIsPromoLoadedFlag, getSelectedMovie} from '../../store/data/selectors';
 
-const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData, onIsPromoLoadedClearFlag, setPromo}) => {
+const PromoMovie = () => {
+  const {isPromoLoaded, selectedMovie} = useSelector((state) => state.DATA);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     if (!isPromoLoaded) {
-      onLoadData()
-        .then(({data}) => setPromo(data));
+      dispatch(loadPromoMovie())
+        .then(({data}) => dispatch(loadPromoAction(data)));
     }
 
-    return (onIsPromoLoadedClearFlag);
+    return (() => dispatch(clearIsPromoLoadedFlagAction()));
   }, []);
 
   return (
     <section className="movie-card">
       <div className="movie-card__bg">
-        {!isPromoLoaded && !promoMovie ? <Loading /> : <img src={promoMovie.backgroundImage} alt={promoMovie.name} />}
+        {!isPromoLoaded && !selectedMovie ? <Loading /> : <img src={selectedMovie.background_image} alt={selectedMovie.name} />}
       </div>
 
       <h1 className="visually-hidden">WTW</h1>
@@ -31,54 +31,10 @@ const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData, onIsPromoLoadedClear
       <Header />
 
       <div className="movie-card__wrap">
-        {!isPromoLoaded && !promoMovie ? <Loading /> : <PromoMovieInfo {...promoMovie} />}
+        {!isPromoLoaded && !selectedMovie ? <Loading /> : <PromoMovieInfo name={selectedMovie.name} poster={selectedMovie.poster_image} genre={selectedMovie.genre} released={selectedMovie.released}/>}
       </div>
     </section>
   );
 };
 
-PromoMovie.propTypes = {
-  promoMovie: PropTypes.shape({
-    backgroundImage: backgroundImageProp,
-    name: nameProp,
-    poster: posterProp,
-    genre: genreProp,
-    released: releasedProp
-  }),
-  onIsPromoLoadedClearFlag: PropTypes.func.isRequired,
-  isPromoLoaded: PropTypes.bool.isRequired,
-  onLoadData: PropTypes.func.isRequired,
-  setPromo: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => {
-  const isPromoLoaded = getIsPromoLoadedFlag(state);
-  const selectedMovie = getSelectedMovie(state);
-
-  const promoMovie = selectedMovie ? {
-    backgroundImage: selectedMovie.background_image,
-    name: selectedMovie.name,
-    poster: selectedMovie.poster_image,
-    genre: selectedMovie.genre,
-    released: selectedMovie.released
-  } : selectedMovie;
-
-  return ({
-    isPromoLoaded,
-    promoMovie
-  });
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    return dispatch(loadPromoMovie());
-  },
-  setPromo(data) {
-    dispatch(loadPromoAction(data));
-  },
-  onIsPromoLoadedClearFlag() {
-    dispatch(clearIsPromoLoadedFlagAction());
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(PromoMovie);
+export default PromoMovie;
