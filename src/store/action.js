@@ -11,7 +11,12 @@ export const ActionType = {
   CLEAR_IS_PROMO_LOADDED_FLAG: `data/clearIsPromoLoaddedFlag`,
   CLEAR_SELECTED_MOVIE: `data/clearSelectedMovie`,
   CLEAR_SELECTED_MOVIE_REVIEWS: `data/clearSelectedMovieReviews`,
-  MARK_MOVIE_AS_FAVORITE: `data/markMovieAsFavorite`
+  MARK_MOVIE_AS_FAVORITE: `data/markMovieAsFavorite`,
+  VIDEO_PLAYER_MOVIE: `player/movie`,
+  VIDEO_PLAYER_LOADED: `player/movieLoaded`,
+  VIDEO_PLAYER_PLAYING: `player/moviePlay`,
+  VIDEO_PLAYER_PAUSE: `player/moviePause`,
+  VIDEO_PLAYER_REQUESTED_PATH: `player/requestedPath`
 };
 
 export const ActionCreator = {
@@ -64,6 +69,27 @@ export const ActionCreator = {
   }),
   markMovieAsFavorite: (data) => ({
     type: ActionType.MARK_MOVIE_AS_FAVORITE,
+    payload: data
+  }),
+  playerMovieToPlay: (data) => ({
+    type: ActionType.VIDEO_PLAYER_MOVIE,
+    payload: data
+  }),
+  playerRequestedPath: (data) => ({
+    type: ActionType.VIDEO_PLAYER_MOVIE,
+    payload: data
+  }),
+  playerMovieLoaded: () => ({
+    type: ActionType.VIDEO_PLAYER_LOADED
+  }),
+  playerMoviePlay: () => ({
+    type: ActionType.VIDEO_PLAYER_PLAYING
+  }),
+  playerMoviePause: () => ({
+    type: ActionType.VIDEO_PLAYER_PAUSE
+  }),
+  addRequestedPlayerPath: (data) => ({
+    type: ActionType.VIDEO_PLAYER_REQUESTED_PATH,
     payload: data
   })
 };

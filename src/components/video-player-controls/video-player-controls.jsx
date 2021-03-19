@@ -7,7 +7,8 @@ dayjs.extend(duration);
 
 const getHumanizeDuration = (durationInMinutes) => {
   const parsedDuration = dayjs.duration(durationInMinutes, `minutes`);
-  return `${parsedDuration.$d.hours}:${parsedDuration.$d.minutes}`;
+  const {hours, minutes, seconds} = parsedDuration.$d;
+  return `${hours}:${minutes}:${seconds > 0 ? seconds : `00`}`;
 };
 
 const PauseButtonIcon = () => (
@@ -29,12 +30,12 @@ const PlayButtonIcon = () => (
 );
 
 
-const VideoPlayerControls = ({isPlaying, isLoading, movieDuration, onPlayButtonClick}) => (
+const VideoPlayerControls = ({isPlaying, isLoading, movieDuration, onPlayButtonClick, onFullScreenButtonClick}) => (
   <div className="player__controls">
     <div className="player__controls-row">
       <div className="player__time">
-        <progress className="player__progress" value="30" max="100"></progress>
-        <div className="player__toggler" style={{left: 30 + `%`}}>Toggler</div>
+        <progress className="player__progress" value="0" max="100"></progress>
+        <div className="player__toggler" style={{left: 0 + `%`}}>Toggler</div>
       </div>
       <div className="player__time-value">{getHumanizeDuration(movieDuration)}</div>
     </div>
@@ -44,7 +45,7 @@ const VideoPlayerControls = ({isPlaying, isLoading, movieDuration, onPlayButtonC
         {isPlaying ? <PauseButtonIcon /> : <PlayButtonIcon />}
       </button>
       <div className="player__name">Transpotting</div>
-      <button type="button" className="player__full-screen">
+      <button type="button" className="player__full-screen" onClick={onFullScreenButtonClick}>
         <svg viewBox="0 0 27 27" width="27" height="27">
           <use xlinkHref="#full-screen"></use>
         </svg>
@@ -58,7 +59,8 @@ VideoPlayerControls.propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   movieDuration: runTimeProp,
-  onPlayButtonClick: PropTypes.func.isRequired
+  onPlayButtonClick: PropTypes.func.isRequired,
+  onFullScreenButtonClick: PropTypes.func.isRequired
 };
 
 export default VideoPlayerControls;

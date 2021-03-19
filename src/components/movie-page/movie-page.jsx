@@ -29,7 +29,7 @@ const MoviePage = ({movie, selectedMovieReviews, match, location, onLoadDataMovi
 
     onLoadDataMovie(id)
       .then(({data}) => setSelectedMovie(data))
-      .catch(() => redirectToNotFound());
+      .catch(redirectToNotFound);
 
     onLoadMovieReviews(id)
       .then(({data}) => loadMovieReviews(data));

@@ -1,10 +1,12 @@
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {idProp} from '../props/movie-props';
 import {addMovieToFavorite} from '../../api/api-actions';
 import {ActionCreator} from '../../store/action';
 import {getSelectedMovie} from '../../store/data/selectors';
+import {RoutePaths} from '../../utils/constatns';
 
 const getSVGInList = () => (
   <svg viewBox="0 0 18 14" width="18" height="14">
@@ -19,10 +21,12 @@ const getSVGAddToList = () => (
 );
 
 const MovieCardAddToListButton = ({id, markMovieAsFavorite, isFavorite, onAddButtonClick}) => {
+  const history = useHistory();
+
   const handleAddButtonClick = () => {
     onAddButtonClick(id, !isFavorite)
       .then(({data}) => markMovieAsFavorite(data))
-      .catch(() => {});
+      .catch(() => history.push(RoutePaths.SIGN_IN));
   };
 
   return (

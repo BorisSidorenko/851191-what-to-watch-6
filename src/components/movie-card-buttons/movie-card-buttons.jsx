@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import MovieCardPlayButton from '../movie-card-play-button/movie-card-play-button';
@@ -23,4 +23,4 @@ MovieCardButtons.propTypes = {
 
 const mapStateToProps = (state) => ({isAuthtorized: getIsAuthtorizedFlag(state)});
 
-export default withRouter(connect(mapStateToProps)(MovieCardButtons));
+export default connect(mapStateToProps)(MovieCardButtons);

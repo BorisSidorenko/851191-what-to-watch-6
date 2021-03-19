@@ -22,7 +22,7 @@ const AddReview = ({selectedMovie, match, onClearData, onLoadData, setSelectedMo
 
     onLoadData(movieId)
       .then(({data}) => setSelectedMovie(data))
-      .catch(() => redirectToRoute());
+      .catch(redirectToRoute);
 
   }, [movieId]);
 

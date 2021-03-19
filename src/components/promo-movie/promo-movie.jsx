@@ -17,7 +17,7 @@ const PromoMovie = ({isPromoLoaded, promoMovie, onLoadData, onIsPromoLoadedClear
         .then(({data}) => setPromo(data));
     }
 
-    return () => onIsPromoLoadedClearFlag();
+    return (onIsPromoLoadedClearFlag);
   }, []);
 
   return (
