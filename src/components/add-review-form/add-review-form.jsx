@@ -1,6 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import {connect} from 'react-redux';
-import PropTypes from 'prop-types';
+import {useDispatch} from 'react-redux';
 import {RATING_STARS} from '../../utils/constatns';
 import {addReview} from '../../api/api-actions';
 import {idProp} from '../../components/props/movie-props';
@@ -20,7 +19,9 @@ const getRatingComoponents = (handleUserInput) => {
   return RATING_STARS.map((item, index) => <RatingInput key={`raiting-${item}`} value={index} onRatingChange={handleUserInput} />);
 };
 
-const AddReviewForm = ({id, addMovieReview, loadReviewsByMovieId, redirectToRoute}) => {
+const AddReviewForm = ({id}) => {
+  const dispatch = useDispatch();
+
   const [reviewFormData, setReviewFormData] = useState({
     rating: ``,
     comment: ``
@@ -35,13 +36,15 @@ const AddReviewForm = ({id, addMovieReview, loadReviewsByMovieId, redirectToRout
     evt.preventDefault();
     const revieForm = evt.target;
 
-    addMovieReview(id, revieForm, reviewFormData)
+    needToDisableForm(revieForm, true);
+
+    dispatch(addReview(id, reviewFormData))
       .then((response) => {
         needToDisableForm(revieForm, false);
         return response;
       })
-    .then(({data}) => loadReviewsByMovieId(data))
-    .then(() => redirectToRoute(id))
+    .then(({data}) => dispatch(loadReviewsByMovieIdAction(data)))
+    .then(() => dispatch(redirectToRouteAction(`${RoutePaths.MOVIE_PAGE}/${id}`)))
     .catch(() => {});
   };
 
@@ -80,23 +83,7 @@ const AddReviewForm = ({id, addMovieReview, loadReviewsByMovieId, redirectToRout
 };
 
 AddReviewForm.propTypes = {
-  id: idProp,
-  addMovieReview: PropTypes.func.isRequired,
-  loadReviewsByMovieId: PropTypes.func.isRequired,
-  redirectToRoute: PropTypes.func.isRequired
+  id: idProp
 };
 
-const mapDispatchToProps = (dispatch) => ({
-  addMovieReview(id, form, formData) {
-    needToDisableForm(form, true);
-    return dispatch(addReview(id, formData));
-  },
-  loadReviewsByMovieId(data) {
-    dispatch(loadReviewsByMovieIdAction(data));
-  },
-  redirectToRoute(id) {
-    dispatch(redirectToRouteAction(`${RoutePaths.MOVIE_PAGE}/${id}`));
-  }
-});
-
-export default connect(null, mapDispatchToProps)(AddReviewForm);
+export default AddReviewForm;
