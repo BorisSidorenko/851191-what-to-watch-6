@@ -15,7 +15,6 @@ import {
   playerMovieToPlayAction,
   playerMovieLoadedAction,
   playerMoviePlayAction,
-  playerMoviePauseAction,
   addRequestedPlayerPathAction
 } from './action';
 import {DEFAULT_GENRE, AuthorizationStatus, RoutePaths} from '../utils/constatns';
@@ -152,14 +151,6 @@ describe(`Actions creators works as expected`, () => {
     };
 
     expect(playerMoviePlayAction()).toEqual(expectedAction);
-  });
-
-  it(`Action creater for setting movie to play is paused flag returns action with undefined payload`, () => {
-    const expectedAction = {
-      type: ActionType.VIDEO_PLAYER_PAUSE
-    };
-
-    expect(playerMoviePauseAction()).toEqual(expectedAction);
   });
 
   it(`Action creater for setting requested path in player returns action with path payload`, () => {

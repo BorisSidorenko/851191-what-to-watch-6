@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ExitButton from '../exit-button/exit-button';
 import VideoPlayerControls from '../video-player-controls/video-player-controls';
 import {idProp} from '../props/movie-props';
-import {redirectToRouteAction, playerMovieToPlayAction, playerMovieLoadedAction, playerMoviePlayAction, playerMoviePauseAction} from '../../store/action';
+import {redirectToRouteAction, playerMovieToPlayAction, playerMovieLoadedAction, playerMoviePlayAction} from '../../store/action';
 import {loadMovieById} from '../../api/api-actions';
 import Loading from '../loading/loading';
 import {RoutePaths} from '../../utils/constatns';
@@ -33,7 +33,7 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
       .then(() => dispatch(playerMovieLoadedAction()))
       .catch(() => dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND)));
 
-    return (() => dispatch(playerMoviePauseAction()));
+    return (() => dispatch(playerMoviePlayAction(false)));
   }, [movieId]);
 
   const videoRef = useRef();
@@ -65,7 +65,7 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
     }
   }, [isPlaying]);
 
-  const handlePlayButtonClick = () => isPlaying ? dispatch(playerMoviePauseAction()) : dispatch(playerMoviePlayAction());
+  const handlePlayButtonClick = () => isPlaying ? dispatch(playerMoviePlayAction(false)) : dispatch(playerMoviePlayAction(true));
 
   return (
     <div className="player">

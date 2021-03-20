@@ -48,8 +48,6 @@ export const playerMovieToPlayAction = createAction(ActionType.VIDEO_PLAYER_MOVI
 
 export const playerMovieLoadedAction = createAction(ActionType.VIDEO_PLAYER_LOADED, () => ({}));
 
-export const playerMoviePlayAction = createAction(ActionType.VIDEO_PLAYER_PLAYING, () => ({}));
-
-export const playerMoviePauseAction = createAction(ActionType.VIDEO_PLAYER_PAUSE, () => ({}));
+export const playerMoviePlayAction = createAction(ActionType.VIDEO_PLAYER_PLAYING, (data) => ({payload: data}));
 
 export const addRequestedPlayerPathAction = createAction(ActionType.VIDEO_PLAYER_REQUESTED_PATH, (data) => ({payload: data}));
