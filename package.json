@@ -14,6 +14,8 @@
     "@babel/core": "7.12.13",
     "@babel/preset-env": "7.12.13",
     "@babel/preset-react": "7.12.13",
+    "@testing-library/jest-dom": "5.11.9",
+    "@testing-library/react": "11.2.5",
     "babel-loader": "8.2.2",
     "eslint": "7.18.0",
     "eslint-config-htmlacademy": "2.1.0",
@@ -43,6 +45,9 @@
   "jest": {
     "moduleNameMapper": {
       "\\.(css|less)$": "<rootDir>/src/style-mock.js"
-    }
+    },
+    "setupFilesAfterEnv": [
+      "./setup-tests.js"
+    ]
   }
 }
