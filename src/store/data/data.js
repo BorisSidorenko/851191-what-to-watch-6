@@ -2,7 +2,7 @@ import {DEFAULT_GENRE} from '../../utils/constatns';
 import {loadPromoAction, clearIsPromoLoadedFlagAction, loadMoviesAction, loadMovieByIdAction, loadReviewsByMovieIdAction, clearSelectedMovieAction, changeGenreAction, markMovieAsFavoriteAction} from '../../store/action';
 import {createReducer} from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   movies: [],
   selectedMovie: null,
   selectedMovieReviews: [],

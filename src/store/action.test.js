@@ -19,42 +19,8 @@ import {
   addRequestedPlayerPathAction
 } from './action';
 import {DEFAULT_GENRE, AuthorizationStatus, RoutePaths} from '../utils/constatns';
+import {movieStructure, reviewStructure, userStructure} from '../data-structure';
 
-const movieStructure = {
-  "name": ``,
-  "poster_image": ``,
-  "preview_image": ``,
-  "background_image": ``,
-  "background_color": ``,
-  "description": ``,
-  "rating": ``,
-  "scores_count": ``,
-  "director": ``,
-  "starring": [``],
-  "run_time": ``,
-  "genre": ``,
-  "released": ``,
-  "id": 1,
-  "is_favorite": false,
-  "video_link": ``,
-  "preview_video_link": ``
-};
-
-const reviewStructure = {
-  "id": 1,
-  "user": {
-    "id": 1,
-    "name": ``
-  },
-  "rating": 1,
-  "comment": ``,
-  "date": ``
-};
-
-const userStructure = {
-  "email": ``,
-  "password": ``
-};
 
 describe(`Actions creators works as expected`, () => {
   it(`Action creater for changing genre returns action with genre payload`, () => {
