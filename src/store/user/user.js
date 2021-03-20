@@ -2,7 +2,7 @@ import {RoutePaths} from '../../utils/constatns';
 import {loginAction, requireAuthorizationAction, addRequestedRouteAction} from '../../store/action';
 import {createReducer} from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   user: null,
   isAuthtorized: null,
   requestedRoute: RoutePaths.MAIN
