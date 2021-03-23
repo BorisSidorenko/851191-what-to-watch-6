@@ -1,38 +1,39 @@
 import React, {useRef, useEffect} from 'react';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import PropTypes from 'prop-types';
 import ExitButton from '../exit-button/exit-button';
 import VideoPlayerControls from '../video-player-controls/video-player-controls';
-import {movieProp, idProp} from '../props/movie-props';
-import {getMovieToPlay} from '../../store/video-player/selectors';
-import {isLoading, isPlaying} from '../../store/video-player/selectors';
-import {ActionCreator} from '../../store/action';
+import {idProp} from '../props/movie-props';
+import {redirectToRouteAction, playerMovieToPlayAction, playerMovieLoadedAction, playerMoviePlayAction} from '../../store/action';
 import {loadMovieById} from '../../api/api-actions';
 import Loading from '../loading/loading';
 import {RoutePaths} from '../../utils/constatns';
 
-const getVideoPlayerComponents = (isPreview, videoRef, movie, isMoviePlaying, isMovieLoading, handlePlayButtonClick) => {
+const getVideoPlayerComponents = (isPreview, videoRef, movieToPlay, isPlaying, isLoading, handlePlayButtonClick) => {
   const handleFullScreenButtonClick = () => {
     videoRef.current.requestFullscreen();
   };
 
   return (
     <>
-      <video ref={videoRef} src={isPreview ? movie.preview_video_link : movie.video_link} className="player__video" poster="img/player-poster.jpg"></video>
+      <video ref={videoRef} src={isPreview ? movieToPlay.preview_video_link : movieToPlay.video_link} className="player__video" poster="img/player-poster.jpg"></video>
       {isPreview || <ExitButton />}
-      {isPreview || <VideoPlayerControls isPlaying={isMoviePlaying} isLoading={isMovieLoading} movieDuration={movie.run_time} onPlayButtonClick={handlePlayButtonClick} onFullScreenButtonClick={handleFullScreenButtonClick}/>}
+      {isPreview || <VideoPlayerControls isPlaying={isPlaying} isLoading={isLoading} movieDuration={movieToPlay.run_time} onPlayButtonClick={handlePlayButtonClick} onFullScreenButtonClick={handleFullScreenButtonClick}/>}
     </>
   );
 };
 
-const VideoPlayer = ({movie, movieId, isPreview = false, isMovieLoading, isMoviePlaying, onLoadDataMovie, setMovieToPlay, onMovieLoaded, onMoviePlay, onMoviePause, redirectToNotFound}) => {
-  useEffect(() => {
-    onLoadDataMovie(movieId)
-      .then(({data}) => setMovieToPlay(data))
-      .then(onMovieLoaded)
-      .catch(redirectToNotFound);
+const VideoPlayer = ({movieId, isPreview = false}) => {
+  const {movieToPlay, isLoading, isPlaying} = useSelector((state) => state.PLAYER);
+  const dispatch = useDispatch();
 
-    return (onMoviePause);
+  useEffect(() => {
+    dispatch(loadMovieById(movieId))
+      .then(({data}) => dispatch(playerMovieToPlayAction(data)))
+      .then(() => dispatch(playerMovieLoadedAction()))
+      .catch(() => dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND)));
+
+    return (() => dispatch(playerMoviePlayAction(false)));
   }, [movieId]);
 
   const videoRef = useRef();
@@ -54,64 +55,28 @@ const VideoPlayer = ({movie, movieId, isPreview = false, isMovieLoading, isMovie
     }
 
     return () => {};
-  }, [movieId, isMovieLoading]);
+  }, [movieId, isLoading]);
 
   useEffect(() => {
-    if (movie && isMoviePlaying) {
+    if (movieToPlay && isPlaying) {
       videoRef.current.play();
-    } else if (movie && !isMoviePlaying) {
+    } else if (movieToPlay && !isPlaying) {
       videoRef.current.pause();
     }
-  }, [isMoviePlaying]);
+  }, [isPlaying]);
 
-  const handlePlayButtonClick = () => isMoviePlaying ? onMoviePause() : onMoviePlay();
+  const handlePlayButtonClick = () => isPlaying ? dispatch(playerMoviePlayAction(false)) : dispatch(playerMoviePlayAction(true));
 
   return (
     <div className="player">
-      {isMovieLoading && !movie ? <Loading /> : getVideoPlayerComponents(isPreview, videoRef, movie, isMoviePlaying, isMovieLoading, handlePlayButtonClick)};
+      {isLoading && !movieToPlay ? <Loading /> : getVideoPlayerComponents(isPreview, videoRef, movieToPlay, isPlaying, isLoading, handlePlayButtonClick)};
     </div>
   );
 };
 
 VideoPlayer.propTypes = {
-  movie: movieProp,
   movieId: idProp,
-  isMovieLoading: PropTypes.bool.isRequired,
-  isMoviePlaying: PropTypes.bool.isRequired,
-  isPreview: PropTypes.bool,
-  onMovieLoaded: PropTypes.func.isRequired,
-  onMoviePlay: PropTypes.func.isRequired,
-  onMoviePause: PropTypes.func.isRequired,
-  onLoadDataMovie: PropTypes.func.isRequired,
-  setMovieToPlay: PropTypes.func.isRequired,
-  redirectToNotFound: PropTypes.func.isRequired
+  isPreview: PropTypes.bool
 };
 
-const mapStateToProps = (state) => ({
-  movie: getMovieToPlay(state),
-  isMovieLoading: isLoading(state),
-  isMoviePlaying: isPlaying(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadDataMovie(id) {
-    return dispatch(loadMovieById(id));
-  },
-  setMovieToPlay(movie) {
-    dispatch(ActionCreator.playerMovieToPlay(movie));
-  },
-  onMovieLoaded() {
-    dispatch(ActionCreator.playerMovieLoaded());
-  },
-  onMoviePlay() {
-    dispatch(ActionCreator.playerMoviePlay());
-  },
-  onMoviePause() {
-    dispatch(ActionCreator.playerMoviePause());
-  },
-  redirectToNotFound() {
-    dispatch(ActionCreator.redirectToRoute(RoutePaths.NOT_FOUND));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(VideoPlayer);
+export default VideoPlayer;

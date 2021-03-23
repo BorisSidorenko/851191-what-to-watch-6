@@ -1,26 +1,27 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector} from 'react-redux';
 import MovieCardPlayButton from '../movie-card-play-button/movie-card-play-button';
 import MovieCardAddToListButton from '../movie-card-add-to-list-button/movie-card-add-to-list-button';
-import {getIsAuthtorizedFlag} from '../../store/user/selectors';
 
-const MovieCardButtons = ({isAuthtorized, reviewPageLink}) => (
-  <div className="movie-card__buttons">
-    <MovieCardPlayButton />
-    <MovieCardAddToListButton />
+const MovieCardButtons = ({reviewPageLink}) => {
+  const {isAuthtorized} = useSelector((state) => state.USER);
 
-    {isAuthtorized && reviewPageLink && <Link to={reviewPageLink} className="btn movie-card__button">Add review</Link> }
+  return (
+    <div className="movie-card__buttons">
+      <MovieCardPlayButton />
+      <MovieCardAddToListButton />
 
-  </div>
-);
+      {isAuthtorized && reviewPageLink && <Link to={reviewPageLink} className="btn movie-card__button">Add review</Link> }
+
+    </div>
+  );
+};
 
 MovieCardButtons.propTypes = {
-  isAuthtorized: PropTypes.bool.isRequired,
   reviewPageLink: PropTypes.string
 };
 
-const mapStateToProps = (state) => ({isAuthtorized: getIsAuthtorizedFlag(state)});
 
-export default connect(mapStateToProps)(MovieCardButtons);
+export default memo(MovieCardButtons);

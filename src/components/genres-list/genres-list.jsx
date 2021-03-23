@@ -1,12 +1,11 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import classNames from 'classnames';
-import {movieProp, genreProp} from '../props/movie-props';
-import {ActionCreator} from '../../store/action';
+import {genreProp} from '../props/movie-props';
+import {changeGenreAction} from '../../store/action';
 import {DEFAULT_CARDS_COUNT_TO_DISPLAY} from '../../utils/constatns';
-import {getGenre, getMovies} from '../../store/data/selectors';
 
 const Genre = ({genre, onGenreClick, isCurrentGenre, onGenreChange}) => {
   const handleGenreChange = (evt) => {
@@ -24,9 +23,16 @@ const Genre = ({genre, onGenreClick, isCurrentGenre, onGenreChange}) => {
   );
 };
 
-const GenresList = ({currentGenre, movies, onGenreClick, onGenreChange}) => {
+const GenresList = ({onGenreChange}) => {
+  const {currentGenre, movies} = useSelector((state) => state.DATA);
   const allGenres = movies.map(({genre}) => genre);
   const uniqueGenres = [`All genres`, ...new Set(allGenres)];
+
+  const dispatch = useDispatch();
+
+  const onGenreClick = (selectedGenre) => {
+    dispatch(changeGenreAction(selectedGenre));
+  };
 
   const getGenreComponent = (genre, i) => <Genre key={i} genre={genre} onGenreClick={onGenreClick} isCurrentGenre={currentGenre === genre} onGenreChange={onGenreChange}/>;
 
@@ -37,17 +43,6 @@ const GenresList = ({currentGenre, movies, onGenreClick, onGenreChange}) => {
   );
 };
 
-const mapStateToProps = (state) => ({
-  currentGenre: getGenre(state),
-  movies: getMovies(state)
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onGenreClick(selectedGenre) {
-    dispatch(ActionCreator.changeGenre(selectedGenre));
-  }
-});
-
 Genre.propTypes = {
   genre: genreProp,
   onGenreClick: PropTypes.func.isRequired,
@@ -56,10 +51,7 @@ Genre.propTypes = {
 };
 
 GenresList.propTypes = {
-  movies: PropTypes.arrayOf(movieProp),
-  onGenreClick: PropTypes.func.isRequired,
-  onGenreChange: PropTypes.func.isRequired,
-  currentGenre: PropTypes.string.isRequired
+  onGenreChange: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GenresList);
+export default GenresList;

@@ -1,24 +1,25 @@
 import React, {useState, useEffect} from 'react';
-import PropTypes from 'prop-types';
 import LayoutRouter from '../layout-router/layout-router';
 import {Router} from 'react-router-dom';
 import browserHistory from '../../browser-history';
 import {checkAuth} from '../../api/api-actions';
-import {ActionCreator} from '../../store/action';
-import {connect} from 'react-redux';
+import {requireAuthorizationAction, loginAction} from '../../store/action';
+import {useSelector, useDispatch} from 'react-redux';
 import AuthCheck from '../auth-check/auth-check';
 import {AuthorizationStatus} from '../../utils/constatns';
-import {getIsAuthtorizedFlag} from '../../store/user/selectors';
 
 
-const App = ({isAuthtorized, onLoad, login, requireAuthorization}) => {
+const App = () => {
+  const {isAuthtorized} = useSelector((state) => state.USER);
   const [isChecking, setIsChecking] = useState(true);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isChecking) {
-      onLoad()
-        .then(({data}) => login(data))
-        .then(requireAuthorization)
+      dispatch(checkAuth())
+        .then(({data}) => dispatch(loginAction(data)))
+        .then(() => dispatch(requireAuthorizationAction(AuthorizationStatus.AUTHORIZED)))
         .catch(() => setIsChecking(false));
     }
   }, []);
@@ -34,25 +35,4 @@ const App = ({isAuthtorized, onLoad, login, requireAuthorization}) => {
   );
 };
 
-App.propTypes = {
-  isAuthtorized: PropTypes.bool,
-  onLoad: PropTypes.func.isRequired,
-  login: PropTypes.func.isRequired,
-  requireAuthorization: PropTypes.func.isRequired
-};
-
-const mapStateToProps = (state) => ({isAuthtorized: getIsAuthtorizedFlag(state)});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoad(onCheckComplete) {
-    return dispatch(checkAuth(onCheckComplete));
-  },
-  login(data) {
-    dispatch(ActionCreator.login(data));
-  },
-  requireAuthorization() {
-    dispatch(ActionCreator.requireAuthorization(AuthorizationStatus.AUTHORIZED));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

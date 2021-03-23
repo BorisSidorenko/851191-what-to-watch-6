@@ -2,7 +2,7 @@ import React from 'react';
 import {directorProp, genreProp, releasedProp, starringProp, runTimeProp} from '../props/movie-props';
 
 
-const MovieCardDetails = ({director, starring, duration, genre, released}) => (
+const MovieCardDetails = ({director, starring, run_time: duration, genre, released}) => (
   <div className="movie-card__text movie-card__row">
     <div className="movie-card__text-col">
       <p className="movie-card__details-item">
@@ -35,11 +35,11 @@ const MovieCardDetails = ({director, starring, duration, genre, released}) => (
 );
 
 MovieCardDetails.propTypes = {
-  released: releasedProp,
-  genre: genreProp,
-  director: directorProp,
-  starring: starringProp,
-  duration: runTimeProp
+  "released": releasedProp,
+  "genre": genreProp,
+  "director": directorProp,
+  "starring": starringProp,
+  "run_time": runTimeProp
 };
 
 

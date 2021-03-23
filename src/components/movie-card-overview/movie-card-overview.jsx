@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {getRatingDescription} from '../../utils/common';
 import {directorProp, descriptionProp, starringProp, ratingProp, scoresCountProp} from '../props/movie-props';
 
-const MovieCardOverview = ({rating, description, director, starring, score}) => {
+const MovieCardOverview = ({rating, description, director, starring, scores_count: score}) => {
   const raitingDesc = useMemo(() => getRatingDescription(rating));
 
   return (
@@ -27,11 +27,11 @@ const MovieCardOverview = ({rating, description, director, starring, score}) => 
 };
 
 MovieCardOverview.propTypes = {
-  rating: ratingProp,
-  description: descriptionProp,
-  director: directorProp,
-  starring: starringProp,
-  score: scoresCountProp
+  "rating": ratingProp,
+  "description": descriptionProp,
+  "director": directorProp,
+  "starring": starringProp,
+  "scores_count": scoresCountProp
 };
 
 export default MovieCardOverview;

@@ -1,7 +1,8 @@
 import {DEFAULT_GENRE} from '../../utils/constatns';
-import {ActionType} from '../../store/action';
+import {loadPromoAction, clearIsPromoLoadedFlagAction, loadMoviesAction, loadMovieByIdAction, loadReviewsByMovieIdAction, clearSelectedMovieAction, changeGenreAction, markMovieAsFavoriteAction} from '../../store/action';
+import {createReducer} from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   movies: [],
   selectedMovie: null,
   selectedMovieReviews: [],
@@ -9,50 +10,30 @@ const initialState = {
   isPromoLoaded: false
 };
 
-export const data = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.LOAD_PROMO:
-      return {
-        ...state,
-        selectedMovie: action.payload,
-        isPromoLoaded: true
-      };
-    case ActionType.CLEAR_IS_PROMO_LOADDED_FLAG:
-      return {
-        ...state,
-        isPromoLoaded: initialState.isPromoLoaded
-      };
-    case ActionType.LOAD_MOVIES:
-      return {
-        ...state,
-        movies: action.payload
-      };
-    case ActionType.LOAD_MOVIE_BY_ID:
-      return {
-        ...state,
-        selectedMovie: action.payload
-      };
-    case ActionType.LOAD_REVIEWS_BY_ID:
-      return {
-        ...state,
-        selectedMovieReviews: action.payload
-      };
-    case ActionType.CLEAR_SELECTED_MOVIE:
-      return {
-        ...state,
-        selectedMovie: initialState.selectedMovie
-      };
-    case ActionType.CHANGE_GENRE:
-      return {
-        ...state,
-        genre: action.payload
-      };
-    case ActionType.MARK_MOVIE_AS_FAVORITE:
-      return {
-        ...state,
-        selectedMovie: action.payload
-      };
-    default:
-      return state;
-  }
-};
+export const data = createReducer(initialState, (builder) => {
+  builder.addCase(loadPromoAction, (state, action) => {
+    state.selectedMovie = action.payload;
+    state.isPromoLoaded = true;
+  });
+  builder.addCase(clearIsPromoLoadedFlagAction, (state) => {
+    state.isPromoLoaded = initialState.isPromoLoaded;
+  });
+  builder.addCase(loadMoviesAction, (state, action) => {
+    state.movies = action.payload;
+  });
+  builder.addCase(loadMovieByIdAction, (state, action) => {
+    state.selectedMovie = action.payload;
+  });
+  builder.addCase(loadReviewsByMovieIdAction, (state, action) => {
+    state.selectedMovieReviews = action.payload;
+  });
+  builder.addCase(clearSelectedMovieAction, (state) => {
+    state.selectedMovie = initialState.selectedMovie;
+  });
+  builder.addCase(changeGenreAction, (state, action) => {
+    state.genre = action.payload;
+  });
+  builder.addCase(markMovieAsFavoriteAction, (state, action) => {
+    state.selectedMovie = action.payload;
+  });
+});

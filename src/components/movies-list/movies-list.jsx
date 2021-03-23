@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import {withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
-import {movieProp} from '../props/movie-props';
 import {getMovieByPathName} from '../../utils/common';
 import {loadMovieList} from '../../api/api-actions';
-import {ActionCreator} from '../../store/action';
+import {loadMoviesAction} from '../../store/action';
 import Loading from '../loading/loading';
 import NothingToDisplay from '../nothing-to-display/nothing-to-display';
 
@@ -14,14 +13,17 @@ const getMovieCardComponent = (id, rest, onMovieCardMouseEnter, onMovieCardMouse
   return <MovieCard key={id} movieId={id} {...rest} onMovieCardMouseEnter={onMovieCardMouseEnter} onMovieCardMouseLeave={onMovieCardMouseLeave} currentMovieId={currentMovieId} />;
 };
 
-const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate, onLoadData, loadMovies}) => {
+const MoviesList = ({amountToDisplay, onMovieListUpdate, location}) => {
+  const {movies, genre, selectedMovie} = useSelector((state) => state.DATA);
+  const targetMovies = getMovieByPathName(movies, genre, selectedMovie, location.pathname);
   const [currentMovieId, setCurrentMovieId] = useState(-1);
   const [needToLoad, setNeedToLoad] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (needToLoad) {
-      onLoadData()
-      .then(({data}) => loadMovies(data));
+      dispatch(loadMovieList())
+        .then(({data}) => dispatch(loadMoviesAction(data)));
     }
 
     return () => setNeedToLoad(false);
@@ -57,28 +59,9 @@ const MoviesList = ({targetMovies, amountToDisplay, onMovieListUpdate, onLoadDat
 };
 
 MoviesList.propTypes = {
-  targetMovies: PropTypes.arrayOf(movieProp),
   amountToDisplay: PropTypes.number.isRequired,
-  onMovieListUpdate: PropTypes.func.isRequired,
-  loadMovies: PropTypes.func.isRequired,
-  onLoadData: PropTypes.func.isRequired
+  location: PropTypes.object.isRequired,
+  onMovieListUpdate: PropTypes.func.isRequired
 };
 
-const mapStateToProps = (state, componentProps) => {
-  const targetMovies = getMovieByPathName(state, componentProps);
-
-  return {
-    targetMovies
-  };
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadData() {
-    return dispatch(loadMovieList());
-  },
-  loadMovies(data) {
-    dispatch(ActionCreator.loadMovies(data));
-  }
-});
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(MoviesList));
+export default withRouter(MoviesList);

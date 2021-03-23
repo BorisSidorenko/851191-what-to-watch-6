@@ -1,11 +1,8 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import {idProp} from '../props/movie-props';
+import {useSelector, useDispatch} from 'react-redux';
 import {addMovieToFavorite} from '../../api/api-actions';
-import {ActionCreator} from '../../store/action';
-import {getSelectedMovie} from '../../store/data/selectors';
+import {markMovieAsFavoriteAction} from '../../store/action';
 import {RoutePaths} from '../../utils/constatns';
 
 const getSVGInList = () => (
@@ -20,12 +17,15 @@ const getSVGAddToList = () => (
   </svg>
 );
 
-const MovieCardAddToListButton = ({id, markMovieAsFavorite, isFavorite, onAddButtonClick}) => {
+const MovieCardAddToListButton = () => {
+  const {selectedMovie} = useSelector((state) => state.DATA);
+  const {id, is_favorite: isFavorite} = selectedMovie;
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const handleAddButtonClick = () => {
-    onAddButtonClick(id, !isFavorite)
-      .then(({data}) => markMovieAsFavorite(data))
+    dispatch(addMovieToFavorite(id, !isFavorite))
+      .then(({data}) => dispatch(markMovieAsFavoriteAction(data)))
       .catch(() => history.push(RoutePaths.SIGN_IN));
   };
 
@@ -37,29 +37,4 @@ const MovieCardAddToListButton = ({id, markMovieAsFavorite, isFavorite, onAddBut
   );
 };
 
-MovieCardAddToListButton.propTypes = {
-  id: idProp,
-  isFavorite: PropTypes.bool.isRequired,
-  onAddButtonClick: PropTypes.func.isRequired,
-  markMovieAsFavorite: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => {
-  const movie = getSelectedMovie(state);
-
-  return ({
-    id: movie.id,
-    isFavorite: movie.is_favorite
-  });
-};
-
-const mapDispatchToProps = (dispatch) => ({
-  onAddButtonClick(movieId, isFavorite) {
-    return dispatch(addMovieToFavorite(movieId, isFavorite));
-  },
-  markMovieAsFavorite(data) {
-    dispatch(ActionCreator.markMovieAsFavorite(data));
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(MovieCardAddToListButton);
+export default MovieCardAddToListButton;

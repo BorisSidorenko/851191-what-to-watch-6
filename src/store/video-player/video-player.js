@@ -1,41 +1,25 @@
-import {ActionType} from '../../store/action';
+import {playerMovieToPlayAction, addRequestedPlayerPathAction, playerMovieLoadedAction, playerMoviePlayAction} from '../../store/action';
 import {RoutePaths} from '../../utils/constatns';
+import {createReducer} from '@reduxjs/toolkit';
 
-const initialState = {
+export const initialState = {
   movieToPlay: null,
   isLoading: true,
   isPlaying: false,
   requestedPlayerPath: RoutePaths.MAIN
 };
 
-export const videoPlayer = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionType.VIDEO_PLAYER_MOVIE:
-      return {
-        ...state,
-        movieToPlay: action.payload
-      };
-    case ActionType.VIDEO_PLAYER_REQUESTED_PATH:
-      return {
-        ...state,
-        requestedPlayerPath: action.payload
-      };
-    case ActionType.VIDEO_PLAYER_LOADED:
-      return {
-        ...state,
-        isLoading: false
-      };
-    case ActionType.VIDEO_PLAYER_PLAYING:
-      return {
-        ...state,
-        isPlaying: true
-      };
-    case ActionType.VIDEO_PLAYER_PAUSE:
-      return {
-        ...state,
-        isPlaying: false
-      };
-    default:
-      return state;
-  }
-};
+export const videoPlayer = createReducer(initialState, (builder) => {
+  builder.addCase(playerMovieToPlayAction, (state, action) => {
+    state.movieToPlay = action.payload;
+  });
+  builder.addCase(addRequestedPlayerPathAction, (state, action) => {
+    state.requestedPlayerPath = action.payload;
+  });
+  builder.addCase(playerMovieLoadedAction, (state) => {
+    state.isLoading = false;
+  });
+  builder.addCase(playerMoviePlayAction, (state, action) => {
+    state.isPlaying = action.payload;
+  });
+});

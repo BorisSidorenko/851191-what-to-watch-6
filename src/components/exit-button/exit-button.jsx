@@ -1,15 +1,10 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
-import {getRequestedPlayerPath} from '../../store/video-player/selectors';
+import {useSelector} from 'react-redux';
 
-const ExitButton = ({requestedPlayerPath}) => <Link to={requestedPlayerPath} className="btn player__exit">Exit</Link>;
-
-ExitButton.propTypes = {
-  requestedPlayerPath: PropTypes.string.isRequired
+const ExitButton = () => {
+  const {requestedPlayerPath} = useSelector((state) => state.PLAYER);
+  return <Link to={requestedPlayerPath} className="btn player__exit">Exit</Link>;
 };
 
-const mapStateToProps = (state) => ({requestedPlayerPath: getRequestedPlayerPath(state)});
-
-export default connect(mapStateToProps)(ExitButton);
+export default ExitButton;

@@ -1,5 +1,4 @@
-import {MovieRatingDesc, RoutePaths} from './constatns';
-import {getFavoriteMoviesSelector, getSimilarMoviesSelector, getMoviesByGenreSelector} from '../store/data/selectors';
+import {MovieRatingDesc, RoutePaths, DEFAULT_GENRE, AMOUNT_OF_SIMILAR_MOVIES} from './constatns';
 
 export const getRandomIntInRange = (a = 1, b = 0) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -37,13 +36,33 @@ export const needToDisableForm = (form, needToDisable) => {
   });
 };
 
-export const getMovieByPathName = (state, {location}) => {
-  switch (location.pathname) {
+export const getFavoriteMovies = (movies) => movies.filter((movie) => movie.is_favorite);
+
+export const getMoviesByGenre = (selectedGenre, movies) => {
+  if (selectedGenre !== DEFAULT_GENRE) {
+    return movies.filter(({genre}) => genre === selectedGenre);
+  } else {
+    return movies;
+  }
+};
+
+export const getSimilarMovies = (selectedMovie, movies) => {
+  if (selectedMovie) {
+    const {id: clickedMovieId, genre: similarGenre} = selectedMovie;
+    const allMoviesSameGenre = movies.filter(({id, genre}) => genre === similarGenre && id !== clickedMovieId);
+    return allMoviesSameGenre.slice(0, AMOUNT_OF_SIMILAR_MOVIES);
+  } else {
+    return movies;
+  }
+};
+
+export const getMovieByPathName = (movies, genre, selectedMovie, path) => {
+  switch (path) {
     case RoutePaths.MY_LIST:
-      return getFavoriteMoviesSelector(state);
+      return getFavoriteMovies(movies);
     case RoutePaths.MAIN:
-      return getMoviesByGenreSelector(state);
+      return getMoviesByGenre(genre, movies);
     default:
-      return getSimilarMoviesSelector(state);
+      return getSimilarMovies(selectedMovie, movies);
   }
 };

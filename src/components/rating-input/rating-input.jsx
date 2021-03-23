@@ -9,7 +9,7 @@ const RatingInput = ({value, onRatingChange}) => {
 
   return (
     <>
-      <input onChange={onRatingChange} className="rating__input" id={inputId} type="radio" name="rating" value={starNumber}/>
+      <input onChange={onRatingChange} className="rating__input" id={inputId} type="radio" name="rating" value={starNumber} data-testid="rating"/>
       <label className="rating__label" htmlFor={inputId}>{labelValue}</label>
     </>
   );

@@ -10,9 +10,7 @@ export const addReview = (movieId, {rating, comment}) => (_dispatch, _getState, 
   return api.post(`${APIRoute.REVIEWS}/${movieId}`, {rating, comment});
 };
 
-export const loadPromoMovie = () => (_dispatch, _getState, api) => {
-  return api.get(APIRoute.PROMO);
-};
+export const loadPromoMovie = () => (_dispatch, _getState, api) => api.get(APIRoute.PROMO);
 
 export const checkAuth = () => (_dispatch, _getState, api) => api.get(APIRoute.LOGIN);
 
