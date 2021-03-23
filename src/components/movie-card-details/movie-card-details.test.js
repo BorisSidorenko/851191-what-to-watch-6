@@ -1,17 +1,10 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 import MovieCardDetails from './movie-card-details';
+import {movieStructure} from '../../data-structure';
 
 it(`Should MovieCardDetails render correctly`, () => {
-  const props = {
-    "director": `test`,
-    "starring": [`test`],
-    "run_time": 1,
-    "genre": `test`,
-    "released": `test`
-  };
-
-  const {getByText} = render(<MovieCardDetails {...props} />);
+  const {getByText} = render(<MovieCardDetails {...movieStructure} />);
 
   const directorText = getByText(`Director`);
   const starringText = getByText(`Starring`);

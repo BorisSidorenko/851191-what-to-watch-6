@@ -6,6 +6,7 @@ import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import {createMemoryHistory} from 'history';
 import UserBlockAvatar from './user-block-avatar';
+import {authInfoStructure} from '../../data-structure';
 
 const mockStore = configureStore({});
 
@@ -15,10 +16,7 @@ it(`Should UserBlockAvatar render correctly`, () => {
   const store = mockStore({
     USER: {
       isAuthtorized: AuthorizationStatus.AUTHORIZED,
-      user: {
-        "avatar_url": ``,
-        "name": `User name`
-      }
+      user: authInfoStructure
     }
   });
 
@@ -32,5 +30,5 @@ it(`Should UserBlockAvatar render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(screen.getByAltText(`User name`)).toBeInTheDocument();
+  expect(screen.getByAltText(authInfoStructure.name)).toBeInTheDocument();
 });

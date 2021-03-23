@@ -1,16 +1,12 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 import MovieCardImage from './movie-card-image';
+import {movieStructure} from '../../data-structure';
 
 it(`Should MovieCardImage render correctly`, () => {
-  const props = {
-    preview: `test`,
-    name: `test`
-  };
+  const {getByAltText} = render(<MovieCardImage preview={movieStructure.preview_image} name={movieStructure.name} />);
 
-  const {getByAltText} = render(<MovieCardImage {...props} />);
-
-  const imgText = getByAltText(props.name);
+  const imgText = getByAltText(movieStructure.name);
 
   expect(imgText).toBeInTheDocument();
 });

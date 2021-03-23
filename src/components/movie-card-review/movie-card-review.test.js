@@ -1,22 +1,16 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 import MovieCardReview from './movie-card-review';
+import {reviewStructure} from '../../data-structure';
 
 it(`Should MovieCardReview render correctly`, () => {
-  const props = {
-    user: {
-      name: `Test`
-    },
-    comment: `test`,
-    date: `01-01-2021`,
-    rating: 10
-  };
+  const {user, comment, rating} = reviewStructure;
 
-  const {getByText} = render(<MovieCardReview {...props} />);
+  const {getByText} = render(<MovieCardReview {...reviewStructure} />);
 
-  const commentText = getByText(props.comment);
-  const nameText = getByText(props.user.name);
-  const ratingText = getByText(props.rating);
+  const commentText = getByText(comment);
+  const nameText = getByText(user.name);
+  const ratingText = getByText(rating);
 
   expect(commentText).toBeInTheDocument();
   expect(nameText).toBeInTheDocument();
