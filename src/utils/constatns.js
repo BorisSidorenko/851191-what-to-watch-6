@@ -111,3 +111,5 @@ export const AuthorizationStatus = {
   AUTHORIZED: true,
   NOT_AUTHORIZED: false
 };
+
+export const NAVIGATION_ITEMS = [`Overview`, `Details`, `Reviews`];
