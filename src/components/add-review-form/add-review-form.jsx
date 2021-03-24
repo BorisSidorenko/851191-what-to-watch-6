@@ -71,7 +71,8 @@ const AddReviewForm = ({id}) => {
           placeholder="Review text"
           required
           minLength={COMMENT_LENGTH_MIN}
-          maxLength={COMMENT_LENGTH_MAX}>
+          maxLength={COMMENT_LENGTH_MAX}
+          data-testid="comment">
         </textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit" disabled={isSubmitDisabled()}>Post</button>
