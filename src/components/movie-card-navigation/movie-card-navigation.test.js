@@ -11,9 +11,9 @@ it(`Should MovieCardNavigation render correctly`, () => {
   const pathname = RoutePaths.MOVIE_PAGE;
 
   const {container} = render(
-    <Router history={history}>
-      <MovieCardNavigation url={overviewTab} pathname={pathname}/>
-    </Router>
+      <Router history={history}>
+        <MovieCardNavigation url={overviewTab} pathname={pathname}/>
+      </Router>
   );
 
   expect(container.querySelector(`.movie-nav`)).toBeInTheDocument();
