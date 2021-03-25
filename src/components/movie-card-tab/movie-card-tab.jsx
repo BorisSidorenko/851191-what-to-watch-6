@@ -2,10 +2,10 @@ import React from 'react';
 import {NavLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {NAVIGATION_ITEMS} from '../../utils/constatns';
+import {TAB_ITEMS} from '../../utils/constatns';
 
 const MovieCardTab = ({tab, url, pathname}) => {
-  const [defaultTab] = NAVIGATION_ITEMS;
+  const [defaultTab] = TAB_ITEMS;
   const [, requestedTab] = pathname.split(`${url}/`);
   const currentTab = requestedTab ? requestedTab : defaultTab.toLowerCase();
 
