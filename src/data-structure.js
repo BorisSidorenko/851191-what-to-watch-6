@@ -18,6 +18,66 @@ export const movieStructure = {
   "preview_video_link": `https://test.com`
 };
 
+export const moviesToTest = [
+  {
+    "name": `Test Movie 1`,
+    "poster_image": `test-image.jpg`,
+    "preview_image": `https://test.com`,
+    "background_image": `test-bg-image.jpg`,
+    "background_color": `black`,
+    "description": `Test description`,
+    "rating": 1,
+    "scores_count": 1.1,
+    "director": `Test Director`,
+    "starring": [`Test Actor 1`, `Test Actor 2`],
+    "run_time": 100,
+    "genre": `Genre to test`,
+    "released": 2021,
+    "id": 1,
+    "is_favorite": false,
+    "video_link": `https://test.com`,
+    "preview_video_link": `https://test.com`
+  },
+  {
+    "name": `Test Movie 2`,
+    "poster_image": `test-image.jpg`,
+    "preview_image": `https://test.com`,
+    "background_image": `test-bg-image.jpg`,
+    "background_color": `black`,
+    "description": `Test description`,
+    "rating": 1,
+    "scores_count": 1.1,
+    "director": `Test Director`,
+    "starring": [`Test Actor 1`, `Test Actor 2`],
+    "run_time": 100,
+    "genre": `Genre to test`,
+    "released": 2021,
+    "id": 2,
+    "is_favorite": true,
+    "video_link": `https://test.com`,
+    "preview_video_link": `https://test.com`
+  },
+  {
+    "name": `Test Movie 3`,
+    "poster_image": `test-image.jpg`,
+    "preview_image": `https://test.com`,
+    "background_image": `test-bg-image.jpg`,
+    "background_color": `black`,
+    "description": `Test description`,
+    "rating": 1,
+    "scores_count": 1.1,
+    "director": `Test Director`,
+    "starring": [`Test Actor 1`, `Test Actor 2`],
+    "run_time": 100,
+    "genre": `Test genre`,
+    "released": 2021,
+    "id": 3,
+    "is_favorite": false,
+    "video_link": `https://test.com`,
+    "preview_video_link": `https://test.com`
+  }
+];
+
 export const reviewStructure = {
   "id": 1,
   "user": {
