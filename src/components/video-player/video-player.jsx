@@ -71,7 +71,7 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
 
   return (
     <div className="player">
-      {isLoading && !movieToPlay ? <Loading /> : getVideoPlayerComponents(isPreview, videoRef, movieToPlay, isPlaying, isLoading, handlePlayButtonClick)};
+      {isLoading && !movieToPlay ? <Loading /> : getVideoPlayerComponents(isPreview, videoRef, movieToPlay, isPlaying, isLoading, handlePlayButtonClick)}
     </div>
   );
 };
