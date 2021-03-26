@@ -28,10 +28,12 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadMovieById(movieId))
+    if (!movieToPlay) {
+      dispatch(loadMovieById(movieId))
       .then(({data}) => dispatch(playerMovieToPlayAction(data)))
       .then(() => dispatch(playerMovieLoadedAction()))
       .catch(() => dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND)));
+    }
 
     return (() => dispatch(playerMoviePlayAction(false)));
   }, [movieId]);
