@@ -1,0 +1,160 @@
+import React from 'react';
+import {render, screen} from '@testing-library/react';
+import {Router} from 'react-router-dom';
+import * as redux from 'react-redux';
+import {createMemoryHistory} from 'history';
+import {movieStructure, authInfoStructure, reviewStructure} from '../../data-structure';
+import {RoutePaths} from '../../utils/constatns';
+import {createAPI} from '../../api/api';
+import rootReducer from '../../store/root-reducer';
+import {configureStore} from '@reduxjs/toolkit';
+import {AuthorizationStatus} from '../../utils/constatns';
+import userEvent from '@testing-library/user-event';
+import LayoutRouter from './layout-router';
+
+const api = createAPI({});
+const mockStore = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api
+      },
+    }),
+  preloadedState: {
+    DATA: {
+      selectedMovie: movieStructure,
+      isPromoLoaded: true,
+      movies: [movieStructure],
+      selectedMovieReviews: [reviewStructure]
+    },
+    USER: {
+      isAuthtorized: AuthorizationStatus.AUTHORIZED,
+      user: authInfoStructure
+    },
+    PLAYER: {
+      movieToPlay: movieStructure,
+      requestedPlayerPath: RoutePaths.MAIN,
+      isLoading: false,
+      isPlaying: false,
+    }
+  }
+});
+
+describe(`Test routing`, () => {
+  it(`Render 'MAIN' when user navigate to '/' url`, () => {
+    const history = createMemoryHistory();
+
+    const {container} = render(
+        <redux.Provider store={mockStore}>
+          <Router history={history}>
+            <LayoutRouter />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(container.querySelector(`.movie-card__poster`)).toBeInTheDocument();
+    expect(screen.queryByText(`Add Review`)).not.toBeInTheDocument();
+    expect(container.querySelector(`.catalog`)).toBeInTheDocument();
+    expect(screen.getByText(`Catalog`)).toBeInTheDocument();
+    expect(container.querySelector(`.copyright`)).toBeInTheDocument();
+  });
+
+  it(`Render 'SignIn' when user navigate to '/login' url`, () => {
+    const history = createMemoryHistory();
+    history.push(RoutePaths.SIGN_IN);
+
+    render(
+        <redux.Provider store={mockStore}>
+          <Router history={history}>
+            <LayoutRouter />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByLabelText(`Email address`)).toBeInTheDocument();
+    expect(screen.getByLabelText(`Password`)).toBeInTheDocument();
+
+    userEvent.type(screen.getByTestId(`email`), `keks`);
+    userEvent.type(screen.getByTestId(`password`), `123456`);
+
+    expect(screen.getByDisplayValue(`keks`)).toBeInTheDocument();
+    expect(screen.getByDisplayValue(`123456`)).toBeInTheDocument();
+  });
+
+  it(`Render 'MyList' when user navigate to '/mylist' url`, () => {
+    const history = createMemoryHistory();
+    history.push(RoutePaths.MY_LIST);
+
+    render(
+        <redux.Provider store={mockStore}>
+          <Router history={history}>
+            <LayoutRouter />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByText(`My list`)).toBeInTheDocument();
+    expect(screen.getByText(`Catalog`)).toBeInTheDocument();
+  });
+
+  it(`Render 'MoviePage' when user navigate to '/movies/:id' url`, () => {
+    const history = createMemoryHistory();
+    history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}`);
+
+    render(
+        <redux.Provider store={mockStore}>
+          <Router history={history}>
+            <LayoutRouter />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByText(`Play`)).toBeInTheDocument();
+    expect(screen.getByText(`My list`)).toBeInTheDocument();
+    expect(screen.getByText(`Add review`)).toBeInTheDocument();
+    expect(screen.getByText(`Overview`)).toBeInTheDocument();
+    expect(screen.getByText(`Details`)).toBeInTheDocument();
+    expect(screen.getByText(`Reviews`)).toBeInTheDocument();
+    expect(screen.getByText(`More like this`)).toBeInTheDocument();
+  });
+
+  it(`Render 'Review' when user navigate to '/movies/:id/review' url`, () => {
+    const history = createMemoryHistory();
+    history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}${RoutePaths.REVIEW}`);
+
+    render(
+        <redux.Provider store={mockStore}>
+          <Router history={history}>
+            <LayoutRouter />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByTestId(`comment`)).toBeInTheDocument();
+    expect(screen.getByText(`Post`)).toBeInTheDocument();
+  });
+
+
+  it(`Render 'Player' when user navigate to '/player/:id' url`, () => {
+    const history = createMemoryHistory();
+    history.push(`${RoutePaths.PLAYER}/${movieStructure.id}`);
+
+    window.HTMLMediaElement.prototype.play = () => {};
+    window.HTMLMediaElement.prototype.pause = () => {};
+
+    render(
+        <redux.Provider store={mockStore}>
+          <Router history={history}>
+            <LayoutRouter />
+          </Router>
+        </redux.Provider>
+    );
+
+    expect(screen.getByText(`Exit`)).toBeInTheDocument();
+    expect(screen.getByText(`Toggler`)).toBeInTheDocument();
+    expect(screen.getByText(`Play`)).toBeInTheDocument();
+    expect(screen.getByText(`Transpotting`)).toBeInTheDocument();
+    expect(screen.getByText(`Full screen`)).toBeInTheDocument();
+  });
+});
