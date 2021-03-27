@@ -3,40 +3,18 @@ import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {movieStructure} from '../../data-structure';
-import {RoutePaths} from '../../utils/constatns';
+import {movieStructure, getFakeStore} from '../../data-structure';
 import VideoPlayer from './video-player';
-import {createAPI} from '../../api/api';
-import rootReducer from '../../store/root-reducer';
-import {configureStore} from '@reduxjs/toolkit';
-
-const api = createAPI({});
-const mockStore = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: api
-      },
-    }),
-  preloadedState: {
-    PLAYER: {
-      movieToPlay: movieStructure,
-      requestedPlayerPath: RoutePaths.MAIN,
-      isLoading: false,
-      isPlaying: false,
-    }
-  }
-});
-
-window.HTMLMediaElement.prototype.play = () => {};
-window.HTMLMediaElement.prototype.pause = () => {};
 
 it(`Should VideoPlayer render correctly`, () => {
+  const fakeStore = getFakeStore();
   const history = createMemoryHistory();
 
+  window.HTMLMediaElement.prototype.play = () => {};
+  window.HTMLMediaElement.prototype.pause = () => {};
+
   render(
-      <redux.Provider store={mockStore}>
+      <redux.Provider store={fakeStore}>
         <Router history={history}>
           <VideoPlayer movieId={movieStructure.id} />
         </Router>

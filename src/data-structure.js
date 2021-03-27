@@ -1,3 +1,8 @@
+import {createAPI} from '../src/api/api';
+import rootReducer from '../src/store/root-reducer';
+import {configureStore} from '@reduxjs/toolkit';
+import {RoutePaths, AuthorizationStatus} from '../src/utils/constatns';
+
 export const movieStructure = {
   "name": `Test Movie`,
   "poster_image": `test-image.jpg`,
@@ -101,3 +106,37 @@ export const authInfoStructure = {
   "avatar_url": `img/1.png`
 };
 
+export const getFakeStore = () => {
+  const api = createAPI({});
+
+  const mockStore = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        thunk: {
+          extraArgument: api
+        },
+      }),
+    preloadedState: {
+      DATA: {
+        selectedMovie: movieStructure,
+        selectedMovieReviews: [reviewStructure],
+        genre: movieStructure.genre,
+        isPromoLoaded: true,
+        movies: [movieStructure]
+      },
+      USER: {
+        isAuthtorized: AuthorizationStatus.AUTHORIZED,
+        user: authInfoStructure
+      },
+      PLAYER: {
+        movieToPlay: movieStructure,
+        requestedPlayerPath: RoutePaths.MAIN,
+        isLoading: false,
+        isPlaying: false
+      }
+    }
+  });
+
+  return mockStore;
+};

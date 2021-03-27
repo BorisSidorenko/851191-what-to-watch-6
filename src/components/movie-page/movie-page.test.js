@@ -3,46 +3,18 @@ import {render, screen} from '@testing-library/react';
 import {Router, Switch, Route} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {movieStructure, authInfoStructure, reviewStructure} from '../../data-structure';
+import {movieStructure, getFakeStore} from '../../data-structure';
 import {RoutePaths} from '../../utils/constatns';
 import MoviePage from './movie-page';
-import {createAPI} from '../../api/api';
-import rootReducer from '../../store/root-reducer';
-import {configureStore} from '@reduxjs/toolkit';
-import {AuthorizationStatus} from '../../utils/constatns';
-
-const api = createAPI({});
-const mockStore = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: api
-      },
-    }),
-  preloadedState: {
-    DATA: {
-      selectedMovie: movieStructure,
-      selectedMovieReviews: [reviewStructure],
-      movies: [movieStructure],
-      genre: movieStructure.genre
-    },
-    USER: {
-      isAuthtorized: AuthorizationStatus.AUTHORIZED,
-      user: authInfoStructure
-    },
-    PLAYER: {
-      isPlaying: true
-    }
-  }
-});
 
 it(`Should MoviePage render correctly`, () => {
+  const fakeStore = getFakeStore();
+
   const history = createMemoryHistory();
   history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}`);
 
   render(
-      <redux.Provider store={mockStore}>
+      <redux.Provider store={fakeStore}>
         <Router history={history}>
           <Switch>
             <Route path={`${RoutePaths.MOVIE_PAGE}/:id`}

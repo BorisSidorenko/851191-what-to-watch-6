@@ -3,50 +3,20 @@ import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {movieStructure, authInfoStructure, reviewStructure} from '../../data-structure';
+import {movieStructure, getFakeStore} from '../../data-structure';
 import {RoutePaths} from '../../utils/constatns';
-import {createAPI} from '../../api/api';
-import rootReducer from '../../store/root-reducer';
-import {configureStore} from '@reduxjs/toolkit';
-import {AuthorizationStatus} from '../../utils/constatns';
 import userEvent from '@testing-library/user-event';
 import LayoutRouter from './layout-router';
 
-const api = createAPI({});
-const mockStore = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: api
-      },
-    }),
-  preloadedState: {
-    DATA: {
-      selectedMovie: movieStructure,
-      isPromoLoaded: true,
-      movies: [movieStructure],
-      selectedMovieReviews: [reviewStructure]
-    },
-    USER: {
-      isAuthtorized: AuthorizationStatus.AUTHORIZED,
-      user: authInfoStructure
-    },
-    PLAYER: {
-      movieToPlay: movieStructure,
-      requestedPlayerPath: RoutePaths.MAIN,
-      isLoading: false,
-      isPlaying: false,
-    }
-  }
-});
+const fakeStore = getFakeStore();
 
 describe(`Test routing`, () => {
+
   it(`Render 'MAIN' when user navigate to '/' url`, () => {
     const history = createMemoryHistory();
 
     const {container} = render(
-        <redux.Provider store={mockStore}>
+        <redux.Provider store={fakeStore}>
           <Router history={history}>
             <LayoutRouter />
           </Router>
@@ -65,7 +35,7 @@ describe(`Test routing`, () => {
     history.push(RoutePaths.SIGN_IN);
 
     render(
-        <redux.Provider store={mockStore}>
+        <redux.Provider store={fakeStore}>
           <Router history={history}>
             <LayoutRouter />
           </Router>
@@ -87,7 +57,7 @@ describe(`Test routing`, () => {
     history.push(RoutePaths.MY_LIST);
 
     render(
-        <redux.Provider store={mockStore}>
+        <redux.Provider store={fakeStore}>
           <Router history={history}>
             <LayoutRouter />
           </Router>
@@ -103,7 +73,7 @@ describe(`Test routing`, () => {
     history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}`);
 
     render(
-        <redux.Provider store={mockStore}>
+        <redux.Provider store={fakeStore}>
           <Router history={history}>
             <LayoutRouter />
           </Router>
@@ -124,7 +94,7 @@ describe(`Test routing`, () => {
     history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}${RoutePaths.REVIEW}`);
 
     render(
-        <redux.Provider store={mockStore}>
+        <redux.Provider store={fakeStore}>
           <Router history={history}>
             <LayoutRouter />
           </Router>
@@ -144,7 +114,7 @@ describe(`Test routing`, () => {
     window.HTMLMediaElement.prototype.pause = () => {};
 
     render(
-        <redux.Provider store={mockStore}>
+        <redux.Provider store={fakeStore}>
           <Router history={history}>
             <LayoutRouter />
           </Router>

@@ -3,42 +3,18 @@ import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {movieStructure, authInfoStructure} from '../../data-structure';
+import {movieStructure, getFakeStore} from '../../data-structure';
 import {RoutePaths} from '../../utils/constatns';
 import Main from './main';
-import {createAPI} from '../../api/api';
-import rootReducer from '../../store/root-reducer';
-import {configureStore} from '@reduxjs/toolkit';
-import {AuthorizationStatus} from '../../utils/constatns';
-
-const api = createAPI({});
-const mockStore = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: api
-      },
-    }),
-  preloadedState: {
-    DATA: {
-      selectedMovie: movieStructure,
-      isPromoLoaded: true,
-      movies: [movieStructure]
-    },
-    USER: {
-      isAuthtorized: AuthorizationStatus.AUTHORIZED,
-      user: authInfoStructure
-    }
-  }
-});
 
 it(`Should Main render correctly`, () => {
+  const fakeStore = getFakeStore();
+
   const history = createMemoryHistory();
   history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}`);
 
   const {container} = render(
-      <redux.Provider store={mockStore}>
+      <redux.Provider store={fakeStore}>
         <Router history={history}>
           <Main />
         </Router>
