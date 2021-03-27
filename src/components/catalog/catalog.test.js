@@ -4,7 +4,7 @@ import {Router} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
 import {movieStructure, getFakeStore} from '../../data-structure';
-import {RoutePaths} from '../../utils/constatns';
+import {RoutePaths, DEFAULT_GENRE} from '../../utils/constatns';
 import Catalog from './catalog';
 
 it(`Should Main render correctly`, () => {
@@ -13,7 +13,7 @@ it(`Should Main render correctly`, () => {
   const history = createMemoryHistory();
   history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}`);
 
-  const {container} = render(
+  render(
       <redux.Provider store={fakeStore}>
         <Router history={history}>
           <Catalog catalogClass={`catalog`} />
@@ -21,7 +21,7 @@ it(`Should Main render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(container.querySelector(`.catalog`)).toBeInTheDocument();
-  expect(screen.getByText(`Catalog`)).toBeInTheDocument();
-  expect(screen.getByText(movieStructure.genre)).toBeInTheDocument();
+  expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
+  expect(screen.getAllByRole(`link`).map((el) => el.innerHTML)).toHaveLength(2);
+  expect(screen.getAllByRole(`link`).map((el) => el.innerHTML)).toEqual([DEFAULT_GENRE, movieStructure.genre]);
 });

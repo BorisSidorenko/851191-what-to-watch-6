@@ -1,27 +1,21 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import configureStore from 'redux-mock-store';
-import {movieStructure} from '../../data-structure';
+import {DEFAULT_GENRE} from '../../utils/constatns';
+import {movieStructure, getFakeStore} from '../../data-structure';
 import GenresList from './genres-list';
 
-const mockStore = configureStore({});
-
-jest.spyOn(redux, `useSelector`);
-jest.spyOn(redux, `useDispatch`);
 it(`Should GenresList render correctly`, () => {
   const handleMock = jest.fn();
   const history = createMemoryHistory();
-  const store = mockStore({
-    DATA: {
-      currentGenre: `Test`,
-      movies: [movieStructure]
-    }
-  });
+  const store = getFakeStore();
 
-  const {container} = render(
+  jest.spyOn(redux, `useSelector`);
+  jest.spyOn(redux, `useDispatch`);
+
+  render(
       <redux.Provider store={store}>
         <Router history={history}>
           <GenresList onGenreChange={handleMock}/>
@@ -29,5 +23,6 @@ it(`Should GenresList render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(container.querySelector(`.catalog__genres-list`)).toBeInTheDocument();
+  expect(screen.getAllByRole(`link`).map((el) => el.innerHTML)).toHaveLength(2);
+  expect(screen.getAllByRole(`link`).map((el) => el.innerHTML)).toEqual([DEFAULT_GENRE, movieStructure.genre]);
 });

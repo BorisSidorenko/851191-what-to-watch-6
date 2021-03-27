@@ -7,12 +7,11 @@ import Footer from './footer';
 it(`Should Footer render correctly`, () => {
   const history = createMemoryHistory();
 
-  const {container} = render(
+  render(
       <Router history={history}>
         <Footer />
       </Router>
   );
 
-  expect(container.querySelector(`.page-footer`)).toBeInTheDocument();
-  expect(screen.getByText(`© 2019 What to watch Ltd.`)).toBeInTheDocument();
+  expect(screen.getByText(/What to watch Ltd./i)).toBeInTheDocument();
 });

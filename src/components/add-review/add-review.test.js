@@ -28,10 +28,11 @@ it(`Should AddReview render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(screen.getByText(`WTW`)).toBeInTheDocument();
+  expect(screen.getByText(/WTW/i)).toBeInTheDocument();
   expect(screen.getByText(movieStructure.name)).toBeInTheDocument();
-  expect(screen.getByText(`Add review`)).toBeInTheDocument();
-  expect(screen.getByText(`Rating 1`)).toBeInTheDocument();
+  expect(screen.getByText(/Add review/i)).toBeInTheDocument();
+  expect(screen.getAllByTestId(`rating`)).toHaveLength(10);
+  expect(screen.getByTestId(`comment`)).toBeInTheDocument();
   expect(screen.getByRole(`button`)).toBeInTheDocument();
-  expect(screen.getByText(`Post`)).toBeInTheDocument();
+  expect(screen.getByText(/Post/i)).toBeInTheDocument();
 });

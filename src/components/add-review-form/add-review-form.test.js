@@ -7,12 +7,11 @@ import {createMemoryHistory} from 'history';
 import AddReviewForm from './add-review-form';
 import {movieStructure} from '../../data-structure';
 
-const mockStore = configureStore({});
-
-jest.spyOn(redux, `useDispatch`);
-
 it(`Should AddReviewForm render correctly`, () => {
+  const mockStore = configureStore({});
   const history = createMemoryHistory();
+
+  jest.spyOn(redux, `useDispatch`);
 
   render(
       <redux.Provider store={mockStore({})}>
