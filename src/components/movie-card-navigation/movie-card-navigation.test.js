@@ -1,5 +1,5 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import {TAB_ITEMS, RoutePaths} from '../../utils/constatns';
@@ -10,12 +10,15 @@ it(`Should MovieCardNavigation render correctly`, () => {
   const [overviewTab] = TAB_ITEMS;
   const pathname = RoutePaths.MOVIE_PAGE;
 
-  const {container} = render(
+  render(
       <Router history={history}>
         <MovieCardNavigation url={overviewTab} pathname={pathname}/>
       </Router>
   );
 
-  expect(container.querySelector(`.movie-nav`)).toBeInTheDocument();
-  expect(container.querySelector(`.movie-nav__list`)).toBeInTheDocument();
+  expect(screen.getByRole(`navigation`)).toBeInTheDocument();
+  expect(screen.getByRole(`list`)).toBeInTheDocument();
+  expect(screen.getByText(`Overview`)).toBeInTheDocument();
+  expect(screen.getByText(`Details`)).toBeInTheDocument();
+  expect(screen.getByText(`Reviews`)).toBeInTheDocument();
 });

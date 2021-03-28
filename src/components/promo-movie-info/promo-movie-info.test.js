@@ -8,10 +8,10 @@ import PromoMovieInfo from './promo-movie-info';
 
 it(`Should PromoMovieInfo render correctly`, () => {
   const store = getFakeStore();
-  const {name} = movieStructure;
+  const {name, genre, released} = movieStructure;
   const history = createMemoryHistory();
 
-  const {container} = render(
+  render(
       <redux.Provider store={store}>
         <Router history={history}>
           <PromoMovieInfo {...movieStructure} poster={movieStructure.poster_image}/>
@@ -19,6 +19,12 @@ it(`Should PromoMovieInfo render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(container.querySelector(`.movie-card__info`)).toBeInTheDocument();
-  expect(screen.getByAltText(name)).toBeInTheDocument();
+  expect(screen.getByRole(`img`)).toHaveAttribute(`src`, movieStructure.poster_image);
+  expect(screen.getByRole(`img`)).toHaveAttribute(`alt`, movieStructure.name);
+  expect(screen.getByText(name)).toBeInTheDocument();
+  expect(screen.getByText(genre)).toBeInTheDocument();
+  expect(screen.getByText(released)).toBeInTheDocument();
+  expect(screen.getByRole(`link`).innerHTML).toMatch(/Play/i);
+  expect(screen.getByRole(`button`).innerHTML).toMatch(/My list/i);
+  expect(screen.queryByText(/Add review/i)).not.toBeInTheDocument();
 });

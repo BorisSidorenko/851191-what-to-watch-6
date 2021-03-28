@@ -1,13 +1,14 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {reviewStructure} from '../../data-structure';
 import MovieCardReviews from './movie-card-reviews';
 
 it(`Should MovieCardReviews render correctly`, () => {
   const reviews = [reviewStructure];
 
-  const {container} = render(<MovieCardReviews reviews={reviews} />);
+  render(<MovieCardReviews reviews={reviews} />);
 
-  expect(container.querySelector(`.movie-card__reviews`)).toBeInTheDocument();
-  expect(container.querySelector(`.movie-card__reviews-col`)).toBeInTheDocument();
+  expect(screen.getByText(reviewStructure.comment)).toBeInTheDocument();
+  expect(screen.getByText(reviewStructure.user.name)).toBeInTheDocument();
+  expect(screen.getByText(reviewStructure.rating)).toBeInTheDocument();
 });

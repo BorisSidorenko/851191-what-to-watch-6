@@ -16,7 +16,7 @@ it(`Should MovieCard render correctly`, () => {
   window.HTMLMediaElement.prototype.play = () => {};
   window.HTMLMediaElement.prototype.pause = () => {};
 
-  const {container} = render(
+  render(
       <redux.Provider store={fakeStore}>
         <Router history={history}>
           <MovieCard
@@ -30,8 +30,7 @@ it(`Should MovieCard render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(container.querySelector(`.small-movie-card`)).toBeInTheDocument();
-  expect(container.querySelector(`.small-movie-card__link`)).toBeInTheDocument();
-  expect(container.querySelector(`.small-movie-card__title`)).toBeInTheDocument();
+  expect(screen.getByRole(`article`)).toBeInTheDocument();
+  expect(screen.getByRole(`img`)).toHaveAttribute(`src`, movieStructure.preview_image);
   expect(screen.getByText(movieStructure.name)).toBeInTheDocument();
 });

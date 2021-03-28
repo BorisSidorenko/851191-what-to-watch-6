@@ -28,7 +28,7 @@ it(`Should MyList render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(screen.getByText(`My list`)).toBeInTheDocument();
-  expect(screen.getByText(`Catalog`)).toBeInTheDocument();
-  expect(screen.getByText(`No movies to display.`)).toBeInTheDocument();
+  expect(screen.getByText(/My list/i)).toBeInTheDocument();
+  expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
+  expect(screen.getByText(/No movies to display./i)).toBeInTheDocument();
 });

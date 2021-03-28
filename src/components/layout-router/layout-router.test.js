@@ -15,7 +15,7 @@ describe(`Test routing`, () => {
   it(`Render 'MAIN' when user navigate to '/' url`, () => {
     const history = createMemoryHistory();
 
-    const {container} = render(
+    render(
         <redux.Provider store={fakeStore}>
           <Router history={history}>
             <LayoutRouter />
@@ -23,11 +23,11 @@ describe(`Test routing`, () => {
         </redux.Provider>
     );
 
-    expect(container.querySelector(`.movie-card__poster`)).toBeInTheDocument();
-    expect(screen.queryByText(`Add Review`)).not.toBeInTheDocument();
-    expect(container.querySelector(`.catalog`)).toBeInTheDocument();
-    expect(screen.getByText(`Catalog`)).toBeInTheDocument();
-    expect(container.querySelector(`.copyright`)).toBeInTheDocument();
+    expect(screen.getByText(/WTW/i)).toBeInTheDocument();
+    expect(screen.getByText(/Play/)).toBeInTheDocument();
+    expect(screen.getByText(/My list/i)).toBeInTheDocument();
+    expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Add Review/i)).not.toBeInTheDocument();
   });
 
   it(`Render 'SignIn' when user navigate to '/login' url`, () => {
@@ -64,8 +64,8 @@ describe(`Test routing`, () => {
         </redux.Provider>
     );
 
-    expect(screen.getByText(`My list`)).toBeInTheDocument();
-    expect(screen.getByText(`Catalog`)).toBeInTheDocument();
+    expect(screen.getByText(/My list/i)).toBeInTheDocument();
+    expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
   });
 
   it(`Render 'MoviePage' when user navigate to '/movies/:id' url`, () => {
@@ -80,13 +80,13 @@ describe(`Test routing`, () => {
         </redux.Provider>
     );
 
-    expect(screen.getByText(`Play`)).toBeInTheDocument();
-    expect(screen.getByText(`My list`)).toBeInTheDocument();
-    expect(screen.getByText(`Add review`)).toBeInTheDocument();
-    expect(screen.getByText(`Overview`)).toBeInTheDocument();
-    expect(screen.getByText(`Details`)).toBeInTheDocument();
-    expect(screen.getByText(`Reviews`)).toBeInTheDocument();
-    expect(screen.getByText(`More like this`)).toBeInTheDocument();
+    expect(screen.getByText(/Play/)).toBeInTheDocument();
+    expect(screen.getByText(/My list/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add review/i)).toBeInTheDocument();
+    expect(screen.getByText(/Overview/i)).toBeInTheDocument();
+    expect(screen.getByText(/Details/i)).toBeInTheDocument();
+    expect(screen.getByText(/Reviews/i)).toBeInTheDocument();
+    expect(screen.getByText(/More like this/i)).toBeInTheDocument();
   });
 
   it(`Render 'Review' when user navigate to '/movies/:id/review' url`, () => {
@@ -102,7 +102,7 @@ describe(`Test routing`, () => {
     );
 
     expect(screen.getByTestId(`comment`)).toBeInTheDocument();
-    expect(screen.getByText(`Post`)).toBeInTheDocument();
+    expect(screen.getByText(/Post/i)).toBeInTheDocument();
   });
 
 
@@ -121,10 +121,10 @@ describe(`Test routing`, () => {
         </redux.Provider>
     );
 
-    expect(screen.getByText(`Exit`)).toBeInTheDocument();
-    expect(screen.getByText(`Toggler`)).toBeInTheDocument();
-    expect(screen.getByText(`Play`)).toBeInTheDocument();
-    expect(screen.getByText(`Transpotting`)).toBeInTheDocument();
-    expect(screen.getByText(`Full screen`)).toBeInTheDocument();
+    expect(screen.getByText(/Exit/i)).toBeInTheDocument();
+    expect(screen.getByText(/Toggler/i)).toBeInTheDocument();
+    expect(screen.getByText(/Play/)).toBeInTheDocument();
+    expect(screen.getByText(/Transpotting/i)).toBeInTheDocument();
+    expect(screen.getByText(/Full screen/i)).toBeInTheDocument();
   });
 });

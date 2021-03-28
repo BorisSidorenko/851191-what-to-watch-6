@@ -10,20 +10,24 @@ import {movieStructure, authInfoStructure} from '../../data-structure';
 import Header from './header';
 
 const mockStore = configureStore({});
+
 const store = mockStore({
   USER: {
     isAuthtorized: AuthorizationStatus.AUTHORIZED,
     user: authInfoStructure
   }
 });
+
 const history = createMemoryHistory();
 
 jest.spyOn(redux, `useSelector`);
+
 describe(`Header should render correctly`, () => {
   it(`Should Header render correctly if user is authorized`, () => {
     const {id, name} = movieStructure;
+    history.push(`${RoutePaths.MOVIE_PAGE}/${id}${RoutePaths.REVIEW}`);
 
-    const {container} = render(
+    render(
         <redux.Provider store={store}>
           <Router history={history}>
             <Header name={name} movieId={id} />
@@ -31,9 +35,7 @@ describe(`Header should render correctly`, () => {
         </redux.Provider>
     );
 
-    expect(container.querySelector(`.logo`)).toBeInTheDocument();
-
-    expect(screen.getByAltText(authInfoStructure.name)).toBeInTheDocument();
+    expect(screen.getAllByRole(`link`).map((el) => el.lastChild.nodeName)).toContain(`IMG`, `SPAN`);
   });
 
   it(`Should Header render correctly if user is authorized and has children`, () => {
@@ -41,7 +43,7 @@ describe(`Header should render correctly`, () => {
 
     const title = `Test title`;
 
-    const {container} = render(
+    render(
         <redux.Provider store={store}>
           <Router history={history}>
             <Header name={name} movieId={id}>
@@ -51,10 +53,8 @@ describe(`Header should render correctly`, () => {
         </redux.Provider>
     );
 
-    expect(container.querySelector(`.logo`)).toBeInTheDocument();
 
     expect(screen.getByAltText(authInfoStructure.name)).toBeInTheDocument();
-
     expect(screen.getByText(title)).toBeInTheDocument();
   });
 
@@ -63,7 +63,7 @@ describe(`Header should render correctly`, () => {
 
     history.location.pathname = `${RoutePaths.MOVIE_PAGE}/${id}${RoutePaths.REVIEW}`;
 
-    const {container} = render(
+    render(
         <redux.Provider store={store}>
           <Router history={history}>
             <Header name={name} movieId={id}/>
@@ -71,11 +71,8 @@ describe(`Header should render correctly`, () => {
         </redux.Provider>
     );
 
-    expect(container.querySelector(`.logo`)).toBeInTheDocument();
-
     expect(screen.getByText(name)).toBeInTheDocument();
-    expect(screen.getByText(`Add review`)).toBeInTheDocument();
-
+    expect(screen.getByText(/Add review/i)).toBeInTheDocument();
     expect(screen.getByAltText(authInfoStructure.name)).toBeInTheDocument();
   });
 
@@ -89,7 +86,7 @@ describe(`Header should render correctly`, () => {
       }
     });
 
-    const {container} = render(
+    render(
         <redux.Provider store={storeRedux}>
           <Router history={history}>
             <Header name={name} movieId={id}/>
@@ -97,8 +94,6 @@ describe(`Header should render correctly`, () => {
         </redux.Provider>
     );
 
-    expect(container.querySelector(`.logo`)).toBeInTheDocument();
-
-    expect(screen.getByText(`Sign in`)).toBeInTheDocument();
+    expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
   });
 });

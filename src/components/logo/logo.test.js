@@ -1,17 +1,20 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
+import {movieStructure} from '../../data-structure';
+import {RoutePaths} from '../../utils/constatns';
 import Logo from './logo';
 
 it(`Should Logo render correctly`, () => {
   const history = createMemoryHistory();
+  history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}`);
 
-  const {container} = render(
+  render(
       <Router history={history}>
         <Logo />
       </Router>
   );
 
-  expect(container.querySelector(`.logo`)).toBeInTheDocument();
+  expect(screen.getByRole(`link`)).toBeInTheDocument();
 });

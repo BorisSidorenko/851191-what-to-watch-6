@@ -34,9 +34,9 @@ describe(`MovieCardButtons render correctly`, () => {
         </redux.Provider>
     );
 
-    expect(screen.getByText(`Play`)).toBeInTheDocument();
-    expect(screen.getByText(`My list`)).toBeInTheDocument();
-    expect(screen.getByText(`Add review`)).toBeInTheDocument();
+    expect(screen.getByText(/Play/i)).toBeInTheDocument();
+    expect(screen.getByText(/My list/i)).toBeInTheDocument();
+    expect(screen.getByText(/Add review/i)).toBeInTheDocument();
   });
 
   it(`Should MovieCardButtons render correctly when user is not authtorized`, () => {
@@ -59,8 +59,8 @@ describe(`MovieCardButtons render correctly`, () => {
         </redux.Provider>
     );
 
-    expect(screen.getByText(`Play`)).toBeInTheDocument();
-    expect(screen.getByText(`My list`)).toBeInTheDocument();
-    expect(screen.queryByText(`Add review`)).not.toBeInTheDocument();
+    expect(screen.getByText(/Play/i)).toBeInTheDocument();
+    expect(screen.getByText(/My list/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Add review/i)).not.toBeInTheDocument();
   });
 });

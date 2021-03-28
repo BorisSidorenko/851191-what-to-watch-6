@@ -16,7 +16,7 @@ it(`Should MovieCardDescription render correctly`, () => {
 
   const history = createMemoryHistory();
 
-  const {container} = render(
+  render(
       <redux.Provider store={store}>
         <Router history={history}>
           <MovieCardDescription {...movieStructure} reviewPageLink={RoutePaths.MAIN}/>
@@ -24,8 +24,9 @@ it(`Should MovieCardDescription render correctly`, () => {
       </redux.Provider>
   );
 
-  expect(container.querySelector(`.movie-card__desc`)).toBeInTheDocument();
   expect(screen.getByText(name)).toBeInTheDocument();
   expect(screen.getByText(genre)).toBeInTheDocument();
   expect(screen.getByText(released)).toBeInTheDocument();
+  expect(screen.getByText(/Play/i)).toBeInTheDocument();
+  expect(screen.getByText(/My list/i)).toBeInTheDocument();
 });
