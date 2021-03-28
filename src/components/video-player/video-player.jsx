@@ -28,10 +28,12 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadMovieById(movieId))
+    if (!movieToPlay) {
+      dispatch(loadMovieById(movieId))
       .then(({data}) => dispatch(playerMovieToPlayAction(data)))
       .then(() => dispatch(playerMovieLoadedAction()))
       .catch(() => dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND)));
+    }
 
     return (() => dispatch(playerMoviePlayAction(false)));
   }, [movieId]);
@@ -69,7 +71,7 @@ const VideoPlayer = ({movieId, isPreview = false}) => {
 
   return (
     <div className="player">
-      {isLoading && !movieToPlay ? <Loading /> : getVideoPlayerComponents(isPreview, videoRef, movieToPlay, isPlaying, isLoading, handlePlayButtonClick)};
+      {isLoading && !movieToPlay ? <Loading /> : getVideoPlayerComponents(isPreview, videoRef, movieToPlay, isPlaying, isLoading, handlePlayButtonClick)}
     </div>
   );
 };

@@ -19,21 +19,22 @@ const MoviePage = ({match, location}) => {
   const {selectedMovie, selectedMovieReviews} = useSelector((state) => state.DATA);
   const reviewPageLink = `${match.url}${RoutePaths.REVIEW}`;
   const {id} = match.params;
+  const movieId = parseInt(id, 10);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (selectedMovie && selectedMovie.id !== id) {
+    if (selectedMovie && selectedMovie.id !== movieId) {
       dispatch(clearSelectedMovieAction());
     }
 
-    dispatch(loadMovieById(id))
+    dispatch(loadMovieById(movieId))
       .then(({data}) => dispatch(loadMovieByIdAction(data)))
       .catch(() => dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND)));
 
-    dispatch(loadReviewsByMovieId(id))
+    dispatch(loadReviewsByMovieId(movieId))
       .then(({data}) => dispatch(loadReviewsByMovieIdAction(data)));
 
-  }, [id]);
+  }, [movieId]);
 
   return (
     <>

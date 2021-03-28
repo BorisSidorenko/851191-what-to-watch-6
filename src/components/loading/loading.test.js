@@ -1,11 +1,14 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+import {getStructureToRender} from '../../utils/test-utils';
+import {createMemoryHistory} from 'history';
 import Loading from './loading';
 
 it(`Should Loading render correctly`, () => {
-  const {getByText} = render(<Loading />);
+  const history = createMemoryHistory();
 
-  const textElement = getByText(`Loading...`);
+  const structureToRender = getStructureToRender(history, <Loading />);
+  render(structureToRender);
 
-  expect(textElement).toBeInTheDocument();
+  expect(screen.getByText(/Loading/i)).toBeInTheDocument();
 });

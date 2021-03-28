@@ -1,19 +1,14 @@
 import React from 'react';
-import {render} from '@testing-library/react';
-import {Router} from 'react-router-dom';
+import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
+import {getStructureToRender} from '../../utils/test-utils';
 import UserBlockLink from './user-block-link';
 
 it(`Should UserBlockLink render correctly`, () => {
   const history = createMemoryHistory();
 
-  const {getByText} = render(
-      <Router history={history}>
-        <UserBlockLink />
-      </Router>
-  );
+  const structureToRender = getStructureToRender(history, <UserBlockLink />);
+  render(structureToRender);
 
-  const textElement = getByText(`Sign in`);
-
-  expect(textElement).toBeInTheDocument();
+  expect(screen.getByText(/Sign in/i)).toBeInTheDocument();
 });

@@ -6,7 +6,7 @@ import App from './components/app/app';
 import rootReducer from '../src/store/root-reducer';
 import {AuthorizationStatus} from '../src/utils/constatns';
 import {requireAuthorizationAction} from '../src/store/action';
-import {redirect} from '../src/redirect';
+import {redirect} from '../src/middleware/redirect';
 import {configureStore} from '@reduxjs/toolkit';
 
 const makeUserNotAuthtorized = () => store.dispatch(requireAuthorizationAction(AuthorizationStatus.NOT_AUTHORIZED));

@@ -1,11 +1,14 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {getStructureToRender} from '../../utils/test-utils';
 import AuthCheck from './auth-check';
 
 it(`Should AuthCheck render correctly`, () => {
-  const {getByText} = render(<AuthCheck />);
+  const history = createMemoryHistory();
 
-  const textElement = getByText(`Checking auth...`);
+  const structureToRender = getStructureToRender(history, <AuthCheck />);
+  render(structureToRender);
 
-  expect(textElement).toBeInTheDocument();
+  expect(screen.getByText(/Checking auth/i)).toBeInTheDocument();
 });

@@ -1,20 +1,15 @@
 import React from 'react';
-import {render} from '@testing-library/react';
-import {Router} from 'react-router-dom';
+import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
+import {movieStructure, getStructureToRender} from '../../utils/test-utils';
 import MovieCardTitle from './movie-card-title';
 
 it(`Should MovieCardTitle render correctly`, () => {
   const history = createMemoryHistory();
-  const props = {name: `test`, movieId: 1};
+  const {id, name} = movieStructure;
 
-  const {getByText} = render(
-      <Router history={history}>
-        <MovieCardTitle {...props}/>
-      </Router>
-  );
+  const structureToRender = getStructureToRender(history, <MovieCardTitle movieId={id} name={name} />);
+  render(structureToRender);
 
-  const linkElement = getByText(props.name);
-
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText(movieStructure.name)).toBeInTheDocument();
 });

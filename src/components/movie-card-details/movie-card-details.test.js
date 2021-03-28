@@ -1,27 +1,18 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {movieStructure, getStructureToRender} from '../../utils/test-utils';
 import MovieCardDetails from './movie-card-details';
 
 it(`Should MovieCardDetails render correctly`, () => {
-  const props = {
-    "director": `test`,
-    "starring": [`test`],
-    "run_time": 1,
-    "genre": `test`,
-    "released": `test`
-  };
+  const history = createMemoryHistory();
 
-  const {getByText} = render(<MovieCardDetails {...props} />);
+  const structureToRender = getStructureToRender(history, <MovieCardDetails {...movieStructure} />);
+  render(structureToRender);
 
-  const directorText = getByText(`Director`);
-  const starringText = getByText(`Starring`);
-  const runTimeText = getByText(`Run Time`);
-  const genreText = getByText(`Genre`);
-  const releasedText = getByText(`Released`);
-
-  expect(directorText).toBeInTheDocument();
-  expect(starringText).toBeInTheDocument();
-  expect(runTimeText).toBeInTheDocument();
-  expect(genreText).toBeInTheDocument();
-  expect(releasedText).toBeInTheDocument();
+  expect(screen.getByText(`Director`)).toBeInTheDocument();
+  expect(screen.getByText(`Starring`)).toBeInTheDocument();
+  expect(screen.getByText(`Run Time`)).toBeInTheDocument();
+  expect(screen.getByText(`Genre`)).toBeInTheDocument();
+  expect(screen.getByText(`Released`)).toBeInTheDocument();
 });

@@ -1,11 +1,14 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {getStructureToRender} from '../../utils/test-utils';
 import ShowMore from './show-more';
 
 it(`Should ShowMore render correctly`, () => {
-  const {getByText} = render(<ShowMore onShowMoreClick={() => {}}/>);
+  const history = createMemoryHistory();
 
-  const textElement = getByText(`Show more`);
+  const structureToRender = getStructureToRender(history, <ShowMore onShowMoreClick={() => {}} />);
+  render(structureToRender);
 
-  expect(textElement).toBeInTheDocument();
+  expect(screen.getByText(/Show more/i)).toBeInTheDocument();
 });

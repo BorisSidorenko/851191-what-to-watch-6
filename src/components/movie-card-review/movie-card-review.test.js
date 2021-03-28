@@ -1,24 +1,17 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {render, screen} from '@testing-library/react';
 import MovieCardReview from './movie-card-review';
+import {reviewStructure, getStructureToRender} from '../../utils/test-utils';
 
 it(`Should MovieCardReview render correctly`, () => {
-  const props = {
-    user: {
-      name: `Test`
-    },
-    comment: `test`,
-    date: `01-01-2021`,
-    rating: 10
-  };
+  const history = createMemoryHistory();
+  const {user, comment, rating} = reviewStructure;
 
-  const {getByText} = render(<MovieCardReview {...props} />);
+  const structureToRender = getStructureToRender(history, <MovieCardReview {...reviewStructure} />);
+  render(structureToRender);
 
-  const commentText = getByText(props.comment);
-  const nameText = getByText(props.user.name);
-  const ratingText = getByText(props.rating);
-
-  expect(commentText).toBeInTheDocument();
-  expect(nameText).toBeInTheDocument();
-  expect(ratingText).toBeInTheDocument();
+  expect(screen.getByText(comment)).toBeInTheDocument();
+  expect(screen.getByText(user.name)).toBeInTheDocument();
+  expect(screen.getByText(rating)).toBeInTheDocument();
 });
