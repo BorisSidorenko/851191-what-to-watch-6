@@ -18,7 +18,7 @@ import {
   addRequestedPlayerPathAction
 } from './action';
 import {DEFAULT_GENRE, AuthorizationStatus, RoutePaths} from '../utils/constatns';
-import {movieStructure, reviewStructure, userStructure} from '../data-structure';
+import {movieStructure, reviewStructure, userStructure} from '../utils/test-utils';
 
 
 describe(`Actions creators works as expected`, () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {reviewStructure} from '../../data-structure';
+import {reviewStructure} from '../../utils/test-utils';
 import MovieCardReviews from './movie-card-reviews';
 
 it(`Should MovieCardReviews render correctly`, () => {

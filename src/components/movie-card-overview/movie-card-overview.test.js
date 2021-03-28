@@ -2,7 +2,7 @@ import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
-import {movieStructure} from '../../data-structure';
+import {movieStructure} from '../../utils/test-utils';
 import MovieCardOverview from './movie-card-overview';
 
 it(`Should MovieCardOverview render correctly`, () => {

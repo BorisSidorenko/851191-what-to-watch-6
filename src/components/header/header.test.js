@@ -6,7 +6,7 @@ import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import {createMemoryHistory} from 'history';
 import {RoutePaths} from '../../utils/constatns';
-import {movieStructure, authInfoStructure} from '../../data-structure';
+import {movieStructure, authInfoStructure} from '../../utils/test-utils';
 import Header from './header';
 
 const mockStore = configureStore({});

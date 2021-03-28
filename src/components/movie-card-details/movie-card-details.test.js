@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 import MovieCardDetails from './movie-card-details';
-import {movieStructure} from '../../data-structure';
+import {movieStructure} from '../../utils/test-utils';
 
 it(`Should MovieCardDetails render correctly`, () => {
   const {getByText} = render(<MovieCardDetails {...movieStructure} />);

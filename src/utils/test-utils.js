@@ -1,7 +1,7 @@
-import {createAPI} from '../src/api/api';
-import rootReducer from '../src/store/root-reducer';
+import {createAPI} from '../api/api';
+import rootReducer from '../store/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
-import {RoutePaths, AuthorizationStatus} from '../src/utils/constatns';
+import {RoutePaths, AuthorizationStatus} from './constatns';
 
 export const movieStructure = {
   "name": `Test Movie`,

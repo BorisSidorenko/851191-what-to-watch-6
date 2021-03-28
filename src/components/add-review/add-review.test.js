@@ -4,7 +4,7 @@ import {Router, Switch} from 'react-router-dom';
 import PrivateRoute from '../../components/private-route/private-route';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {movieStructure, getFakeStore} from '../../data-structure';
+import {movieStructure, getFakeStore} from '../../utils/test-utils';
 import {RoutePaths} from '../../utils/constatns';
 import AddReview from './add-review';
 

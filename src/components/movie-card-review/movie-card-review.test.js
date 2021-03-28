@@ -1,7 +1,7 @@
 import React from 'react';
 import {render} from '@testing-library/react';
 import MovieCardReview from './movie-card-review';
-import {reviewStructure} from '../../data-structure';
+import {reviewStructure} from '../../utils/test-utils';
 
 it(`Should MovieCardReview render correctly`, () => {
   const {user, comment, rating} = reviewStructure;

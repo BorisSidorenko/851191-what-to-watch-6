@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/react';
 import {Router, Switch, Route} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {movieStructure, getFakeStore} from '../../data-structure';
+import {movieStructure, getFakeStore} from '../../utils/test-utils';
 import {RoutePaths} from '../../utils/constatns';
 import MoviePage from './movie-page';
 

@@ -5,7 +5,7 @@ import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import {createMemoryHistory} from 'history';
 import AddReviewForm from './add-review-form';
-import {movieStructure} from '../../data-structure';
+import {movieStructure} from '../../utils/test-utils';
 
 it(`Should AddReviewForm render correctly`, () => {
   const mockStore = configureStore({});

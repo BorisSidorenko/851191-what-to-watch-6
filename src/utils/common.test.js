@@ -1,5 +1,5 @@
 import {getRatingDescription, getFavoriteMovies, getMoviesByGenre, getSimilarMovies} from './common';
-import {moviesToTest} from '../data-structure';
+import {moviesToTest} from '../utils/test-utils';
 
 describe(`Test common functions`, () => {
   it(`getRatingDescription works correctly`, () => {

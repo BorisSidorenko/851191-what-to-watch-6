@@ -3,7 +3,7 @@ import {render, screen} from '@testing-library/react';
 import {Router} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {movieStructure, getFakeStore} from '../../data-structure';
+import {movieStructure, getFakeStore} from '../../utils/test-utils';
 import PromoMovieInfo from './promo-movie-info';
 
 it(`Should PromoMovieInfo render correctly`, () => {

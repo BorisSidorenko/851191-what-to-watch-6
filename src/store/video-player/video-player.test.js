@@ -1,5 +1,5 @@
 import {videoPlayer, initialState} from './video-player';
-import {movieStructure} from '../../data-structure';
+import {movieStructure} from '../../utils/test-utils';
 import {playerMovieToPlayAction, addRequestedPlayerPathAction, playerMovieLoadedAction, playerMoviePlayAction} from '../action';
 import {RoutePaths} from '../../utils/constatns';
 

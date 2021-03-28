@@ -4,8 +4,8 @@ import {Router} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {RoutePaths} from '../../utils/constatns';
 import {createMemoryHistory} from 'history';
-import {movieStructure} from '../../data-structure';
-import {getFakeStore} from '../../data-structure';
+import {movieStructure} from '../../utils/test-utils';
+import {getFakeStore} from '../../utils/test-utils';
 import MovieCardDescription from './movie-card-description';
 
 

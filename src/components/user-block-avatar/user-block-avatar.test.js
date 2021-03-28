@@ -4,7 +4,7 @@ import {Router} from 'react-router-dom';
 import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
 import UserBlockAvatar from './user-block-avatar';
-import {authInfoStructure, getFakeStore} from '../../data-structure';
+import {authInfoStructure, getFakeStore} from '../../utils/test-utils';
 
 it(`Should UserBlockAvatar render correctly`, () => {
   const store = getFakeStore();

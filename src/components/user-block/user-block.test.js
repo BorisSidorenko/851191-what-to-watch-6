@@ -6,7 +6,7 @@ import * as redux from 'react-redux';
 import configureStore from 'redux-mock-store';
 import {createMemoryHistory} from 'history';
 import UserBlock from './user-block';
-import {authInfoStructure} from '../../data-structure';
+import {authInfoStructure} from '../../utils/test-utils';
 
 const mockStore = configureStore({});
 

@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import {createAPI, APIRoute} from '../../api/api';
 import {data, initialState} from './data';
-import {movieStructure, reviewStructure} from '../../data-structure';
+import {movieStructure, reviewStructure} from '../../utils/test-utils';
 import {
   ActionType,
   loadPromoAction,
