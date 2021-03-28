@@ -1,22 +1,16 @@
 import React from 'react';
-import {render} from '@testing-library/react';
-import {Router} from 'react-router-dom';
+import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
+import {getStructureToRender} from '../../utils/test-utils';
 import AddReviewBreadcrumbs from './add-review-breadcrumbs';
 
 it(`Should AddReviewBreadcrumbs render correctly`, () => {
   const history = createMemoryHistory();
   const props = {name: `test`, id: 1};
 
-  const {getByText} = render(
-      <Router history={history}>
-        <AddReviewBreadcrumbs {...props}/>
-      </Router>
-  );
+  const structureToRender = getStructureToRender(history, <AddReviewBreadcrumbs {...props}/>);
+  render(structureToRender);
 
-  const breadcrumbsLink = getByText(props.name);
-  const linkElement = getByText(`Add review`);
-
-  expect(breadcrumbsLink).toBeInTheDocument();
-  expect(linkElement).toBeInTheDocument();
+  expect(screen.getByText(props.name)).toBeInTheDocument();
+  expect(screen.getByText(/Add review/i)).toBeInTheDocument();
 });

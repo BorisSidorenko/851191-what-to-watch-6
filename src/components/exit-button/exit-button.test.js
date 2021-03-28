@@ -1,24 +1,14 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
 import ExitButton from './exit-button';
-import {getFakeStore} from '../../utils/test-utils';
+import {getStructureToRender} from '../../utils/test-utils';
 
 it(`Should ExitButton render correctly`, () => {
   const history = createMemoryHistory();
-  const store = getFakeStore();
 
-  jest.spyOn(redux, `useSelector`);
+  const structureToRender = getStructureToRender(history, <ExitButton />);
+  render(structureToRender);
 
-  render(
-      <redux.Provider store={store}>
-        <Router history={history}>
-          <ExitButton />
-        </Router>
-      </redux.Provider>
-  );
-
-  expect(screen.getByText(`Exit`)).toBeInTheDocument();
+  expect(screen.getByText(/Exit/i)).toBeInTheDocument();
 });

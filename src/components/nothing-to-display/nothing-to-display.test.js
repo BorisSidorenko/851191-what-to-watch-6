@@ -1,11 +1,14 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {getStructureToRender} from '../../utils/test-utils';
 import NothingToDisplay from './nothing-to-display';
 
 it(`Should NothingToDisplay render correctly`, () => {
-  const {getByText} = render(<NothingToDisplay />);
+  const history = createMemoryHistory();
 
-  const textElement = getByText(`No movies to display.`);
+  const structureToRender = getStructureToRender(history, <NothingToDisplay />);
+  render(structureToRender);
 
-  expect(textElement).toBeInTheDocument();
+  expect(screen.getByText(/No movies to display./i)).toBeInTheDocument();
 });

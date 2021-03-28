@@ -1,22 +1,14 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {getFakeStore} from '../../utils/test-utils';
+import {getStructureToRender} from '../../utils/test-utils';
 import NotFound from './not-found';
 
 it(`Should NotFound render correctly`, () => {
-  const store = getFakeStore();
   const history = createMemoryHistory();
 
-  render(
-      <redux.Provider store={store}>
-        <Router history={history}>
-          <NotFound />
-        </Router>
-      </redux.Provider>
-  );
+  const structureToRender = getStructureToRender(history, <NotFound />);
+  render(structureToRender);
 
   expect(screen.getByText(/404 Not Found/i)).toBeInTheDocument();
 });

@@ -1,6 +1,9 @@
+import React from 'react';
 import {createAPI} from '../api/api';
 import rootReducer from '../store/root-reducer';
 import {configureStore} from '@reduxjs/toolkit';
+import {Router} from 'react-router-dom';
+import * as redux from 'react-redux';
 import {RoutePaths, AuthorizationStatus} from './constatns';
 
 export const movieStructure = {
@@ -127,7 +130,8 @@ export const getFakeStore = () => {
       },
       USER: {
         isAuthtorized: AuthorizationStatus.AUTHORIZED,
-        user: authInfoStructure
+        user: authInfoStructure,
+        requestedRoute: RoutePaths.MAIN
       },
       PLAYER: {
         movieToPlay: movieStructure,
@@ -139,4 +143,16 @@ export const getFakeStore = () => {
   });
 
   return mockStore;
+};
+
+export const getStructureToRender = (history, children, store) => {
+  const fakeStore = store ? store : getFakeStore();
+
+  return (
+    <redux.Provider store={fakeStore}>
+      <Router history={history}>
+        {children}
+      </Router>
+    </redux.Provider>
+  );
 };

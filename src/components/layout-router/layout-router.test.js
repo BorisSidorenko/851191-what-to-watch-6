@@ -1,27 +1,17 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
-import {movieStructure, getFakeStore} from '../../utils/test-utils';
+import {movieStructure, getStructureToRender} from '../../utils/test-utils';
 import {RoutePaths} from '../../utils/constatns';
 import userEvent from '@testing-library/user-event';
 import LayoutRouter from './layout-router';
 
-const fakeStore = getFakeStore();
-
 describe(`Test routing`, () => {
-
   it(`Render 'MAIN' when user navigate to '/' url`, () => {
     const history = createMemoryHistory();
 
-    render(
-        <redux.Provider store={fakeStore}>
-          <Router history={history}>
-            <LayoutRouter />
-          </Router>
-        </redux.Provider>
-    );
+    const structureToRender = getStructureToRender(history, <LayoutRouter />);
+    render(structureToRender);
 
     expect(screen.getByText(/WTW/i)).toBeInTheDocument();
     expect(screen.getByText(/Play/)).toBeInTheDocument();
@@ -34,13 +24,8 @@ describe(`Test routing`, () => {
     const history = createMemoryHistory();
     history.push(RoutePaths.SIGN_IN);
 
-    render(
-        <redux.Provider store={fakeStore}>
-          <Router history={history}>
-            <LayoutRouter />
-          </Router>
-        </redux.Provider>
-    );
+    const structureToRender = getStructureToRender(history, <LayoutRouter />);
+    render(structureToRender);
 
     expect(screen.getByLabelText(`Email address`)).toBeInTheDocument();
     expect(screen.getByLabelText(`Password`)).toBeInTheDocument();
@@ -56,13 +41,8 @@ describe(`Test routing`, () => {
     const history = createMemoryHistory();
     history.push(RoutePaths.MY_LIST);
 
-    render(
-        <redux.Provider store={fakeStore}>
-          <Router history={history}>
-            <LayoutRouter />
-          </Router>
-        </redux.Provider>
-    );
+    const structureToRender = getStructureToRender(history, <LayoutRouter />);
+    render(structureToRender);
 
     expect(screen.getByText(/My list/i)).toBeInTheDocument();
     expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
@@ -72,13 +52,8 @@ describe(`Test routing`, () => {
     const history = createMemoryHistory();
     history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}`);
 
-    render(
-        <redux.Provider store={fakeStore}>
-          <Router history={history}>
-            <LayoutRouter />
-          </Router>
-        </redux.Provider>
-    );
+    const structureToRender = getStructureToRender(history, <LayoutRouter />);
+    render(structureToRender);
 
     expect(screen.getByText(/Play/)).toBeInTheDocument();
     expect(screen.getByText(/My list/i)).toBeInTheDocument();
@@ -93,13 +68,8 @@ describe(`Test routing`, () => {
     const history = createMemoryHistory();
     history.push(`${RoutePaths.MOVIE_PAGE}/${movieStructure.id}${RoutePaths.REVIEW}`);
 
-    render(
-        <redux.Provider store={fakeStore}>
-          <Router history={history}>
-            <LayoutRouter />
-          </Router>
-        </redux.Provider>
-    );
+    const structureToRender = getStructureToRender(history, <LayoutRouter />);
+    render(structureToRender);
 
     expect(screen.getByTestId(`comment`)).toBeInTheDocument();
     expect(screen.getByText(/Post/i)).toBeInTheDocument();
@@ -113,13 +83,8 @@ describe(`Test routing`, () => {
     window.HTMLMediaElement.prototype.play = () => {};
     window.HTMLMediaElement.prototype.pause = () => {};
 
-    render(
-        <redux.Provider store={fakeStore}>
-          <Router history={history}>
-            <LayoutRouter />
-          </Router>
-        </redux.Provider>
-    );
+    const structureToRender = getStructureToRender(history, <LayoutRouter />);
+    render(structureToRender);
 
     expect(screen.getByText(/Exit/i)).toBeInTheDocument();
     expect(screen.getByText(/Toggler/i)).toBeInTheDocument();

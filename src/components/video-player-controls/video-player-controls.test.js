@@ -1,8 +1,12 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {getStructureToRender} from '../../utils/test-utils';
 import VideoPlayerControls from './video-player-controls';
 
 it(`Should VideoPlayerControls render correctly`, () => {
+  const history = createMemoryHistory();
+
   const props = {
     isPlaying: true,
     isLoading: true,
@@ -11,13 +15,10 @@ it(`Should VideoPlayerControls render correctly`, () => {
     onFullScreenButtonClick: () => {}
   };
 
-  const {getByText} = render(<VideoPlayerControls {...props} />);
+  const structureToRender = getStructureToRender(history, <VideoPlayerControls {...props} />);
+  render(structureToRender);
 
-  const togglerText = getByText(`Toggler`);
-  const transpottingText = getByText(`Transpotting`);
-  const fullScreenText = getByText(`Full screen`);
-
-  expect(togglerText).toBeInTheDocument();
-  expect(transpottingText).toBeInTheDocument();
-  expect(fullScreenText).toBeInTheDocument();
+  expect(screen.getByText(/Toggler/i)).toBeInTheDocument();
+  expect(screen.getByText(/Transpotting/i)).toBeInTheDocument();
+  expect(screen.getByText(/Full screen/i)).toBeInTheDocument();
 });

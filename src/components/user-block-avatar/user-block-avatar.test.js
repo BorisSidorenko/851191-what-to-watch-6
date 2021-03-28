@@ -1,24 +1,14 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
-import * as redux from 'react-redux';
 import {createMemoryHistory} from 'history';
 import UserBlockAvatar from './user-block-avatar';
-import {authInfoStructure, getFakeStore} from '../../utils/test-utils';
+import {authInfoStructure, getStructureToRender} from '../../utils/test-utils';
 
 it(`Should UserBlockAvatar render correctly`, () => {
-  const store = getFakeStore();
   const history = createMemoryHistory();
 
-  jest.spyOn(redux, `useSelector`);
-
-  render(
-      <redux.Provider store={store}>
-        <Router history={history}>
-          <UserBlockAvatar />
-        </Router>
-      </redux.Provider>
-  );
+  const structureToRender = getStructureToRender(history, <UserBlockAvatar />);
+  render(structureToRender);
 
   expect(screen.getByAltText(authInfoStructure.name)).toBeInTheDocument();
 });

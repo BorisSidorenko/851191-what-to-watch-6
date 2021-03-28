@@ -1,6 +1,6 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
-import {Router} from 'react-router-dom';
+import {getStructureToRender} from '../../utils/test-utils';
 import {createMemoryHistory} from 'history';
 import Genre from './genre';
 
@@ -10,11 +10,8 @@ it(`Should Genre render correctly`, () => {
   const handleMock = jest.fn();
   const history = createMemoryHistory();
 
-  render(
-      <Router history={history}>
-        <Genre genre={testGenre} onGenreClick={handleMock} isCurrentGenre={isCurrentGenre} onGenreChange={handleMock}/>
-      </Router>
-  );
+  const structureToRender = getStructureToRender(history, <Genre genre={testGenre} onGenreClick={handleMock} isCurrentGenre={isCurrentGenre} onGenreChange={handleMock}/>);
+  render(structureToRender);
 
   expect(screen.getByText(testGenre)).toBeInTheDocument();
 });

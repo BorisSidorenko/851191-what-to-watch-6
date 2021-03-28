@@ -1,12 +1,14 @@
 import React from 'react';
-import {render} from '@testing-library/react';
+import {render, screen} from '@testing-library/react';
+import {createMemoryHistory} from 'history';
+import {movieStructure, getStructureToRender} from '../../utils/test-utils';
 import MovieCardImage from './movie-card-image';
-import {movieStructure} from '../../utils/test-utils';
 
 it(`Should MovieCardImage render correctly`, () => {
-  const {getByAltText} = render(<MovieCardImage preview={movieStructure.preview_image} name={movieStructure.name} />);
+  const history = createMemoryHistory();
 
-  const imgText = getByAltText(movieStructure.name);
+  const structureToRender = getStructureToRender(history, <MovieCardImage preview={movieStructure.preview_image} name={movieStructure.name} />);
+  render(structureToRender);
 
-  expect(imgText).toBeInTheDocument();
+  expect(screen.getByAltText(movieStructure.name)).toBeInTheDocument();
 });
