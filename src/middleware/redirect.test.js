@@ -1,5 +1,5 @@
 import {redirect} from './redirect';
-import {redirectToRouteAction} from '../store/action';
+import {redirectToRouteAction} from '../store/user/action';
 import {RoutePaths} from '../utils/constatns';
 
 const mockRedux = () => {

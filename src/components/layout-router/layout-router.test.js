@@ -1,7 +1,9 @@
 import React from 'react';
 import {render, screen} from '@testing-library/react';
 import {createMemoryHistory} from 'history';
-import {movieStructure, getStructureToRender} from '../../utils/test-utils';
+import {AuthorizationStatus} from '../../utils/constatns';
+import configureStore from 'redux-mock-store';
+import {movieStructure, authInfoStructure, getStructureToRender} from '../../utils/test-utils';
 import {RoutePaths} from '../../utils/constatns';
 import userEvent from '@testing-library/user-event';
 import LayoutRouter from './layout-router';
@@ -20,11 +22,19 @@ describe(`Test routing`, () => {
     expect(screen.queryByText(/Add Review/i)).not.toBeInTheDocument();
   });
 
-  it(`Render 'SignIn' when user navigate to '/login' url`, () => {
+  it(`Render 'SignIn' when user is not authorized and navigates to '/login' url`, () => {
+    const mockStore = configureStore({});
+    const store = mockStore({
+      USER: {
+        isAuthtorized: AuthorizationStatus.NOT_AUTHORIZED,
+        user: authInfoStructure
+      }
+    });
+
     const history = createMemoryHistory();
     history.push(RoutePaths.SIGN_IN);
 
-    const structureToRender = getStructureToRender(history, <LayoutRouter />);
+    const structureToRender = getStructureToRender(history, <LayoutRouter />, store);
     render(structureToRender);
 
     expect(screen.getByLabelText(`Email address`)).toBeInTheDocument();
@@ -35,6 +45,20 @@ describe(`Test routing`, () => {
 
     expect(screen.getByDisplayValue(`keks`)).toBeInTheDocument();
     expect(screen.getByDisplayValue(`123456`)).toBeInTheDocument();
+  });
+
+  it(`Render 'SignIn' when user is authorized and navigates to '/login' url`, () => {
+    const history = createMemoryHistory();
+    history.push(RoutePaths.SIGN_IN);
+
+    const structureToRender = getStructureToRender(history, <LayoutRouter />);
+    render(structureToRender);
+
+    expect(screen.getByText(/WTW/i)).toBeInTheDocument();
+    expect(screen.getByText(/Play/)).toBeInTheDocument();
+    expect(screen.getByText(/My list/i)).toBeInTheDocument();
+    expect(screen.getByText(/Catalog/i)).toBeInTheDocument();
+    expect(screen.queryByText(/Add Review/i)).not.toBeInTheDocument();
   });
 
   it(`Render 'MyList' when user navigate to '/mylist' url`, () => {

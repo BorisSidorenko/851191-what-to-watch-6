@@ -47,9 +47,6 @@
     "reselect": "4.0.0"
   },
   "jest": {
-    "moduleNameMapper": {
-      "\\.(css|less)$": "<rootDir>/src/style-mock.js"
-    },
     "setupFilesAfterEnv": [
       "./setup-tests.js"
     ]

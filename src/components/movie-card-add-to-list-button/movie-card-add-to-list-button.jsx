@@ -2,7 +2,7 @@ import React from 'react';
 import {useHistory} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {addMovieToFavorite} from '../../api/api-actions';
-import {markMovieAsFavoriteAction} from '../../store/action';
+import {markMovieAsFavoriteAction} from '../../store/data/action';
 import {RoutePaths} from '../../utils/constatns';
 
 const getSVGInList = () => (

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Route, Redirect} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import {RoutePaths} from '../../utils/constatns';
-import {addRequestedRouteAction} from '../../store/action';
+import {addRequestedRouteAction} from '../../store/user/action';
 
 const handleUserNotAuthtorized = () => {
   return <Redirect to={RoutePaths.SIGN_IN} />;

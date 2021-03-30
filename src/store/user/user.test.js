@@ -3,7 +3,7 @@ import {createAPI, APIRoute} from '../../api/api';
 import {user, initialState} from './user';
 import {userStructure} from '../../utils/test-utils';
 import {checkAuth, login} from '../../api/api-actions';
-import {loginAction, requireAuthorizationAction, addRequestedRouteAction, redirectToRouteAction, ActionType} from '../action';
+import {loginAction, requireAuthorizationAction, addRequestedRouteAction, redirectToRouteAction, ActionType} from './action';
 import {RoutePaths, AuthorizationStatus} from '../../utils/constatns';
 
 const api = createAPI(() => {});

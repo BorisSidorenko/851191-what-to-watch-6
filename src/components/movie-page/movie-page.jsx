@@ -12,7 +12,8 @@ import Catalog from '../catalog/catalog';
 import Footer from '../footer/footer';
 import {RoutePaths} from '../../utils/constatns';
 import {loadMovieById, loadReviewsByMovieId} from '../../api/api-actions';
-import {loadMovieByIdAction, loadReviewsByMovieIdAction, clearSelectedMovieAction, redirectToRouteAction} from '../../store/action';
+import {loadMovieByIdAction, loadReviewsByMovieIdAction, clearSelectedMovieAction} from '../../store/data/action';
+import {redirectToRouteAction} from '../../store/user/action';
 import Loading from '../loading/loading';
 
 const MoviePage = ({match, location}) => {

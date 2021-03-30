@@ -2,7 +2,7 @@ import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {useHistory, Link} from 'react-router-dom';
 import {RoutePaths} from '../../utils/constatns';
-import {addRequestedPlayerPathAction} from '../../store/action';
+import {addRequestedPlayerPathAction} from '../../store/video-player/action';
 
 const MovieCardPlayButton = () => {
   const {selectedMovie} = useSelector((state) => state.DATA);

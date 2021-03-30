@@ -12,7 +12,7 @@ import {
   clearSelectedMovieAction,
   changeGenreAction,
   markMovieAsFavoriteAction
-} from '../action';
+} from './action';
 import {loadPromoMovie, loadMovieList, loadMovieById, loadReviewsByMovieId, addReview, addMovieToFavorite} from '../../api/api-actions';
 
 const api = createAPI(() => {});

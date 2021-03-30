@@ -1,14 +1,15 @@
-import React from 'react';
+import React, {useEffect, useState, memo} from 'react';
 import PropTypes from 'prop-types';
-import {runTimeProp} from '../props/movie-props';
+import {movieProp} from '../props/movie-props';
+import {MIN_NUMBER_TO_EXTEND_DURATION_FORMAT, PLAYER_PROGRESS, MAX_PLAYER_PROGRESS_IN_PERCENT} from '../../utils/constatns';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
 
 const getHumanizeDuration = (durationInMinutes) => {
   const parsedDuration = dayjs.duration(durationInMinutes, `minutes`);
-  const {hours, minutes, seconds} = parsedDuration.$d;
-  return `${hours}:${minutes}:${seconds > 0 ? seconds : `00`}`;
+  const {hours, minutes} = parsedDuration.$d;
+  return `${hours}:${minutes >= MIN_NUMBER_TO_EXTEND_DURATION_FORMAT ? minutes : `0` + minutes}`;
 };
 
 const PauseButtonIcon = () => (
@@ -29,38 +30,69 @@ const PlayButtonIcon = () => (
   </>
 );
 
+const VideoPlayerControls = ({video, isPlaying, isLoading, movie, onPlayButtonClick, onFullScreenButtonClick}) => {
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [progressPercentage, setProgressPercentage] = useState(0);
 
-const VideoPlayerControls = ({isPlaying, isLoading, movieDuration, onPlayButtonClick, onFullScreenButtonClick}) => (
-  <div className="player__controls">
-    <div className="player__controls-row">
-      <div className="player__time">
-        <progress className="player__progress" value="0" max="100"></progress>
-        <div className="player__toggler" style={{left: 0 + `%`}}>Toggler</div>
+  const handleElapsedTime = ({duration: runTime, currentTime}) => {
+    const timeToWatch = runTime - Math.floor(currentTime);
+    setElapsedTime(timeToWatch);
+
+    const progressInPercent = currentTime * MAX_PLAYER_PROGRESS_IN_PERCENT / runTime;
+    setProgressPercentage(progressInPercent);
+  };
+
+  useEffect(() => {
+    if (video) {
+      video.ontimeupdate = () => handleElapsedTime(video);
+
+      return () => {
+        video.ontimeupdate = null;
+      };
+    }
+
+    return () => {};
+  }, [video]);
+
+  useEffect(() => {
+    if (movie) {
+      setElapsedTime(movie.run_time);
+    }
+  }, [movie]);
+
+  return (
+    <div className="player__controls">
+      <div className="player__controls-row">
+        <div className="player__time">
+          <progress className="player__progress" value={video && isPlaying ? video.currentTime : PLAYER_PROGRESS.MIN_VALUE} max={video && !isNaN(video.duration) ? video.duration : PLAYER_PROGRESS.MAX_VALUE}></progress>
+          <div className="player__toggler" style={{left: progressPercentage + `%`}}>Toggler</div>
+        </div>
+        <div className="player__time-value">{getHumanizeDuration(elapsedTime)}</div>
       </div>
-      <div className="player__time-value">{getHumanizeDuration(movieDuration)}</div>
-    </div>
 
-    <div className="player__controls-row">
-      <button type="button" className="player__play" disabled={isLoading} onClick={onPlayButtonClick}>
-        {isPlaying ? <PauseButtonIcon /> : <PlayButtonIcon />}
-      </button>
-      <div className="player__name">Transpotting</div>
-      <button type="button" className="player__full-screen" onClick={onFullScreenButtonClick}>
-        <svg viewBox="0 0 27 27" width="27" height="27">
-          <use xlinkHref="#full-screen"></use>
-        </svg>
-        <span>Full screen</span>
-      </button>
+      <div className="player__controls-row">
+        <button type="button" className="player__play" disabled={isLoading} onClick={onPlayButtonClick}>
+          {isPlaying ? <PauseButtonIcon /> : <PlayButtonIcon />}
+        </button>
+        <div className="player__name">Transpotting</div>
+        <button type="button" className="player__full-screen" onClick={onFullScreenButtonClick}>
+          <svg viewBox="0 0 27 27" width="27" height="27">
+            <use xlinkHref="#full-screen"></use>
+          </svg>
+          <span>Full screen</span>
+        </button>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 VideoPlayerControls.propTypes = {
+  video: PropTypes.object,
+  movie: movieProp,
   isPlaying: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  movieDuration: runTimeProp,
   onPlayButtonClick: PropTypes.func.isRequired,
   onFullScreenButtonClick: PropTypes.func.isRequired
 };
 
-export default VideoPlayerControls;
+export default memo(VideoPlayerControls);
