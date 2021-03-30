@@ -1,5 +1,14 @@
 import {DEFAULT_GENRE} from '../../utils/constatns';
-import {loadPromoAction, clearIsPromoLoadedFlagAction, loadMoviesAction, loadMovieByIdAction, loadReviewsByMovieIdAction, clearSelectedMovieAction, changeGenreAction, markMovieAsFavoriteAction} from '../../store/action';
+import {
+  loadPromoAction,
+  clearIsPromoLoadedFlagAction,
+  loadMoviesAction,
+  loadMovieByIdAction,
+  loadReviewsByMovieIdAction,
+  clearSelectedMovieAction,
+  changeGenreAction,
+  markMovieAsFavoriteAction
+} from './action';
 import {createReducer} from '@reduxjs/toolkit';
 
 export const initialState = {

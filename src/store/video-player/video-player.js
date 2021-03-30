@@ -1,4 +1,10 @@
-import {playerMovieToPlayAction, clearPlayerMovieToPlayAction, addRequestedPlayerPathAction, playerMovieLoadedAction, playerMoviePlayAction} from '../../store/action';
+import {
+  playerMovieToPlayAction,
+  clearPlayerMovieToPlayAction,
+  addRequestedPlayerPathAction,
+  playerMovieLoadedAction,
+  playerMoviePlayAction
+} from './action';
 import {RoutePaths} from '../../utils/constatns';
 import {createReducer} from '@reduxjs/toolkit';
 

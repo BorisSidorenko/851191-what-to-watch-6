@@ -1,6 +1,12 @@
 import {videoPlayer, initialState} from './video-player';
 import {movieStructure} from '../../utils/test-utils';
-import {playerMovieToPlayAction, addRequestedPlayerPathAction, playerMovieLoadedAction, playerMoviePlayAction, clearPlayerMovieToPlayAction} from '../action';
+import {
+  playerMovieToPlayAction,
+  addRequestedPlayerPathAction,
+  playerMovieLoadedAction,
+  playerMoviePlayAction,
+  clearPlayerMovieToPlayAction
+} from './action';
 import {RoutePaths} from '../../utils/constatns';
 
 describe(`Reducers work as expected`, () => {

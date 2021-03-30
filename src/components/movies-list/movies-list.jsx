@@ -5,7 +5,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import MovieCard from '../movie-card/movie-card';
 import {getMovieByPathName} from '../../utils/common';
 import {loadMovieList} from '../../api/api-actions';
-import {loadMoviesAction} from '../../store/action';
+import {loadMoviesAction} from '../../store/data/action';
 import Loading from '../loading/loading';
 import NothingToDisplay from '../nothing-to-display/nothing-to-display';
 

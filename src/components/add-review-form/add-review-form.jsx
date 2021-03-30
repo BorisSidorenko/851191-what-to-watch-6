@@ -5,7 +5,8 @@ import {addReview} from '../../api/api-actions';
 import {idProp} from '../../components/props/movie-props';
 import {needToDisableForm} from '../../utils/common';
 import {RoutePaths} from '../../utils/constatns';
-import {loadReviewsByMovieIdAction, redirectToRouteAction} from '../../store/action';
+import {loadReviewsByMovieIdAction} from '../../store/data/action';
+import {redirectToRouteAction} from '../../store/user/action';
 import RatingInput from '../rating-input/rating-input';
 
 const COMMENT_LENGTH_MIN = 50;

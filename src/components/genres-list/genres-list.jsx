@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {useSelector, useDispatch} from 'react-redux';
-import {changeGenreAction} from '../../store/action';
+import {changeGenreAction} from '../../store/data/action';
 import Genre from '../genre/genre';
 
 const GenresList = ({onGenreChange}) => {
@@ -15,7 +15,7 @@ const GenresList = ({onGenreChange}) => {
     dispatch(changeGenreAction(selectedGenre));
   };
 
-  const getGenreComponent = (genre, i) => <Genre key={i} genre={genre} onGenreClick={onGenreClick} isCurrentGenre={currentGenre === genre} onGenreChange={onGenreChange}/>;
+  const getGenreComponent = (genre, i) => <Genre key={`${genre}-${i}`} genre={genre} onGenreClick={onGenreClick} isCurrentGenre={currentGenre === genre} onGenreChange={onGenreChange}/>;
 
   return (
     <ul className="catalog__genres-list">

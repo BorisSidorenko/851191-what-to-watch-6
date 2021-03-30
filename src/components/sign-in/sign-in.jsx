@@ -4,7 +4,7 @@ import {login} from '../../api/api-actions';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import {Redirect} from 'react-router-dom';
-import {requireAuthorizationAction, redirectToRouteAction, loginAction} from '../../store/action';
+import {requireAuthorizationAction, redirectToRouteAction, loginAction} from '../../store/user/action';
 import {AuthorizationStatus, RoutePaths} from '../../utils/constatns';
 
 const AMOUT_OF_PASSWORD_CHARACTERS = 6;

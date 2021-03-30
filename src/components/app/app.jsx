@@ -3,7 +3,7 @@ import LayoutRouter from '../layout-router/layout-router';
 import {Router} from 'react-router-dom';
 import browserHistory from '../../browser-history';
 import {checkAuth} from '../../api/api-actions';
-import {requireAuthorizationAction, loginAction} from '../../store/action';
+import {requireAuthorizationAction, loginAction} from '../../store/user/action';
 import {useSelector, useDispatch} from 'react-redux';
 import AuthCheck from '../auth-check/auth-check';
 import {AuthorizationStatus} from '../../utils/constatns';

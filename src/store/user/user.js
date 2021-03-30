@@ -1,5 +1,5 @@
 import {RoutePaths} from '../../utils/constatns';
-import {loginAction, requireAuthorizationAction, addRequestedRouteAction} from '../../store/action';
+import {loginAction, requireAuthorizationAction, addRequestedRouteAction} from './action';
 import {createReducer} from '@reduxjs/toolkit';
 
 export const initialState = {

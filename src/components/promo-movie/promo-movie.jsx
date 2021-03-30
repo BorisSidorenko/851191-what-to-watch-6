@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import Header from '../header/header';
 import PromoMovieInfo from '../promo-movie-info/promo-movie-info';
 import {loadPromoMovie} from '../../api/api-actions';
-import {loadPromoAction, clearIsPromoLoadedFlagAction} from '../../store/action';
+import {loadPromoAction, clearIsPromoLoadedFlagAction} from '../../store/data/action';
 import Loading from '../loading/loading';
 
 const PromoMovie = () => {
