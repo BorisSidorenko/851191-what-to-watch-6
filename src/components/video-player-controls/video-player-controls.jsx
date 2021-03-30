@@ -1,7 +1,7 @@
 import React, {useEffect, useState, memo} from 'react';
 import PropTypes from 'prop-types';
 import {movieProp} from '../props/movie-props';
-import {MIN_NUMBER_TO_EXTEND_DURATION_FORMAT} from '../../utils/constatns';
+import {MIN_NUMBER_TO_EXTEND_DURATION_FORMAT, PLAYER_PROGRESS, MAX_PLAYER_PROGRESS_IN_PERCENT} from '../../utils/constatns';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 dayjs.extend(duration);
@@ -30,19 +30,28 @@ const PlayButtonIcon = () => (
   </>
 );
 
-
 const VideoPlayerControls = ({video, isPlaying, isLoading, movie, onPlayButtonClick, onFullScreenButtonClick}) => {
   const [elapsedTime, setElapsedTime] = useState(0);
+  const [progressPercentage, setProgressPercentage] = useState(0);
 
   const handleElapsedTime = ({duration: runTime, currentTime}) => {
     const timeToWatch = runTime - Math.floor(currentTime);
     setElapsedTime(timeToWatch);
+
+    const progressInPercent = currentTime * MAX_PLAYER_PROGRESS_IN_PERCENT / runTime;
+    setProgressPercentage(progressInPercent);
   };
 
   useEffect(() => {
     if (video) {
       video.ontimeupdate = () => handleElapsedTime(video);
+
+      return () => {
+        video.ontimeupdate = null;
+      };
     }
+
+    return () => {};
   }, [video]);
 
   useEffect(() => {
@@ -55,8 +64,8 @@ const VideoPlayerControls = ({video, isPlaying, isLoading, movie, onPlayButtonCl
     <div className="player__controls">
       <div className="player__controls-row">
         <div className="player__time">
-          <progress className="player__progress" value="0" max="100"></progress>
-          <div className="player__toggler" style={{left: 0 + `%`}}>Toggler</div>
+          <progress className="player__progress" value={video && isPlaying ? video.currentTime : PLAYER_PROGRESS.MIN_VALUE} max={video && !isNaN(video.duration) ? video.duration : PLAYER_PROGRESS.MAX_VALUE}></progress>
+          <div className="player__toggler" style={{left: progressPercentage + `%`}}>Toggler</div>
         </div>
         <div className="player__time-value">{getHumanizeDuration(elapsedTime)}</div>
       </div>
