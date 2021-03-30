@@ -15,7 +15,8 @@ import {
   playerMovieToPlayAction,
   playerMovieLoadedAction,
   playerMoviePlayAction,
-  addRequestedPlayerPathAction
+  addRequestedPlayerPathAction,
+  clearPlayerMovieToPlayAction
 } from './action';
 import {DEFAULT_GENRE, AuthorizationStatus, RoutePaths} from '../utils/constatns';
 import {movieStructure, reviewStructure, userStructure} from '../utils/test-utils';
@@ -160,5 +161,13 @@ describe(`Actions creators works as expected`, () => {
     };
 
     expect(addRequestedPlayerPathAction(RoutePaths.MAIN)).toEqual(expectedAction);
+  });
+
+  it(`Action creater for clearing movie to play and returns action with empty movie to play`, () => {
+    const expectedAction = {
+      type: ActionType.CLEAR_VIDEO_PLAYER_MOVIE
+    };
+
+    expect(clearPlayerMovieToPlayAction()).toEqual(expectedAction);
   });
 });

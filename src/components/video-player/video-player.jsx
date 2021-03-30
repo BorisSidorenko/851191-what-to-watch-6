@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import ExitButton from '../exit-button/exit-button';
 import VideoPlayerControls from '../video-player-controls/video-player-controls';
 import {idProp} from '../props/movie-props';
-import {redirectToRouteAction, playerMovieToPlayAction, playerMovieLoadedAction, playerMoviePlayAction} from '../../store/action';
+import {redirectToRouteAction, playerMovieToPlayAction, playerMovieLoadedAction, playerMoviePlayAction, clearPlayerMovieToPlayAction} from '../../store/action';
 import {loadMovieById} from '../../api/api-actions';
 import Loading from '../loading/loading';
 import {RoutePaths} from '../../utils/constatns';
@@ -25,37 +25,44 @@ const getVideoPlayerComponents = (isPreview, videoRef, movieToPlay, isPlaying, i
 
 const VideoPlayer = ({movieId, isPreview = false}) => {
   const {movieToPlay, isLoading, isPlaying} = useSelector((state) => state.PLAYER);
+  const id = parseInt(movieId, 10);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(loadMovieById(movieId))
+    if (movieToPlay && movieToPlay.id !== id) {
+      dispatch(clearPlayerMovieToPlayAction());
+    }
+
+    dispatch(loadMovieById(id))
     .then(({data}) => dispatch(playerMovieToPlayAction(data)))
     .then(() => dispatch(playerMovieLoadedAction()))
     .catch(() => dispatch(redirectToRouteAction(RoutePaths.NOT_FOUND)));
 
     return (() => dispatch(playerMoviePlayAction(false)));
-  }, [movieId]);
+  }, [id]);
 
   const videoRef = useRef();
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.oncanplaythrough = () => {
-        if (isPreview) {
+        if (isPreview && videoRef.current) {
           videoRef.current.muted = true;
           videoRef.current.play();
         }
       };
 
       return () => {
-        videoRef.current.oncanplaythrough = null;
-        videoRef.current.onplay = null;
-        videoRef.current.onpause = null;
-        videoRef.current = null;
+        if (videoRef.current) {
+          videoRef.current.oncanplaythrough = null;
+          videoRef.current.onplay = null;
+          videoRef.current.onpause = null;
+          videoRef.current = null;
+        }
       };
     }
 
     return () => {};
-  }, [movieId, isLoading]);
+  }, [id, isLoading]);
 
   useEffect(() => {
     if (movieToPlay && isPlaying) {

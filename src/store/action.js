@@ -14,7 +14,9 @@ export const ActionType = {
   CLEAR_SELECTED_MOVIE: `data/clearSelectedMovie`,
   MARK_MOVIE_AS_FAVORITE: `data/markMovieAsFavorite`,
   VIDEO_PLAYER_MOVIE: `player/movie`,
+  CLEAR_VIDEO_PLAYER_MOVIE: `player/clearMovie`,
   VIDEO_PLAYER_LOADED: `player/movieLoaded`,
+  VIDEO_PLAYER_NOT_LOADED: `player/movieNotLoaded`,
   VIDEO_PLAYER_PLAYING: `player/moviePlay`,
   VIDEO_PLAYER_PAUSE: `player/moviePause`,
   VIDEO_PLAYER_REQUESTED_PATH: `player/requestedPath`
@@ -45,6 +47,8 @@ export const loginAction = createAction(ActionType.LOGIN, (data) => ({payload: d
 export const markMovieAsFavoriteAction = createAction(ActionType.MARK_MOVIE_AS_FAVORITE, (data) => ({payload: data}));
 
 export const playerMovieToPlayAction = createAction(ActionType.VIDEO_PLAYER_MOVIE, (data) => ({payload: data}));
+
+export const clearPlayerMovieToPlayAction = createAction(ActionType.CLEAR_VIDEO_PLAYER_MOVIE, () => ({}));
 
 export const playerMovieLoadedAction = createAction(ActionType.VIDEO_PLAYER_LOADED, () => ({}));
 

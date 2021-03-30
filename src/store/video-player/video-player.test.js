@@ -1,6 +1,6 @@
 import {videoPlayer, initialState} from './video-player';
 import {movieStructure} from '../../utils/test-utils';
-import {playerMovieToPlayAction, addRequestedPlayerPathAction, playerMovieLoadedAction, playerMoviePlayAction} from '../action';
+import {playerMovieToPlayAction, addRequestedPlayerPathAction, playerMovieLoadedAction, playerMoviePlayAction, clearPlayerMovieToPlayAction} from '../action';
 import {RoutePaths} from '../../utils/constatns';
 
 describe(`Reducers work as expected`, () => {
@@ -36,5 +36,13 @@ describe(`Reducers work as expected`, () => {
     });
 
     expect(videoPlayer(initialState, playerMoviePlayAction(false))).toEqual(initialState);
+  });
+
+  it(`Reducer should return state with movieToPlay and isLoading from initial state`, () => {
+    expect(videoPlayer(initialState, clearPlayerMovieToPlayAction())).toEqual({
+      ...initialState,
+      movieToPlay: null,
+      isLoading: true
+    });
   });
 });
