@@ -113,3 +113,5 @@ export const AuthorizationStatus = {
 };
 
 export const TAB_ITEMS = [`Overview`, `Details`, `Reviews`];
+
+export const MIN_NUMBER_TO_EXTEND_DURATION_FORMAT = 10;

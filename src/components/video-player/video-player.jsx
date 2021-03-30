@@ -18,7 +18,7 @@ const getVideoPlayerComponents = (isPreview, videoRef, movieToPlay, isPlaying, i
     <>
       <video ref={videoRef} src={isPreview ? movieToPlay.preview_video_link : movieToPlay.video_link} className="player__video" poster="img/player-poster.jpg"></video>
       {isPreview || <ExitButton />}
-      {isPreview || <VideoPlayerControls isPlaying={isPlaying} isLoading={isLoading} movieDuration={movieToPlay.run_time} onPlayButtonClick={handlePlayButtonClick} onFullScreenButtonClick={handleFullScreenButtonClick}/>}
+      {isPreview || <VideoPlayerControls video={videoRef.current} isPlaying={isPlaying} isLoading={isLoading} movie={movieToPlay} onPlayButtonClick={handlePlayButtonClick} onFullScreenButtonClick={handleFullScreenButtonClick}/>}
     </>
   );
 };
