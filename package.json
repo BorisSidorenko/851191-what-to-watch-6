@@ -12,7 +12,7 @@
     "test.jest": "jest",
     "test.coverage": "jest --coverage",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d ./"
+    "deploy": "gh-pages -d ../851191-what-to-watch-6/"
   },
   "devDependencies": {
     "@babel/core": "7.12.13",
