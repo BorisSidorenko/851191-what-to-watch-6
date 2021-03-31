@@ -1,3 +1,4 @@
+Здест будет опубликованный проект "WTW"
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Борис Сидоренко](https://htmlacademy.ru/profile/borissid).
