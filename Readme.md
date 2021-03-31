@@ -1,4 +1,4 @@
-Здест будет опубликованный проект "WTW"
+<a href="https://borissidorenko.github.io/851191-what-to-watch-6/">Опубликованный проект "WTW"</a>
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Борис Сидоренко](https://htmlacademy.ru/profile/borissid).
